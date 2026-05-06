@@ -12,15 +12,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "ara-bridge"
-version = "0.1.1"
+name = "ara2-bridge"
+version = "0.1.2"
 dependencies = [
- "ara-bridge-sys",
+ "ara2-bridge-sys",
 ]
 
 [[package]]
-name = "ara-bridge-sys"
-version = "0.1.1"
+name = "ara2-bridge-sys"
+version = "0.1.2"
 dependencies = [
  "bindgen",
 ]

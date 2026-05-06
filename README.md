@@ -1,4 +1,9 @@
 # ara2-bridge
+[![CI](https://github.com/entrepeneur4lyf/ara2-bridge/actions/workflows/ci.yml/badge.svg)](https://github.com/entrepeneur4lyf/ara2-bridge/actions/workflows/ci.yml)
+[![crates.io](https://img.shields.io/crates/v/ara-bridge.svg)](https://crates.io/crates/ara-bridge)
+[![docs.rs](https://docs.rs/ara-bridge/badge.svg)](https://docs.rs/ara-bridge)
+[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)
+
 
 Safe Rust bindings for the [Celemony ARA2 SDK](https://github.com/Celemony/ARA_API).
 

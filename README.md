@@ -30,8 +30,8 @@ This pulls in `ara2-bridge-sys` automatically. You do not need to depend on it d
 ### 1. Implement the `DocumentController` trait
 
 ```rust
-use ara_bridge::*;
-use ara_bridge_sys::*;
+use ara2_bridge::*;
+use ara2_bridge_sys::*;
 
 struct MyPlugin;
 
@@ -225,7 +225,7 @@ impl DocumentController for MyPlugin {
 ### 2. Build the vtable and instance
 
 ```rust
-use ara_bridge::build_document_controller_instance;
+use ara2_bridge::build_document_controller_instance;
 
 // Create your controller
 let controller = Box::new(MyPlugin);
@@ -242,7 +242,7 @@ let instance = build_document_controller_instance(controller);
 The `ARAFactory` struct is defined in `ara2-bridge-sys`. Fill in the static fields:
 
 ```rust
-use ara_bridge_sys::*;
+use ara2_bridge_sys::*;
 use std::ffi::CStr;
 
 static FACTORY: ARAFactory = ARAFactory {

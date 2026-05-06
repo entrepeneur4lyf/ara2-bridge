@@ -1,89 +1,284 @@
-//! Safe Rust bindings for the Celemony ARA2 SDK.
+//! Safe Rust bindings for the [Celemony ARA2 SDK](https://github.com/Celemony/ARA_API).
 //!
-//! ARA2 uses C structs of function pointers (vtables). This crate wraps
-//! the `DocumentController` interface as a Rust trait with a vtable
-//! builder that converts trait objects into the C-compatible struct
-//! the DAW calls through.
+//! ARA2 (Audio Random Access) lets audio plugins access DAW audio regions
+//! directly — not just streaming audio at the insert point. This crate
+//! wraps the C API as Rust traits with vtable builders.
 //!
-//! Unimplemented vtable entries are null pointers. Per the ARA2 spec,
-//! the host reads `structSize` to determine which functions are present
-//! and treats null entries as "feature not supported."
+//! ## How ARA2 Works
+//!
+//! The DAW calls into your plugin through C structs of function pointers
+//! (vtables). Each vtable has a `structSize` field that tells the host
+//! which functions are present; null entries mean "not supported."
+//!
+//! This crate implements 25 of 55 vtable entries. The remaining 30 return
+//! null pointers per the ARA2 spec.
+//!
+//! ## Quick Start
+//!
+//! ```rust,ignore
+//! use ara2::*;
+//! use ara2_sys::*;
+//!
+//! struct MyPlugin;
+//!
+//! impl DocumentController for MyPlugin {
+//!     // ... implement all 25 methods
+//! }
+//!
+//! // Build the C-compatible instance for the DAW
+//! let controller = Box::new(MyPlugin);
+//! let instance = build_document_controller_instance(controller);
+//! ```
 
 use ara2_sys::*;
 
-// ── Document Controller Trait ────────────────────────────────────────
+// ────────────────────────────────────────────────────────────────────
+// DocumentController — the main plugin interface
+// ────────────────────────────────────────────────────────────────────
 
+/// Plugin-side document controller.
+///
+/// Created once per DAW document. Manages audio sources, musical contexts,
+/// region sequences, playback regions, persistence, and undo history.
+///
+/// The DAW calls these methods through the function pointer vtable
+/// built by [`build_document_controller_instance`].
+///
+/// ## Lifecycle
+///
+/// 1. DAW creates a document → calls your `ARAFactory` callback
+/// 2. You return an `ARADocumentControllerInstance`
+/// 3. DAW calls `begin_editing()` → you set up internal state
+/// 4. DAW calls `create_audio_source()`, `create_musical_context()`, etc.
+/// 5. DAW calls `request_audio_source_content_analysis()` → you analyze
+/// 6. DAW calls `end_editing()` → you commit changes
+/// 7. DAW calls `store_objects_to_archive()` → you serialize to project
+/// 8. DAW calls `destroy()` → you free resources
 pub trait DocumentController {
+    /// Destroy the controller and free all resources.
+    ///
+    /// Called by the DAW when the document is closed. After this call,
+    /// no further callbacks will be received.
     fn destroy(&mut self);
+
+    /// Return a pointer to the static [`ARAFactory`] that created this controller.
+    ///
+    /// The returned pointer must remain valid for the lifetime of the controller.
+    /// This is how the DAW discovers the plugin's capabilities (name, version,
+    /// supported content types, archive IDs).
     fn get_factory(&self) -> *const ARAFactory;
+
+    /// Begin an editing session.
+    ///
+    /// All model changes between `begin_editing` and [`end_editing`] are
+    /// treated as a single undoable operation. The plugin may defer
+    /// expensive updates until `end_editing` is called.
+    ///
+    /// [`end_editing`]: DocumentController::end_editing
     fn begin_editing(&mut self);
+
+    /// End an editing session.
+    ///
+    /// The plugin should now perform any deferred updates and notify the
+    /// host of changes via `ARAModelUpdateControllerInterface`.
     fn end_editing(&mut self);
+
+    /// Send all pending model update notifications to the host.
+    ///
+    /// Called periodically by the DAW when not editing. The plugin may
+    /// call back into the host using `ARAModelUpdateControllerInterface`
+    /// during this call.
     fn notify_model_updates(&mut self);
+
+    /// Handle a change to the document's properties (name, etc.).
     fn update_document_properties(&mut self, properties: &ARADocumentProperties);
+
+    /// Create a new audio source associated with this document.
+    ///
+    /// Audio sources represent the raw audio data that playback regions
+    /// reference. Sample data access is initially disabled — call
+    /// `enable_audio_source_samples_access` to grant access.
+    ///
+    /// Returns an opaque reference that identifies the source in future
+    /// callbacks.
     fn create_audio_source(
-        &mut self, host_ref: ARAAudioSourceHostRef, properties: &ARAAudioSourceProperties,
+        &mut self, host_ref: ARAAudioSourceHostRef,
+        properties: &ARAAudioSourceProperties,
     ) -> ARAAudioSourceRef;
+
+    /// Update properties of an existing audio source.
+    ///
+    /// Called when sample rate, channel count, or name changes.
+    /// All properties are provided; the plugin determines which changed.
     fn update_audio_source_properties(
         &mut self, source: ARAAudioSourceRef, properties: &ARAAudioSourceProperties,
     );
+
+    /// Called when audio sample data or content information for a source changes.
+    ///
+    /// `range` is `None` if the entire source is affected. The plugin should
+    /// invalidate any cached analysis for the affected range.
     fn update_audio_source_content(
         &mut self, source: ARAAudioSourceRef, range: Option<&ARAContentTimeRange>,
         flags: ARAContentUpdateFlags,
     );
-    fn enable_audio_source_samples_access(&mut self, source: ARAAudioSourceRef, enable: ARABool);
+
+    /// Grant or revoke access to audio sample data for a source.
+    ///
+    /// When `enable` is non-zero, the plugin may read audio samples
+    /// through the host's audio access controller. When zero, sample
+    /// access is revoked and any cached samples should be freed.
+    fn enable_audio_source_samples_access(
+        &mut self, source: ARAAudioSourceRef, enable: ARABool,
+    );
+
+    /// Manage undo history state for an audio source.
+    ///
+    /// `deactivate` is non-zero when the host is about to purge undo
+    /// history that references this source.
     fn deactivate_audio_source_for_undo_history(
         &mut self, source: ARAAudioSourceRef, deactivate: ARABool,
     );
+
+    /// Destroy an audio source and free its resources.
     fn destroy_audio_source(&mut self, source: ARAAudioSourceRef);
+
+    /// Host requests analysis of specific content types for an audio source.
+    ///
+    /// This is where you plug in your analysis engine. The content types
+    /// are a subset of the plugin's `analyzeableContentTypes` from the
+    /// [`ARAFactory`]. When analysis completes, notify the host via
+    /// `ARAModelUpdateControllerInterface`.
+    ///
+    /// `count` is the number of entries in `content_types`.
     fn request_audio_source_content_analysis(
-        &mut self, source: ARAAudioSourceRef, count: ARASize, content_types: *const ARAContentType,
+        &mut self, source: ARAAudioSourceRef, count: ARASize,
+        content_types: *const ARAContentType,
     );
+
+    /// Check whether analysis data is available for a given content type.
+    ///
+    /// Returns non-zero if the plugin has analysis results ready.
     fn is_audio_source_content_available(
         &self, source: ARAAudioSourceRef, content_type: ARAContentType,
     ) -> ARABool;
+
+    /// Create a musical context (tempo, time signature, key).
     fn create_musical_context(
-        &mut self, host_ref: ARAMusicalContextHostRef, properties: &ARAMusicalContextProperties,
+        &mut self, host_ref: ARAMusicalContextHostRef,
+        properties: &ARAMusicalContextProperties,
     ) -> ARAMusicalContextRef;
+
+    /// Update properties of an existing musical context.
     fn update_musical_context_properties(
-        &mut self, ctx: ARAMusicalContextRef, properties: &ARAMusicalContextProperties,
+        &mut self, ctx: ARAMusicalContextRef,
+        properties: &ARAMusicalContextProperties,
     );
+
+    /// Called when musical context content changes.
     fn update_musical_context_content(
         &mut self, ctx: ARAMusicalContextRef, range: Option<&ARAContentTimeRange>,
         flags: ARAContentUpdateFlags,
     );
+
+    /// Destroy a musical context.
     fn destroy_musical_context(&mut self, ctx: ARAMusicalContextRef);
+
+    /// Create a region sequence (time-ordered regions on a track).
     fn create_region_sequence(
-        &mut self, host_ref: ARARegionSequenceHostRef, properties: &ARARegionSequenceProperties,
+        &mut self, host_ref: ARARegionSequenceHostRef,
+        properties: &ARARegionSequenceProperties,
     ) -> ARARegionSequenceRef;
+
+    /// Update properties of an existing region sequence.
     fn update_region_sequence_properties(
-        &mut self, seq: ARARegionSequenceRef, properties: &ARARegionSequenceProperties,
+        &mut self, seq: ARARegionSequenceRef,
+        properties: &ARARegionSequenceProperties,
     );
+
+    /// Destroy a region sequence.
     fn destroy_region_sequence(&mut self, seq: ARARegionSequenceRef);
+
+    /// Create a playback region linked to an audio modification.
+    ///
+    /// Playback regions define where and how audio modifications appear
+    /// in the DAW timeline. Each playback region references an audio
+    /// modification, which in turn references an audio source.
     fn create_playback_region(
         &mut self, host_ref: ARAPlaybackRegionHostRef,
         audio_modification_ref: ARAAudioModificationRef,
         properties: &ARAPlaybackRegionProperties,
     ) -> ARAPlaybackRegionRef;
+
+    /// Update properties of an existing playback region.
     fn update_playback_region_properties(
-        &mut self, region: ARAPlaybackRegionRef, properties: &ARAPlaybackRegionProperties,
+        &mut self, region: ARAPlaybackRegionRef,
+        properties: &ARAPlaybackRegionProperties,
     );
+
+    /// Destroy a playback region.
     fn destroy_playback_region(&mut self, region: ARAPlaybackRegionRef);
+
+    /// Serialize document state for DAW project save.
+    ///
+    /// Write analysis data through the provided archive writer.
+    /// `filter` is `None` if all objects should be stored, or a
+    /// filter specifying which objects to include.
+    ///
+    /// Returns non-zero on success.
     fn store_objects_to_archive(
         &mut self, archive_writer_host_ref: ARAArchiveWriterHostRef,
         filter: *const ARAStoreObjectsFilter,
     ) -> ARABool;
+
+    /// Deserialize document state from DAW project load.
+    ///
+    /// Read analysis data through the provided archive reader.
+    /// `filter` is `None` if all objects should be restored, or a
+    /// filter specifying which objects to include.
+    ///
+    /// Returns non-zero on success.
     fn restore_objects_from_archive(
         &mut self, archive_reader_host_ref: ARAArchiveReaderHostRef,
         filter: *const ARARestoreObjectsFilter,
     ) -> ARABool;
 }
 
-// ── Vtable + Instance Builder ────────────────────────────────────────
+// ────────────────────────────────────────────────────────────────────
+// Vtable + Instance Builder
+// ────────────────────────────────────────────────────────────────────
 
 struct ControllerState {
     controller: Box<dyn DocumentController>,
 }
 
+/// Build a C-compatible [`ARADocumentControllerInstance`] from a trait object.
+///
+/// Returns a heap-allocated instance that the DAW will destroy by calling
+/// the `destroyDocumentController` vtable entry. The returned pointer
+/// should be returned from your `ARAFactory::createDocumentControllerWithDocument`
+/// callback.
+///
+/// ## Safety
+///
+/// The returned pointer must eventually be freed by the DAW calling
+/// `destroyDocumentController`. If the DAW never calls it, the memory
+/// will leak.
+///
+/// ## Example
+///
+/// ```rust,ignore
+/// use ara2::*;
+/// use ara2_sys::*;
+///
+/// unsafe extern "C" fn factory_callback(
+///     _host: *const ARADocumentControllerHostInstance,
+///     _props: *const ARADocumentProperties,
+/// ) -> *const ARADocumentControllerInstance {
+///     let controller = Box::new(MyPlugin);
+///     build_document_controller_instance(controller)
+/// }
+/// ```
 pub fn build_document_controller_instance(
     controller: Box<dyn DocumentController>,
 ) -> *const ARADocumentControllerInstance {

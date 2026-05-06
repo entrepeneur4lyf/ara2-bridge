@@ -2,8 +2,11 @@
 name = "ara2"
 version = "0.1.0"
 edition = "2021"
-description = "Safe Rust bindings for Celemony ARA2 SDK"
+description = "Safe Rust bindings for the Celemony ARA2 SDK"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/entrepeneur4lyf/ara2-rs"
+keywords = ["audio", "ara2", "daw", "vst", "plugin"]
+categories = ["multimedia::audio", "development-tools::ffi"]
 
 [dependencies]
-ara2-sys = { path = "../ara2-sys" }
+ara2-sys = { path = "../ara2-sys", version = "0.1" }

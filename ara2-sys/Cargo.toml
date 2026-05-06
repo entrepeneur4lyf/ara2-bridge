@@ -4,10 +4,11 @@ version = "0.1.0"
 edition = "2021"
 description = "Raw FFI bindings for Celemony ARA2 SDK"
 license = "MIT OR Apache-2.0"
-links = "ara2"
-build = "build.rs"
-
-[dependencies]
+repository = "https://github.com/entrepeneur4lyf/ara2-rs"
+keywords = ["audio", "ara2", "daw", "vst", "plugin"]
+categories = ["multimedia::audio", "development-tools::ffi"]
 
 [build-dependencies]
 bindgen = "0.71"
+
+[dependencies]

@@ -16,8 +16,8 @@
 //! ## Quick Start
 //!
 //! ```rust,ignore
-//! use ara_bridge::*;
-//! use ara_bridge_sys::*;
+//! use ara2_bridge::*;
+//! use ara2_bridge_sys::*;
 //!
 //! struct MyPlugin;
 //!
@@ -30,7 +30,7 @@
 //! let instance = build_document_controller_instance(controller);
 //! ```
 
-use ara_bridge_sys::*;
+use ara2_bridge_sys::*;
 
 // ────────────────────────────────────────────────────────────────────
 // DocumentController — the main plugin interface
@@ -287,8 +287,8 @@ struct ControllerState {
 /// ## Example
 ///
 /// ```rust,ignore
-/// use ara_bridge::*;
-/// use ara_bridge_sys::*;
+/// use ara2_bridge::*;
+/// use ara2_bridge_sys::*;
 ///
 /// unsafe extern "C" fn factory_callback(
 ///     _host: *const ARADocumentControllerHostInstance,

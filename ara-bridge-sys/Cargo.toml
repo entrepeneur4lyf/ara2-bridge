@@ -1,5 +1,5 @@
 [package]
-name = "ara-bridge-sys"
+name = "ara2-bridge-sys"
 version = "0.1.2"
 edition = "2021"
 description = "Raw FFI bindings for Celemony ARA2 SDK"

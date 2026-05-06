@@ -102,7 +102,8 @@ pub trait DocumentController {
     /// Returns an opaque reference that identifies the source in future
     /// callbacks.
     fn create_audio_source(
-        &mut self, host_ref: ARAAudioSourceHostRef,
+        &mut self,
+        host_ref: ARAAudioSourceHostRef,
         properties: &ARAAudioSourceProperties,
     ) -> ARAAudioSourceRef;
 
@@ -111,7 +112,9 @@ pub trait DocumentController {
     /// Called when sample rate, channel count, or name changes.
     /// All properties are provided; the plugin determines which changed.
     fn update_audio_source_properties(
-        &mut self, source: ARAAudioSourceRef, properties: &ARAAudioSourceProperties,
+        &mut self,
+        source: ARAAudioSourceRef,
+        properties: &ARAAudioSourceProperties,
     );
 
     /// Called when audio sample data or content information for a source changes.
@@ -119,7 +122,9 @@ pub trait DocumentController {
     /// `range` is `None` if the entire source is affected. The plugin should
     /// invalidate any cached analysis for the affected range.
     fn update_audio_source_content(
-        &mut self, source: ARAAudioSourceRef, range: Option<&ARAContentTimeRange>,
+        &mut self,
+        source: ARAAudioSourceRef,
+        range: Option<&ARAContentTimeRange>,
         flags: ARAContentUpdateFlags,
     );
 
@@ -128,16 +133,16 @@ pub trait DocumentController {
     /// When `enable` is non-zero, the plugin may read audio samples
     /// through the host's audio access controller. When zero, sample
     /// access is revoked and any cached samples should be freed.
-    fn enable_audio_source_samples_access(
-        &mut self, source: ARAAudioSourceRef, enable: ARABool,
-    );
+    fn enable_audio_source_samples_access(&mut self, source: ARAAudioSourceRef, enable: ARABool);
 
     /// Manage undo history state for an audio source.
     ///
     /// `deactivate` is non-zero when the host is about to purge undo
     /// history that references this source.
     fn deactivate_audio_source_for_undo_history(
-        &mut self, source: ARAAudioSourceRef, deactivate: ARABool,
+        &mut self,
+        source: ARAAudioSourceRef,
+        deactivate: ARABool,
     );
 
     /// Destroy an audio source and free its resources.
@@ -152,7 +157,9 @@ pub trait DocumentController {
     ///
     /// `count` is the number of entries in `content_types`.
     fn request_audio_source_content_analysis(
-        &mut self, source: ARAAudioSourceRef, count: ARASize,
+        &mut self,
+        source: ARAAudioSourceRef,
+        count: ARASize,
         content_types: *const ARAContentType,
     );
 
@@ -160,24 +167,30 @@ pub trait DocumentController {
     ///
     /// Returns non-zero if the plugin has analysis results ready.
     fn is_audio_source_content_available(
-        &self, source: ARAAudioSourceRef, content_type: ARAContentType,
+        &self,
+        source: ARAAudioSourceRef,
+        content_type: ARAContentType,
     ) -> ARABool;
 
     /// Create a musical context (tempo, time signature, key).
     fn create_musical_context(
-        &mut self, host_ref: ARAMusicalContextHostRef,
+        &mut self,
+        host_ref: ARAMusicalContextHostRef,
         properties: &ARAMusicalContextProperties,
     ) -> ARAMusicalContextRef;
 
     /// Update properties of an existing musical context.
     fn update_musical_context_properties(
-        &mut self, ctx: ARAMusicalContextRef,
+        &mut self,
+        ctx: ARAMusicalContextRef,
         properties: &ARAMusicalContextProperties,
     );
 
     /// Called when musical context content changes.
     fn update_musical_context_content(
-        &mut self, ctx: ARAMusicalContextRef, range: Option<&ARAContentTimeRange>,
+        &mut self,
+        ctx: ARAMusicalContextRef,
+        range: Option<&ARAContentTimeRange>,
         flags: ARAContentUpdateFlags,
     );
 
@@ -186,13 +199,15 @@ pub trait DocumentController {
 
     /// Create a region sequence (time-ordered regions on a track).
     fn create_region_sequence(
-        &mut self, host_ref: ARARegionSequenceHostRef,
+        &mut self,
+        host_ref: ARARegionSequenceHostRef,
         properties: &ARARegionSequenceProperties,
     ) -> ARARegionSequenceRef;
 
     /// Update properties of an existing region sequence.
     fn update_region_sequence_properties(
-        &mut self, seq: ARARegionSequenceRef,
+        &mut self,
+        seq: ARARegionSequenceRef,
         properties: &ARARegionSequenceProperties,
     );
 
@@ -205,14 +220,16 @@ pub trait DocumentController {
     /// in the DAW timeline. Each playback region references an audio
     /// modification, which in turn references an audio source.
     fn create_playback_region(
-        &mut self, host_ref: ARAPlaybackRegionHostRef,
+        &mut self,
+        host_ref: ARAPlaybackRegionHostRef,
         audio_modification_ref: ARAAudioModificationRef,
         properties: &ARAPlaybackRegionProperties,
     ) -> ARAPlaybackRegionRef;
 
     /// Update properties of an existing playback region.
     fn update_playback_region_properties(
-        &mut self, region: ARAPlaybackRegionRef,
+        &mut self,
+        region: ARAPlaybackRegionRef,
         properties: &ARAPlaybackRegionProperties,
     );
 
@@ -227,7 +244,8 @@ pub trait DocumentController {
     ///
     /// Returns non-zero on success.
     fn store_objects_to_archive(
-        &mut self, archive_writer_host_ref: ARAArchiveWriterHostRef,
+        &mut self,
+        archive_writer_host_ref: ARAArchiveWriterHostRef,
         filter: *const ARAStoreObjectsFilter,
     ) -> ARABool;
 
@@ -239,7 +257,8 @@ pub trait DocumentController {
     ///
     /// Returns non-zero on success.
     fn restore_objects_from_archive(
-        &mut self, archive_reader_host_ref: ARAArchiveReaderHostRef,
+        &mut self,
+        archive_reader_host_ref: ARAArchiveReaderHostRef,
         filter: *const ARARestoreObjectsFilter,
     ) -> ARABool;
 }
@@ -349,133 +368,177 @@ unsafe extern "C" fn notify_model_updates_cb(r: ARADocumentControllerRef) {
 }
 
 unsafe extern "C" fn update_doc_props_cb(
-    r: ARADocumentControllerRef, p: *const ARADocumentProperties,
+    r: ARADocumentControllerRef,
+    p: *const ARADocumentProperties,
 ) {
     state(r).controller.update_document_properties(&*p);
 }
 
 unsafe extern "C" fn create_audio_source_cb(
-    r: ARADocumentControllerRef, h: ARAAudioSourceHostRef, p: *const ARAAudioSourceProperties,
+    r: ARADocumentControllerRef,
+    h: ARAAudioSourceHostRef,
+    p: *const ARAAudioSourceProperties,
 ) -> ARAAudioSourceRef {
     state(r).controller.create_audio_source(h, &*p)
 }
 
 unsafe extern "C" fn update_audio_source_props_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef, p: *const ARAAudioSourceProperties,
+    r: ARADocumentControllerRef,
+    s: ARAAudioSourceRef,
+    p: *const ARAAudioSourceProperties,
 ) {
     state(r).controller.update_audio_source_properties(s, &*p);
 }
 
 unsafe extern "C" fn update_audio_source_content_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef,
-    range: *const ARAContentTimeRange, flags: ARAContentUpdateFlags,
+    r: ARADocumentControllerRef,
+    s: ARAAudioSourceRef,
+    range: *const ARAContentTimeRange,
+    flags: ARAContentUpdateFlags,
 ) {
     let opt = if range.is_null() { None } else { Some(&*range) };
-    state(r).controller.update_audio_source_content(s, opt, flags);
+    state(r)
+        .controller
+        .update_audio_source_content(s, opt, flags);
 }
 
 unsafe extern "C" fn enable_audio_access_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef, enable: ARABool,
+    r: ARADocumentControllerRef,
+    s: ARAAudioSourceRef,
+    enable: ARABool,
 ) {
-    state(r).controller.enable_audio_source_samples_access(s, enable);
+    state(r)
+        .controller
+        .enable_audio_source_samples_access(s, enable);
 }
 
 unsafe extern "C" fn deactivate_audio_undo_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef, deactivate: ARABool,
+    r: ARADocumentControllerRef,
+    s: ARAAudioSourceRef,
+    deactivate: ARABool,
 ) {
-    state(r).controller.deactivate_audio_source_for_undo_history(s, deactivate);
+    state(r)
+        .controller
+        .deactivate_audio_source_for_undo_history(s, deactivate);
 }
 
-unsafe extern "C" fn destroy_audio_source_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef,
-) {
+unsafe extern "C" fn destroy_audio_source_cb(r: ARADocumentControllerRef, s: ARAAudioSourceRef) {
     state(r).controller.destroy_audio_source(s);
 }
 
 unsafe extern "C" fn request_audio_analysis_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef,
-    count: ARASize, types: *const ARAContentType,
+    r: ARADocumentControllerRef,
+    s: ARAAudioSourceRef,
+    count: ARASize,
+    types: *const ARAContentType,
 ) {
-    state(r).controller.request_audio_source_content_analysis(s, count, types);
+    state(r)
+        .controller
+        .request_audio_source_content_analysis(s, count, types);
 }
 
 unsafe extern "C" fn is_audio_content_avail_cb(
-    r: ARADocumentControllerRef, s: ARAAudioSourceRef, ct: ARAContentType,
+    r: ARADocumentControllerRef,
+    s: ARAAudioSourceRef,
+    ct: ARAContentType,
 ) -> ARABool {
     state(r).controller.is_audio_source_content_available(s, ct)
 }
 
 unsafe extern "C" fn create_musical_ctx_cb(
-    r: ARADocumentControllerRef, h: ARAMusicalContextHostRef, p: *const ARAMusicalContextProperties,
+    r: ARADocumentControllerRef,
+    h: ARAMusicalContextHostRef,
+    p: *const ARAMusicalContextProperties,
 ) -> ARAMusicalContextRef {
     state(r).controller.create_musical_context(h, &*p)
 }
 
 unsafe extern "C" fn update_musical_ctx_props_cb(
-    r: ARADocumentControllerRef, c: ARAMusicalContextRef, p: *const ARAMusicalContextProperties,
+    r: ARADocumentControllerRef,
+    c: ARAMusicalContextRef,
+    p: *const ARAMusicalContextProperties,
 ) {
-    state(r).controller.update_musical_context_properties(c, &*p);
+    state(r)
+        .controller
+        .update_musical_context_properties(c, &*p);
 }
 
 unsafe extern "C" fn update_musical_ctx_content_cb(
-    r: ARADocumentControllerRef, c: ARAMusicalContextRef,
-    range: *const ARAContentTimeRange, flags: ARAContentUpdateFlags,
+    r: ARADocumentControllerRef,
+    c: ARAMusicalContextRef,
+    range: *const ARAContentTimeRange,
+    flags: ARAContentUpdateFlags,
 ) {
     let opt = if range.is_null() { None } else { Some(&*range) };
-    state(r).controller.update_musical_context_content(c, opt, flags);
+    state(r)
+        .controller
+        .update_musical_context_content(c, opt, flags);
 }
 
-unsafe extern "C" fn destroy_musical_ctx_cb(
-    r: ARADocumentControllerRef, c: ARAMusicalContextRef,
-) {
+unsafe extern "C" fn destroy_musical_ctx_cb(r: ARADocumentControllerRef, c: ARAMusicalContextRef) {
     state(r).controller.destroy_musical_context(c);
 }
 
 unsafe extern "C" fn create_region_seq_cb(
-    r: ARADocumentControllerRef, h: ARARegionSequenceHostRef, p: *const ARARegionSequenceProperties,
+    r: ARADocumentControllerRef,
+    h: ARARegionSequenceHostRef,
+    p: *const ARARegionSequenceProperties,
 ) -> ARARegionSequenceRef {
     state(r).controller.create_region_sequence(h, &*p)
 }
 
 unsafe extern "C" fn update_region_seq_props_cb(
-    r: ARADocumentControllerRef, s: ARARegionSequenceRef, p: *const ARARegionSequenceProperties,
+    r: ARADocumentControllerRef,
+    s: ARARegionSequenceRef,
+    p: *const ARARegionSequenceProperties,
 ) {
-    state(r).controller.update_region_sequence_properties(s, &*p);
+    state(r)
+        .controller
+        .update_region_sequence_properties(s, &*p);
 }
 
-unsafe extern "C" fn destroy_region_seq_cb(
-    r: ARADocumentControllerRef, s: ARARegionSequenceRef,
-) {
+unsafe extern "C" fn destroy_region_seq_cb(r: ARADocumentControllerRef, s: ARARegionSequenceRef) {
     state(r).controller.destroy_region_sequence(s);
 }
 
 unsafe extern "C" fn create_playback_region_cb(
-    r: ARADocumentControllerRef, m: ARAAudioModificationRef,
-    h: ARAPlaybackRegionHostRef, p: *const ARAPlaybackRegionProperties,
+    r: ARADocumentControllerRef,
+    m: ARAAudioModificationRef,
+    h: ARAPlaybackRegionHostRef,
+    p: *const ARAPlaybackRegionProperties,
 ) -> ARAPlaybackRegionRef {
     state(r).controller.create_playback_region(h, m, &*p)
 }
 
 unsafe extern "C" fn update_playback_region_props_cb(
-    r: ARADocumentControllerRef, reg: ARAPlaybackRegionRef, p: *const ARAPlaybackRegionProperties,
+    r: ARADocumentControllerRef,
+    reg: ARAPlaybackRegionRef,
+    p: *const ARAPlaybackRegionProperties,
 ) {
-    state(r).controller.update_playback_region_properties(reg, &*p);
+    state(r)
+        .controller
+        .update_playback_region_properties(reg, &*p);
 }
 
 unsafe extern "C" fn destroy_playback_region_cb(
-    r: ARADocumentControllerRef, reg: ARAPlaybackRegionRef,
+    r: ARADocumentControllerRef,
+    reg: ARAPlaybackRegionRef,
 ) {
     state(r).controller.destroy_playback_region(reg);
 }
 
 unsafe extern "C" fn store_objects_cb(
-    r: ARADocumentControllerRef, wr: ARAArchiveWriterHostRef, f: *const ARAStoreObjectsFilter,
+    r: ARADocumentControllerRef,
+    wr: ARAArchiveWriterHostRef,
+    f: *const ARAStoreObjectsFilter,
 ) -> ARABool {
     state(r).controller.store_objects_to_archive(wr, f)
 }
 
 unsafe extern "C" fn restore_objects_cb(
-    r: ARADocumentControllerRef, rr: ARAArchiveReaderHostRef, f: *const ARARestoreObjectsFilter,
+    r: ARADocumentControllerRef,
+    rr: ARAArchiveReaderHostRef,
+    f: *const ARARestoreObjectsFilter,
 ) -> ARABool {
     state(r).controller.restore_objects_from_archive(rr, f)
 }

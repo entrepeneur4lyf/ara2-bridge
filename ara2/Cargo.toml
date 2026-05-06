@@ -1,12 +1,12 @@
 [package]
-name = "ara2"
+name = "ara-bridge"
 version = "0.1.0"
 edition = "2021"
 description = "Safe Rust bindings for the Celemony ARA2 SDK"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/entrepeneur4lyf/ara2-rs"
+repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 keywords = ["audio", "ara2", "daw", "vst", "plugin"]
 categories = ["multimedia::audio", "development-tools::ffi"]
 
 [dependencies]
-ara2-sys = { path = "../ara2-sys", version = "0.1" }
+ara-bridge-sys = { path = "../ara2-sys", version = "0.1" }

@@ -9,4 +9,4 @@ keywords = ["audio", "ara2", "daw", "vst", "plugin"]
 categories = ["multimedia::audio", "development-tools::ffi"]
 
 [dependencies]
-ara-bridge-sys = { path = "../ara2-sys", version = "0.1" }
+ara-bridge-sys = { path = "../ara-bridge-sys", version = "0.1" }

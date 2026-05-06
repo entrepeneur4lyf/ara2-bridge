@@ -1,3 +1,3 @@
 [workspace]
-members = ["ara-bridge-sys", "ara-bridge"]
+members = ["ara2-bridge-sys", "ara2-bridge"]
 resolver = "2"

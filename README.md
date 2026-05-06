@@ -20,7 +20,7 @@ ARA2 (Audio Random Access) lets audio plugins access DAW audio regions directly 
 
 ```toml
 [dependencies]
-ara2-bridge = "0.1.3"
+ara2-bridge = "0.1.4"
 ```
 
 This pulls in `ara2-bridge-sys` automatically. You do not need to depend on it directly unless you want raw FFI access.

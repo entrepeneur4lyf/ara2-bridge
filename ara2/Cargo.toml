@@ -1,0 +1,9 @@
+[package]
+name = "ara2"
+version = "0.1.0"
+edition = "2021"
+description = "Safe Rust bindings for Celemony ARA2 SDK"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+ara2-sys = { path = "../ara2-sys" }

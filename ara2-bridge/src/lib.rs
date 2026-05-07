@@ -161,7 +161,7 @@ pub trait DocumentController {
         source: ARAAudioSourceRef,
         count: ARASize,
         content_types: *const ARAContentType,
-    );
+    ) -> ARABool;
 
     /// Check whether analysis data is available for a given content type.
     ///
@@ -541,4 +541,129 @@ unsafe extern "C" fn restore_objects_cb(
     f: *const ARARestoreObjectsFilter,
 ) -> ARABool {
     state(r).controller.restore_objects_from_archive(rr, f)
+}
+
+// ────────────────────────────────────────────────────────────────────
+// Host-side traits — what the DAW implements for ARA2 plugins
+// ────────────────────────────────────────────────────────────────────
+
+/// Host-side playback region interface.
+///
+/// The plugin calls these methods to notify the DAW about content
+/// analysis results and rendering progress on this playback region.
+pub trait PlaybackRegionHost {
+    /// Plugin has completed content analysis for this region.
+    fn notify_content_analysis_completed(
+        &mut self,
+        region: ARAPlaybackRegionRef,
+        content: *mut std::ffi::c_void,
+    );
+
+    /// Plugin requests that the host start rendering this region.
+    fn request_playback(&mut self, region: ARAPlaybackRegionRef);
+}
+
+/// Host-side model update interface.
+///
+/// The plugin calls these methods to tell the DAW that model objects
+/// (audio sources, musical contexts, etc.) have changed.
+pub trait ModelUpdateController {
+    /// Notify the host that an audio source's content has changed.
+    fn notify_audio_source_content_changed(
+        &mut self,
+        source: ARAAudioSourceRef,
+        content: *const std::ffi::c_void,
+    );
+
+    /// Notify the host that new model objects are available.
+    fn notify_model_update(&mut self);
+
+    /// Notify the host that the plugin session has been restored from archive.
+    fn notify_restored_from_archive(&mut self);
+}
+
+/// Host-side archive reader interface.
+///
+/// The plugin calls these methods during `restore_objects_from_archive()`
+/// to read back serialized state from the DAW project file.
+pub trait ArchiveReaderHost {
+    /// Read bytes from the archive into `buffer`.
+    /// Returns the number of bytes actually read.
+    fn read(&mut self, buffer: &mut [u8]) -> usize;
+
+    /// Return the number of bytes available to read.
+    fn size(&self) -> usize;
+}
+
+/// Host-side archive writer interface.
+///
+/// The plugin calls these methods during `store_objects_to_archive()`
+/// to save plugin state into the DAW project file.
+pub trait ArchiveWriterHost {
+    /// Write bytes to the archive.
+    fn write(&mut self, data: &[u8]);
+}
+
+// ────────────────────────────────────────────────────────────────────
+// Tests
+// ────────────────────────────────────────────────────────────────────
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Minimal plugin implementation for testing
+    struct TestPlugin {
+        destroyed: bool,
+        editing: bool,
+    }
+
+    impl DocumentController for TestPlugin {
+        fn destroy(&mut self) { self.destroyed = true; }
+        fn get_factory(&self) -> *const ARAFactory { std::ptr::null() }
+        fn begin_editing(&mut self) { self.editing = true; }
+        fn end_editing(&mut self) { self.editing = false; }
+        fn notify_model_updates(&mut self) {}
+        fn update_document_properties(&mut self, _: &ARADocumentProperties) {}
+        fn create_audio_source(&mut self, _: ARAAudioSourceHostRef, _: &ARAAudioSourceProperties) -> ARAAudioSourceRef { std::ptr::null_mut() }
+        fn update_audio_source_properties(&mut self, _: ARAAudioSourceRef, _: &ARAAudioSourceProperties) {}
+        fn update_audio_source_content(&mut self, _: ARAAudioSourceRef, _: Option<&ARAContentTimeRange>, _: ARAContentUpdateFlags) {}
+        fn enable_audio_source_samples_access(&mut self, _: ARAAudioSourceRef, _: ARABool) {}
+        fn deactivate_audio_source_for_undo_history(&mut self, _: ARAAudioSourceRef, _: ARABool) {}
+        fn destroy_audio_source(&mut self, _: ARAAudioSourceRef) {}
+        fn request_audio_source_content_analysis(&mut self, _: ARAAudioSourceRef, _: ARASize, _: *const ARAContentType) -> ARABool { 1 }
+        fn is_audio_source_content_available(&self, _: ARAAudioSourceRef, _: ARAContentType) -> ARABool { 1 }
+        fn create_musical_context(&mut self, _: ARAMusicalContextHostRef, _: &ARAMusicalContextProperties) -> ARAMusicalContextRef { std::ptr::null_mut() }
+        fn update_musical_context_properties(&mut self, _: ARAMusicalContextRef, _: &ARAMusicalContextProperties) {}
+        fn update_musical_context_content(&mut self, _: ARAMusicalContextRef, _: Option<&ARAContentTimeRange>, _: ARAContentUpdateFlags) {}
+        fn destroy_musical_context(&mut self, _: ARAMusicalContextRef) {}
+        fn create_region_sequence(&mut self, _: ARARegionSequenceHostRef, _: &ARARegionSequenceProperties) -> ARARegionSequenceRef { std::ptr::null_mut() }
+        fn update_region_sequence_properties(&mut self, _: ARARegionSequenceRef, _: &ARARegionSequenceProperties) {}
+        fn destroy_region_sequence(&mut self, _: ARARegionSequenceRef) {}
+        fn create_playback_region(&mut self, _: ARAPlaybackRegionHostRef, _: ARAAudioModificationRef, _: &ARAPlaybackRegionProperties) -> ARAPlaybackRegionRef { std::ptr::null_mut() }
+        fn update_playback_region_properties(&mut self, _: ARAPlaybackRegionRef, _: &ARAPlaybackRegionProperties) {}
+        fn destroy_playback_region(&mut self, _: ARAPlaybackRegionRef) {}
+        fn store_objects_to_archive(&mut self, _: ARAArchiveWriterHostRef, _: *const ARAStoreObjectsFilter) -> ARABool { 1 }
+        fn restore_objects_from_archive(&mut self, _: ARAArchiveReaderHostRef, _: *const ARARestoreObjectsFilter) -> ARABool { 1 }
+    }
+
+    #[test]
+    fn test_plugin_lifecycle() {
+        let mut plugin = TestPlugin { destroyed: false, editing: false };
+        assert!(!plugin.destroyed);
+        plugin.begin_editing();
+        assert!(plugin.editing);
+        plugin.end_editing();
+        assert!(!plugin.editing);
+        plugin.destroy();
+        assert!(plugin.destroyed);
+    }
+
+    #[test]
+    fn test_build_instance_creates_vtable() {
+        let plugin = Box::new(TestPlugin { destroyed: false, editing: false });
+        let instance = build_document_controller_instance(plugin);
+        // The instance has a valid vtable with the correct structSize
+        assert!(unsafe { (*(*instance).documentControllerInterface).structSize } > 0);
+    }
 }

@@ -1,6 +1,21 @@
-//! Safe Rust bindings for the [Celemony ARA2 SDK](https://github.com/Celemony/ARA_API).
+//! Safe Rust bindings for the [Celemony ARA2 SDK](https://github.com/Celemony/ARA_API) **v2.3.0**.
 //!
 //! ARA2 (Audio Random Access) lets audio plugins access DAW audio regions
+//! directly — not just streaming audio at the insert point. This crate
+//! wraps the C API as Rust traits with vtable builders.
+//!
+//! ## Supported interfaces
+//!
+//! | Side | Trait | Status |
+//! |------|-------|--------|
+//! | Plugin | `DocumentController` (25 methods) | Full vtable |
+//! | Host | `PlaybackRegionHost` | Trait defined |
+//! | Host | `ModelUpdateController` | Trait defined |
+//! | Host | `ArchiveReaderHost` / `ArchiveWriterHost` | Trait defined |
+//!
+//! Host-side vtables are instantiated by the ARA2 SDK/library, not by this crate.
+//! This crate provides the Rust trait definitions that host implementations
+//! (like GAW) implement. The C↔Rust bridge lives in the host application.
 //! directly — not just streaming audio at the insert point. This crate
 //! wraps the C API as Rust traits with vtable builders.
 //!
@@ -10,8 +25,9 @@
 //! (vtables). Each vtable has a `structSize` field that tells the host
 //! which functions are present; null entries mean "not supported."
 //!
-//! This crate implements 25 of 55 vtable entries. The remaining 30 return
-//! null pointers per the ARA2 spec.
+//! Built against ARA2 SDK v2.3.0. This crate implements 25 of 55 vtable
+//! entries for the plugin side. Host-side vtables are constructed by the
+//! ARA2 SDK's C++ library via VST3/CLAP/AU factory queries.
 //!
 //! ## Quick Start
 //!

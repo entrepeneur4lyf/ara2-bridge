@@ -619,37 +619,130 @@ mod tests {
     }
 
     impl DocumentController for TestPlugin {
-        fn destroy(&mut self) { self.destroyed = true; }
-        fn get_factory(&self) -> *const ARAFactory { std::ptr::null() }
-        fn begin_editing(&mut self) { self.editing = true; }
-        fn end_editing(&mut self) { self.editing = false; }
+        fn destroy(&mut self) {
+            self.destroyed = true;
+        }
+        fn get_factory(&self) -> *const ARAFactory {
+            std::ptr::null()
+        }
+        fn begin_editing(&mut self) {
+            self.editing = true;
+        }
+        fn end_editing(&mut self) {
+            self.editing = false;
+        }
         fn notify_model_updates(&mut self) {}
         fn update_document_properties(&mut self, _: &ARADocumentProperties) {}
-        fn create_audio_source(&mut self, _: ARAAudioSourceHostRef, _: &ARAAudioSourceProperties) -> ARAAudioSourceRef { std::ptr::null_mut() }
-        fn update_audio_source_properties(&mut self, _: ARAAudioSourceRef, _: &ARAAudioSourceProperties) {}
-        fn update_audio_source_content(&mut self, _: ARAAudioSourceRef, _: Option<&ARAContentTimeRange>, _: ARAContentUpdateFlags) {}
+        fn create_audio_source(
+            &mut self,
+            _: ARAAudioSourceHostRef,
+            _: &ARAAudioSourceProperties,
+        ) -> ARAAudioSourceRef {
+            std::ptr::null_mut()
+        }
+        fn update_audio_source_properties(
+            &mut self,
+            _: ARAAudioSourceRef,
+            _: &ARAAudioSourceProperties,
+        ) {
+        }
+        fn update_audio_source_content(
+            &mut self,
+            _: ARAAudioSourceRef,
+            _: Option<&ARAContentTimeRange>,
+            _: ARAContentUpdateFlags,
+        ) {
+        }
         fn enable_audio_source_samples_access(&mut self, _: ARAAudioSourceRef, _: ARABool) {}
         fn deactivate_audio_source_for_undo_history(&mut self, _: ARAAudioSourceRef, _: ARABool) {}
         fn destroy_audio_source(&mut self, _: ARAAudioSourceRef) {}
-        fn request_audio_source_content_analysis(&mut self, _: ARAAudioSourceRef, _: ARASize, _: *const ARAContentType) -> ARABool { 1 }
-        fn is_audio_source_content_available(&self, _: ARAAudioSourceRef, _: ARAContentType) -> ARABool { 1 }
-        fn create_musical_context(&mut self, _: ARAMusicalContextHostRef, _: &ARAMusicalContextProperties) -> ARAMusicalContextRef { std::ptr::null_mut() }
-        fn update_musical_context_properties(&mut self, _: ARAMusicalContextRef, _: &ARAMusicalContextProperties) {}
-        fn update_musical_context_content(&mut self, _: ARAMusicalContextRef, _: Option<&ARAContentTimeRange>, _: ARAContentUpdateFlags) {}
+        fn request_audio_source_content_analysis(
+            &mut self,
+            _: ARAAudioSourceRef,
+            _: ARASize,
+            _: *const ARAContentType,
+        ) -> ARABool {
+            1
+        }
+        fn is_audio_source_content_available(
+            &self,
+            _: ARAAudioSourceRef,
+            _: ARAContentType,
+        ) -> ARABool {
+            1
+        }
+        fn create_musical_context(
+            &mut self,
+            _: ARAMusicalContextHostRef,
+            _: &ARAMusicalContextProperties,
+        ) -> ARAMusicalContextRef {
+            std::ptr::null_mut()
+        }
+        fn update_musical_context_properties(
+            &mut self,
+            _: ARAMusicalContextRef,
+            _: &ARAMusicalContextProperties,
+        ) {
+        }
+        fn update_musical_context_content(
+            &mut self,
+            _: ARAMusicalContextRef,
+            _: Option<&ARAContentTimeRange>,
+            _: ARAContentUpdateFlags,
+        ) {
+        }
         fn destroy_musical_context(&mut self, _: ARAMusicalContextRef) {}
-        fn create_region_sequence(&mut self, _: ARARegionSequenceHostRef, _: &ARARegionSequenceProperties) -> ARARegionSequenceRef { std::ptr::null_mut() }
-        fn update_region_sequence_properties(&mut self, _: ARARegionSequenceRef, _: &ARARegionSequenceProperties) {}
+        fn create_region_sequence(
+            &mut self,
+            _: ARARegionSequenceHostRef,
+            _: &ARARegionSequenceProperties,
+        ) -> ARARegionSequenceRef {
+            std::ptr::null_mut()
+        }
+        fn update_region_sequence_properties(
+            &mut self,
+            _: ARARegionSequenceRef,
+            _: &ARARegionSequenceProperties,
+        ) {
+        }
         fn destroy_region_sequence(&mut self, _: ARARegionSequenceRef) {}
-        fn create_playback_region(&mut self, _: ARAPlaybackRegionHostRef, _: ARAAudioModificationRef, _: &ARAPlaybackRegionProperties) -> ARAPlaybackRegionRef { std::ptr::null_mut() }
-        fn update_playback_region_properties(&mut self, _: ARAPlaybackRegionRef, _: &ARAPlaybackRegionProperties) {}
+        fn create_playback_region(
+            &mut self,
+            _: ARAPlaybackRegionHostRef,
+            _: ARAAudioModificationRef,
+            _: &ARAPlaybackRegionProperties,
+        ) -> ARAPlaybackRegionRef {
+            std::ptr::null_mut()
+        }
+        fn update_playback_region_properties(
+            &mut self,
+            _: ARAPlaybackRegionRef,
+            _: &ARAPlaybackRegionProperties,
+        ) {
+        }
         fn destroy_playback_region(&mut self, _: ARAPlaybackRegionRef) {}
-        fn store_objects_to_archive(&mut self, _: ARAArchiveWriterHostRef, _: *const ARAStoreObjectsFilter) -> ARABool { 1 }
-        fn restore_objects_from_archive(&mut self, _: ARAArchiveReaderHostRef, _: *const ARARestoreObjectsFilter) -> ARABool { 1 }
+        fn store_objects_to_archive(
+            &mut self,
+            _: ARAArchiveWriterHostRef,
+            _: *const ARAStoreObjectsFilter,
+        ) -> ARABool {
+            1
+        }
+        fn restore_objects_from_archive(
+            &mut self,
+            _: ARAArchiveReaderHostRef,
+            _: *const ARARestoreObjectsFilter,
+        ) -> ARABool {
+            1
+        }
     }
 
     #[test]
     fn test_plugin_lifecycle() {
-        let mut plugin = TestPlugin { destroyed: false, editing: false };
+        let mut plugin = TestPlugin {
+            destroyed: false,
+            editing: false,
+        };
         assert!(!plugin.destroyed);
         plugin.begin_editing();
         assert!(plugin.editing);
@@ -661,7 +754,10 @@ mod tests {
 
     #[test]
     fn test_build_instance_creates_vtable() {
-        let plugin = Box::new(TestPlugin { destroyed: false, editing: false });
+        let plugin = Box::new(TestPlugin {
+            destroyed: false,
+            editing: false,
+        });
         let instance = build_document_controller_instance(plugin);
         // The instance has a valid vtable with the correct structSize
         assert!(unsafe { (*(*instance).documentControllerInterface).structSize } > 0);

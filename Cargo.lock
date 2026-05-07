@@ -13,14 +13,14 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "ara2-bridge-sys",
 ]
 
 [[package]]
 name = "ara2-bridge-sys"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "bindgen",
 ]

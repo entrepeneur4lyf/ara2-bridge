@@ -27,3 +27,4 @@
 #![allow(dead_code)]
 
 include!(concat!(env!("OUT_DIR"), "/ara2_bindings.rs"));
+include!(concat!(env!("OUT_DIR"), "/host_vtables.rs"));

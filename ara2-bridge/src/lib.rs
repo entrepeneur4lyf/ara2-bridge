@@ -48,6 +48,13 @@
 
 use ara2_bridge_sys::*;
 
+// Use auto-generated host vtable builders from bridge-sys
+pub use ara2_bridge_sys::build_araarchivingcontroller_vtable;
+pub use ara2_bridge_sys::build_araaudioaccesscontroller_vtable;
+pub use ara2_bridge_sys::build_aracontentaccesscontroller_vtable;
+pub use ara2_bridge_sys::build_aramodelupdatecontroller_vtable;
+pub use ara2_bridge_sys::build_araplaybackcontroller_vtable;
+
 // ────────────────────────────────────────────────────────────────────
 // DocumentController — the main plugin interface
 // ────────────────────────────────────────────────────────────────────

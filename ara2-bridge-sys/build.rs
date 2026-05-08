@@ -1,4 +1,5 @@
 use std::env;
+use std::fs;
 use std::path::PathBuf;
 
 fn main() {
@@ -17,9 +18,33 @@ fn main() {
         .generate()
         .expect("bindgen failed");
 
+    let bindings_path = out.join("ara2_bindings.rs");
     bindings
-        .write_to_file(out.join("ara2_bindings.rs"))
+        .write_to_file(&bindings_path)
         .expect("write failed");
 
+    let vtables = [
+        "ARAAudioAccessControllerInterface",
+        "ARAArchivingControllerInterface",
+        "ARAModelUpdateControllerInterface",
+        "ARAPlaybackControllerInterface",
+        "ARAContentAccessControllerInterface",
+    ];
+
+    let mut gen = String::from("// Auto-generated host vtable constructors.\n\n");
+
+    for vname in &vtables {
+        let fn_name = vname.replace("Interface", "_vtable").to_lowercase();
+        gen.push_str(&format!(
+            "#[allow(non_snake_case)]\n\
+             pub fn build_{fn_name}() -> {vname} {{\n\
+             \x20   let mut v: {vname} = unsafe {{ std::mem::zeroed() }};\n\
+             \x20   v.structSize = std::mem::size_of::<{vname}>() as ARASize;\n\
+             \x20   v\n\
+             }}\n\n"
+        ));
+    }
+
+    fs::write(out.join("host_vtables.rs"), gen).unwrap();
     println!("cargo:rerun-if-changed=ARAInterface.h");
 }

@@ -72,7 +72,7 @@ Cargo packages include MIT OR Apache-2.0 project licensing and preserve Celemony
 
 ## Release artifacts
 
-A release includes crates plus a deterministic source bundle containing the packaged `.crate` files, API docs/manual sources, exhaustive core and companion coverage manifests, conformance report, migration guide, changelog, SDK provenance manifest, and license notices. The bundle has a schema-versioned manifest and SHA-256 inventory and is generated and verified by the release tool. Packaging tests build every crate from its published tarball with no repository-relative reference dependency and verify the complete source bundle independently.
+A release includes crates plus a deterministic source bundle containing the packaged `.crate` files, API docs/manual sources, exhaustive core and companion coverage manifests, conformance report, migration guide, changelog, SDK provenance manifest, and license notices. The release tool canonicalizes Cargo-produced crate containers by sorted path, normalized ownership/mode/time metadata, and deterministic gzip encoding before computing their registry checksums. It also removes cache-specific vendored `.gitignore` files and regenerates each directory checksum while retaining the published package digest; license and source files are never filtered. The bundle has a schema-versioned manifest and SHA-256 inventory and is generated and verified by the release tool. Packaging tests build every crate from its published tarball with no repository-relative reference dependency and verify the complete source bundle independently.
 
 ## Acceptance criteria
 
@@ -86,4 +86,5 @@ The feature matrix is additive and documented; published packages build without 
 - 2026-07-14: Audit replaced ambiguous `full`/AUv3 features with explicit portable and Apple-v2 bundles.
 - 2026-07-15: Audit clarified the acyclic facade/testkit feature and documentation classification for bridge-native APIs.
 - 2026-07-15: Audit defined the deterministic source bundle as the release boundary for workspace-level coverage, provenance, manual sources, and notices that cannot live inside every member crate tarball.
+- 2026-07-15: Cross-platform validation requires canonical crate compression and normalized vendored cache metadata so Linux and macOS produce byte-identical source bundles from one commit.
 - 2026-07-15: Implementation audit allowed unambiguous enclosing-item C-counterpart classifications so associated methods retain focused operational rustdoc without duplicating classification boilerplate.

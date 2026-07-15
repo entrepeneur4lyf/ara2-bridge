@@ -2,7 +2,7 @@ use super::{
     validate_generated_derivative, validate_packaged_manifest, verify_recipe, Recipe, PACKAGES,
     VERSION,
 };
-use flate2::read::GzDecoder;
+use flate2::{read::GzDecoder, Compression, GzBuilder};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
@@ -184,6 +184,36 @@ fn vendor_locked_graph(root: &Path, vendor: &Path) -> Result<(), String> {
         },
         "vendor locked registry graph",
     )?;
+    normalize_vendored_sources(vendor)
+}
+
+fn normalize_vendored_sources(vendor: &Path) -> Result<(), String> {
+    let mut packages = fs::read_dir(vendor)
+        .map_err(|error| format!("cannot read {}: {error}", vendor.display()))?
+        .collect::<Result<Vec<_>, _>>()
+        .map_err(|error| format!("cannot enumerate {}: {error}", vendor.display()))?;
+    packages.sort_by_key(|entry| entry.file_name());
+    for package in packages {
+        let directory = package.path();
+        if !directory.is_dir() {
+            continue;
+        }
+        let checksum_path = directory.join(".cargo-checksum.json");
+        let checksum: serde_json::Value = read_json(&checksum_path)?;
+        let package_digest = checksum["package"].as_str().ok_or_else(|| {
+            format!(
+                "vendored package checksum has no archive digest: {}",
+                checksum_path.display()
+            )
+        })?;
+        for relative in list_files(&directory)? {
+            if relative.file_name() == Some(OsStr::new(".gitignore")) {
+                fs::remove_file(directory.join(&relative))
+                    .map_err(|error| format!("cannot remove {}: {error}", relative.display()))?;
+            }
+        }
+        write_directory_checksum(&directory, package_digest)?;
+    }
     Ok(())
 }
 
@@ -225,8 +255,7 @@ fn package_members(
             ));
         }
         let packaged = packages_dir.join(&filename);
-        fs::copy(&produced, &packaged)
-            .map_err(|error| format!("cannot copy {}: {error}", produced.display()))?;
+        canonicalize_crate_archive(&produced, &packaged)?;
         let package_digest = sha256_file(&packaged)?;
 
         let clean_dir = unpack_crate(&packaged, &clean_crates, name)?;
@@ -255,6 +284,74 @@ fn package_members(
         .and_then(|_| fs::remove_dir_all(&package_target))
         .map_err(|error| format!("cannot remove package scratch directory: {error}"))?;
     Ok(records)
+}
+
+fn canonicalize_crate_archive(source: &Path, destination: &Path) -> Result<(), String> {
+    let input =
+        File::open(source).map_err(|error| format!("cannot open {}: {error}", source.display()))?;
+    let mut archive = tar::Archive::new(GzDecoder::new(input));
+    let mut files = BTreeMap::<PathBuf, (u32, Vec<u8>)>::new();
+    for entry in archive
+        .entries()
+        .map_err(|error| format!("cannot read {}: {error}", source.display()))?
+    {
+        let mut entry = entry.map_err(|error| format!("invalid crate entry: {error}"))?;
+        if entry.header().entry_type().is_dir() {
+            continue;
+        }
+        if !entry.header().entry_type().is_file() {
+            return Err(format!(
+                "crate archive contains a non-file entry in {}",
+                source.display()
+            ));
+        }
+        let relative = entry
+            .path()
+            .map_err(|error| format!("invalid crate path: {error}"))?
+            .into_owned();
+        validate_relative_path(&relative)?;
+        let mode = entry
+            .header()
+            .mode()
+            .map_err(|error| format!("invalid crate mode: {error}"))?;
+        let mut bytes = Vec::new();
+        entry
+            .read_to_end(&mut bytes)
+            .map_err(|error| format!("cannot read {}: {error}", relative.display()))?;
+        if files.insert(relative.clone(), (mode, bytes)).is_some() {
+            return Err(format!(
+                "crate archive contains duplicate path {}",
+                relative.display()
+            ));
+        }
+    }
+
+    let output = File::create(destination)
+        .map_err(|error| format!("cannot create {}: {error}", destination.display()))?;
+    let encoder = GzBuilder::new().mtime(0).write(output, Compression::new(6));
+    let mut canonical = tar::Builder::new(encoder);
+    for (relative, (source_mode, bytes)) in files {
+        let mut header = tar::Header::new_gnu();
+        header.set_size(bytes.len() as u64);
+        header.set_mode(if source_mode & 0o111 == 0 {
+            0o644
+        } else {
+            0o755
+        });
+        header.set_uid(0);
+        header.set_gid(0);
+        header.set_mtime(0);
+        header.set_cksum();
+        canonical
+            .append_data(&mut header, &relative, bytes.as_slice())
+            .map_err(|error| format!("cannot archive {}: {error}", relative.display()))?;
+    }
+    canonical
+        .into_inner()
+        .map_err(|error| format!("cannot finish {}: {error}", destination.display()))?
+        .finish()
+        .map_err(|error| format!("cannot finish {}: {error}", destination.display()))?;
+    Ok(())
 }
 
 fn unpack_crate(archive: &Path, destination: &Path, name: &str) -> Result<PathBuf, String> {
@@ -782,5 +879,85 @@ fn command_output(mut command: Command, action: &str) -> Result<Output, String> 
             String::from_utf8_lossy(&output.stdout),
             String::from_utf8_lossy(&output.stderr)
         ))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{canonicalize_crate_archive, normalize_vendored_sources, read_json};
+    use flate2::{Compression, GzBuilder};
+    use serde_json::Value;
+    use std::fs::{self, File};
+    use std::path::Path;
+
+    fn write_crate(path: &Path, entries: &[(&str, &[u8])], mtime: u64) {
+        let output = File::create(path).unwrap();
+        let encoder = GzBuilder::new()
+            .mtime(mtime as u32)
+            .write(output, Compression::fast());
+        let mut archive = tar::Builder::new(encoder);
+        for (name, bytes) in entries {
+            let mut header = tar::Header::new_gnu();
+            header.set_size(bytes.len() as u64);
+            header.set_mode(0o644);
+            header.set_uid(mtime);
+            header.set_gid(mtime);
+            header.set_mtime(mtime);
+            header.set_cksum();
+            archive.append_data(&mut header, name, *bytes).unwrap();
+        }
+        archive.into_inner().unwrap().finish().unwrap();
+    }
+
+    #[test]
+    fn canonical_crate_archive_ignores_input_order_and_metadata() {
+        let temp = tempfile::tempdir().unwrap();
+        let first = temp.path().join("first.crate");
+        let second = temp.path().join("second.crate");
+        write_crate(
+            &first,
+            &[("example-1.0.0/b", b"two"), ("example-1.0.0/a", b"one")],
+            7,
+        );
+        write_crate(
+            &second,
+            &[("example-1.0.0/a", b"one"), ("example-1.0.0/b", b"two")],
+            99,
+        );
+        let canonical_first = temp.path().join("canonical-first.crate");
+        let canonical_second = temp.path().join("canonical-second.crate");
+
+        canonicalize_crate_archive(&first, &canonical_first).unwrap();
+        canonicalize_crate_archive(&second, &canonical_second).unwrap();
+
+        assert_eq!(
+            fs::read(canonical_first).unwrap(),
+            fs::read(canonical_second).unwrap()
+        );
+    }
+
+    #[test]
+    fn vendored_sources_drop_cache_specific_ignore_files() {
+        let temp = tempfile::tempdir().unwrap();
+        let package = temp.path().join("dependency-1.0.0");
+        fs::create_dir_all(package.join("nested")).unwrap();
+        fs::write(package.join("lib.rs"), b"pub fn dependency() {}").unwrap();
+        fs::write(package.join("nested/.gitignore"), b"generated\n").unwrap();
+        fs::write(
+            package.join(".cargo-checksum.json"),
+            br#"{"files":{},"package":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}"#,
+        )
+        .unwrap();
+
+        normalize_vendored_sources(temp.path()).unwrap();
+
+        assert!(!package.join("nested/.gitignore").exists());
+        let checksum: Value = read_json(&package.join(".cargo-checksum.json")).unwrap();
+        assert_eq!(
+            checksum["package"],
+            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        );
+        assert!(checksum["files"].get("lib.rs").is_some());
+        assert!(checksum["files"].get("nested/.gitignore").is_none());
     }
 }

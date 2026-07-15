@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "source_tag": "releases/2.3.0",
+    "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
+    "audio_unit_sdk_tag": "AudioUnitSDK-1.0.0",
+    "audio_unit_sdk_commit": "53ea94e5efebf864b70afb673bdd60c977818ec7",
+    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "notice": "DO NOT EDIT"
+  },
+  "records": [
+    { "symbol": "ARAAudioUnit_h", "rust": "feature audio-unit-v2 module", "classification": "header-guard" },
+    { "symbol": "kARAAudioComponentTag", "rust": "audio_unit::ffi::ARA_AUDIO_COMPONENT_TAG", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitFactory", "rust": "audio_unit::ffi::AraAudioUnitFactory", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitFactory.inOutMagicNumber", "rust": "AraAudioUnitFactory::in_out_magic_number", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitFactory.outFactory", "rust": "AraAudioUnitFactory::out_factory", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitPlugInExtensionBinding", "rust": "audio_unit::ffi::AraAudioUnitPluginExtensionBinding", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitPlugInExtensionBinding.inOutMagicNumber", "rust": "AraAudioUnitPluginExtensionBinding::in_out_magic_number", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitPlugInExtensionBinding.inDocumentControllerRef", "rust": "AraAudioUnitPluginExtensionBinding::in_document_controller_ref", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitPlugInExtensionBinding.outPlugInExtension", "rust": "AraAudioUnitPluginExtensionBinding::out_plugin_extension", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitPlugInExtensionBinding.knownRoles", "rust": "AraAudioUnitPluginExtensionBinding::known_roles", "classification": "native-shim" },
+    { "symbol": "ARAAudioUnitPlugInExtensionBinding.assignedRoles", "rust": "AraAudioUnitPluginExtensionBinding::assigned_roles", "classification": "native-shim" },
+    { "symbol": "kARAAudioUnitMagic", "rust": "audio_unit::ffi::ARA_AUDIO_UNIT_MAGIC", "classification": "native-shim" },
+    { "symbol": "kAudioUnitProperty_ARAFactory", "rust": "audio_unit::ffi::AUDIO_UNIT_PROPERTY_ARA_FACTORY", "classification": "native-shim" },
+    { "symbol": "kAudioUnitProperty_ARAPlugInExtensionBinding", "rust": "audio_unit::ffi::AUDIO_UNIT_PROPERTY_ARA_BINDING", "classification": "native-shim" },
+    { "symbol": "kAudioUnitProperty_ARAPlugInExtensionBindingWithRoles", "rust": "audio_unit::ffi::AUDIO_UNIT_PROPERTY_ARA_BINDING_WITH_ROLES", "classification": "native-shim" }
+  ]
+}

@@ -1,0 +1,23 @@
+[package]
+name = "ara2-bridge-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Shared safe types and dispatch infrastructure for ara2-bridge"
+license.workspace = true
+repository.workspace = true
+readme = "README.md"
+
+[dependencies]
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
+base64.workspace = true
+bitflags.workspace = true
+crossbeam-queue.workspace = true
+parking_lot.workspace = true
+quick-xml.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+tempfile = "=3.14.0"
+trybuild.workspace = true

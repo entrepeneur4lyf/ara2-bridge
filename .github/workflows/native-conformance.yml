@@ -1,0 +1,224 @@
+name: Native Conformance
+
+on:
+  push:
+    branches: [main, "release/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  cpp-interop:
+    name: C++ ARA interop ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            cxx: c++
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            cxx: c++
+          - os: windows-2025
+            target: x86_64-pc-windows-msvc
+            cxx: clang++
+          - os: macos-15-large
+            target: x86_64-apple-darwin
+            cxx: clang++
+          - os: macos-15
+            target: aarch64-apple-darwin
+            cxx: clang++
+    runs-on: ${{ matrix.os }}
+    env:
+      ARA_SDK_DIR: ${{ github.workspace }}/reference/ARA_SDK
+      CXX: ${{ matrix.cxx }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: cpp-interop-${{ matrix.target }}
+      - shell: bash
+        run: ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+      - shell: bash
+        run: cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture
+      - name: Write evidence
+        if: always()
+        shell: bash
+        env:
+          EVIDENCE_TARGET: ${{ matrix.target }}
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            sdk-provenance.toml
+            ci/reference-sdks.lock.toml
+        run: ci/write-evidence.sh target/evidence/cpp-${{ matrix.target }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-cpp-${{ matrix.target }}
+          path: target/evidence/cpp-${{ matrix.target }}.json
+          if-no-files-found: error
+
+  clap-conformance:
+    name: CLAP ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-24.04, target: x86_64-unknown-linux-gnu }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu }
+          - { os: windows-2025, target: x86_64-pc-windows-msvc }
+          - { os: macos-15-large, target: x86_64-apple-darwin }
+          - { os: macos-15, target: aarch64-apple-darwin }
+    runs-on: ${{ matrix.os }}
+    env:
+      ARA_CLAP_DIR: ${{ github.workspace }}/.third-party/clap
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: clap-${{ matrix.target }}
+      - shell: bash
+        run: |
+          ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+          ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT
+      - shell: bash
+        run: |
+          cargo xtask ara provenance --check --component clap
+          cargo xtask ara companion-probe clap --check-all
+          cargo test -p ara2-bridge-testkit --features clap --test clap_abi --test clap_interop --test companion_features
+      - name: Write evidence
+        if: always()
+        shell: bash
+        env:
+          EVIDENCE_TARGET: ${{ matrix.target }}
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: CLAP provenance, probe, clap_abi, and clap_interop
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            sdk-provenance.toml
+            ci/reference-sdks.lock.toml
+        run: ci/write-evidence.sh target/evidence/clap-${{ matrix.target }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-clap-${{ matrix.target }}
+          path: target/evidence/clap-${{ matrix.target }}.json
+          if-no-files-found: error
+
+  vst3-conformance:
+    name: VST3 ${{ matrix.target }}
+    if: ${{ vars.ARA_VST3_LICENSE_POLICY != '' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-24.04, target: x86_64-unknown-linux-gnu, cxx: c++ }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, cxx: c++ }
+          - { os: windows-2025, target: x86_64-pc-windows-msvc, cxx: clang++ }
+          - { os: macos-15-large, target: x86_64-apple-darwin, cxx: clang++ }
+          - { os: macos-15, target: aarch64-apple-darwin, cxx: clang++ }
+    runs-on: ${{ matrix.os }}
+    env:
+      ARA_VST3_LICENSE_POLICY: ${{ vars.ARA_VST3_LICENSE_POLICY }}
+      ARA_VST3_SDK_DIR: ${{ github.workspace }}/.third-party/vst3sdk
+      CXX: ${{ matrix.cxx }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: vst3-${{ matrix.target }}
+      - shell: bash
+        run: |
+          ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+          ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license "$ARA_VST3_LICENSE_POLICY"
+      - shell: bash
+        run: |
+          cargo xtask ara provenance --check --component vst3
+          cargo xtask ara companion-probe vst3 --check-all
+          cargo test -p ara2-bridge-testkit --features vst3 --test vst3_abi --test vst3_interop
+      - name: Write evidence
+        if: always()
+        shell: bash
+        env:
+          EVIDENCE_TARGET: ${{ matrix.target }}
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: configured VST3 provenance, probe, vst3_abi, and vst3_interop
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            sdk-provenance.toml
+            ci/reference-sdks.lock.toml
+        run: ci/write-evidence.sh target/evidence/vst3-${{ matrix.target }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-vst3-${{ matrix.target }}
+          path: target/evidence/vst3-${{ matrix.target }}.json
+          if-no-files-found: error
+
+  audio-unit-conformance:
+    name: Audio Unit v2 ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-15-large, target: x86_64-apple-darwin }
+          - { os: macos-15, target: aarch64-apple-darwin }
+    runs-on: ${{ matrix.os }}
+    env:
+      ARA_AUDIO_UNIT_SDK_DIR: ${{ github.workspace }}/.third-party/AudioUnitSDK
+      CXX: clang++
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: audio-unit-${{ matrix.target }}
+      - run: |
+          ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+          ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0
+      - run: |
+          cargo xtask ara provenance --check --component audio-unit
+          cargo xtask ara companion-probe audio-unit-v2 --check-all
+          cargo test -p ara2-bridge-testkit --features audio-unit-v2 --test audio_unit_interop
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: ${{ matrix.target }}
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: Audio Unit v2 provenance, probe, and audio_unit_interop
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            sdk-provenance.toml
+            ci/reference-sdks.lock.toml
+        run: ci/write-evidence.sh target/evidence/audio-unit-${{ matrix.target }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-audio-unit-${{ matrix.target }}
+          path: target/evidence/audio-unit-${{ matrix.target }}.json
+          if-no-files-found: error

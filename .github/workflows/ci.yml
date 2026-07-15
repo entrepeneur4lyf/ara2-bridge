@@ -5,40 +5,213 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   CARGO_TERM_COLOR: always
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  check:
-    name: Check + Test + Lint
-    runs-on: ubuntu-latest
+  quality:
+    name: Stable quality, generated ABI, and Rust conformance
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
+          toolchain: stable
           components: clippy, rustfmt
-
-      - uses: Swatinem/rust-cache@v2
-
-      - name: Install clang (bindgen requirement)
-        run: sudo apt-get update && sudo apt-get install -y libclang-dev
-
-      - name: Check
-        run: cargo check --workspace
-
-      - name: Clippy
-        run: cargo clippy --workspace -- -D warnings
-
-      - name: Format
-        run: cargo fmt --all --check
-
-      - name: Test
-        run: cargo test --workspace
-
-      - name: Doc
-        run: cargo doc --workspace --no-deps
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+      - name: Install native compiler
+        run: sudo apt-get update && sudo apt-get install --yes clang libclang-dev
+      - name: Provision locked ARA and CLAP inputs
+        run: |
+          ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+          ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT
+      - name: Verify generated ABI and native probes
+        run: |
+          cargo xtask ara provenance --check
+          cargo xtask ara provenance --check --component clap
+          cargo xtask ara generate --check
+          cargo xtask ara probe-core --check-all
+          cargo xtask ara companion-probe clap --check-all
+      - name: Format, check, lint, and test
+        run: |
+          cargo fmt --all --check
+          cargo check --workspace --all-targets
+          cargo check -p ara2-bridge --no-default-features
+          cargo check -p ara2-bridge --no-default-features --features testkit
+          cargo check -p ara2-bridge --no-default-features --features clap
+          cargo check -p ara2-bridge --no-default-features --features clap,testkit
+          cargo clippy --workspace --all-targets -- -D warnings
+          cargo test --workspace
+          cargo test -p ara2-bridge-testkit --features clap --test clap_abi --test clap_interop --test companion_features
+      - name: Warning-free documentation
         env:
           RUSTDOCFLAGS: -D warnings
+        run: cargo doc --workspace --no-deps
+      - name: Prove downstream builds are Clang-free
+        run: env -u LIBCLANG_PATH cargo check --workspace
+      - name: Reject generated drift
+        run: git diff --exit-code -- ara2-bridge-sys/src/generated sdk-provenance.toml
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: x86_64-unknown-linux-gnu
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: generated ABI; fmt; no-default/additive checks; clippy; workspace and CLAP tests; rustdoc
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            sdk-provenance.toml
+            ci/reference-sdks.lock.toml
+        run: ci/write-evidence.sh target/evidence/quality.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-quality
+          path: target/evidence/quality.json
+          if-no-files-found: error
+
+  msrv:
+    name: Rust 1.82 locked workspace
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: 1.82.0
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+      - run: cargo check --workspace --all-targets --locked
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: x86_64-unknown-linux-gnu
+          EVIDENCE_TOOLCHAIN: 1.82.0
+          EVIDENCE_COMMAND: cargo check --workspace --all-targets --locked
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: Cargo.lock
+        run: ci/write-evidence.sh target/evidence/msrv.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-msrv
+          path: target/evidence/msrv.json
+          if-no-files-found: error
+
+  runtime-matrix:
+    name: Runtime ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+          - os: windows-2025
+            target: x86_64-pc-windows-msvc
+          - os: macos-15-large
+            target: x86_64-apple-darwin
+          - os: macos-15
+            target: aarch64-apple-darwin
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+          targets: ${{ matrix.target }}
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: runtime-${{ matrix.target }}
+      - run: cargo check --workspace --target ${{ matrix.target }}
+      - run: cargo test --workspace --target ${{ matrix.target }}
+      - run: cargo test -p ara2-bridge-sys --test abi --target ${{ matrix.target }}
+      - name: Write evidence
+        if: always()
+        shell: bash
+        env:
+          EVIDENCE_TARGET: ${{ matrix.target }}
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: cargo test --workspace --target ${{ matrix.target }}; sys ABI test
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: Cargo.lock
+        run: ci/write-evidence.sh target/evidence/runtime-${{ matrix.target }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-runtime-${{ matrix.target }}
+          path: target/evidence/runtime-${{ matrix.target }}.json
+          if-no-files-found: error
+
+  i686-archive:
+    name: Windows i686 oversized archive refusal
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+          targets: i686-pc-windows-msvc
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+      - run: cargo check --workspace --target i686-pc-windows-msvc
+      - run: cargo test --target i686-pc-windows-msvc -p ara2-bridge-core --test archive archive_larger_than_address_space_is_rejected
+      - name: Write evidence
+        if: always()
+        shell: bash
+        env:
+          EVIDENCE_TARGET: i686-pc-windows-msvc
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: cargo test --target i686-pc-windows-msvc -p ara2-bridge-core --test archive archive_larger_than_address_space_is_rejected
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: Cargo.lock
+        run: ci/write-evidence.sh target/evidence/i686-archive.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-i686-archive
+          path: target/evidence/i686-archive.json
+          if-no-files-found: error
+
+  phase0-core-probe:
+    name: Phase 0 provenance and native core probe regression
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+      - run: ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+      - run: cargo xtask ara provenance --check
+      - run: cargo xtask ara probe-core --check-all
+      - run: cargo xtask ara probe-core --emit target/core-probe.tar.zst --target-family x86_64
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: x86_64-unknown-linux-gnu
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: provenance freshness and cargo xtask ara probe-core --emit
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            sdk-provenance.toml
+            ci/reference-sdks.lock.toml
+          EVIDENCE_OUTPUTS: target/core-probe.tar.zst
+        run: ci/write-evidence.sh target/evidence/phase0-core-probe.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-phase0-core-probe
+          path: |
+            target/evidence/phase0-core-probe.json
+            target/core-probe.tar.zst
+          if-no-files-found: error

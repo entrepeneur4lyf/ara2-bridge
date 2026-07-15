@@ -1,0 +1,143 @@
+schema_version = 1
+ara_api_tag = "releases/2.3.0"
+ara_api_commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+runner = "cargo test -p ara2-bridge-testkit --test upstream_scenarios -- --nocapture"
+expected_skip_count = 0
+
+required_capabilities = [
+  "content",
+  "analysis",
+  "partial-persistence",
+  "processing-algorithms",
+  "audio-file-chunks",
+  "all-extension-roles",
+]
+
+[[scenario]]
+name = "property-updates"
+source_behavior = "TestHost: Update Properties"
+generation = "2.3-final"
+
+[[scenario]]
+name = "content-updates"
+source_behavior = "TestHost: Update Content"
+generation = "2.3-final"
+
+[[scenario]]
+name = "content-reading"
+source_behavior = "TestHost: Read Content and Analysis"
+generation = "2.3-final"
+
+[[scenario]]
+name = "audio-modification-cloning"
+source_behavior = "TestHost: Clone Audio Modification"
+generation = "2.3-final"
+
+[[scenario]]
+name = "full-archive"
+source_behavior = "TestHost: Store Complete Document"
+generation = "2.3-final"
+fixtures = ["ara2-full.archive"]
+
+[[scenario]]
+name = "split-partial-archives"
+source_behavior = "TestHost: Store/Restore Objects"
+generation = "2.3-final"
+fixtures = ["ara2-partial-a.archive", "ara2-partial-b.archive"]
+
+[[scenario]]
+name = "drag-drop-import"
+source_behavior = "TestHost: Import Audio Source"
+generation = "2.3-final"
+fixtures = ["ara2-partial-a.archive"]
+
+[[scenario]]
+name = "playback-rendering"
+source_behavior = "TestHost: Playback Renderer Assignment"
+generation = "2.3-final"
+
+[[scenario]]
+name = "playback-rendering-time-stretch"
+source_behavior = "TestHost: Playback Renderer with Transformations"
+generation = "2.3-final"
+
+[[scenario]]
+name = "editor-view"
+source_behavior = "TestHost: Editor Renderer and View"
+generation = "2.3-final"
+
+[[scenario]]
+name = "processing-algorithms"
+source_behavior = "TestHost: Processing Algorithms"
+generation = "2.3-final"
+
+[[scenario]]
+name = "audio-file-chunk-load"
+source_behavior = "TestHost: Load Audio File Chunk"
+generation = "2.3-final"
+fixtures = ["chunk-wave.wav", "chunk-aiff.aiff"]
+
+[[scenario]]
+name = "audio-file-chunk-save"
+source_behavior = "TestHost: Save Audio File Chunk"
+generation = "2.3-final"
+
+[[scenario]]
+name = "basic-document"
+source_behavior = "TestHost: Create Basic Document"
+generation = "2.3-final"
+
+[[scenario]]
+name = "ara1-persistence"
+source_behavior = "Bridge-specific deprecated generation persistence"
+generation = "1-final"
+fixtures = ["ara1-full.archive"]
+
+[[scenario]]
+name = "ara23-dirtiness"
+source_behavior = "Bridge-specific persistent category dirtiness"
+generation = "2.3-final"
+
+[[scenario]]
+name = "extension-role-combinations"
+source_behavior = "Bridge-specific known/assigned role matrix"
+generation = "2.3-final"
+
+[[scenario]]
+name = "poisoning"
+source_behavior = "Bridge-specific reentrant failure quarantine"
+generation = "2.3-final"
+
+[[scenario]]
+name = "controller-first-teardown"
+source_behavior = "Bridge-specific controller-first destruction"
+generation = "2.3-final"
+
+[[scenario]]
+name = "companion-first-teardown"
+source_behavior = "Bridge-specific companion-first destruction"
+generation = "2.3-final"
+
+[[fixture]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara1-full.archive"
+sha256 = "3071f1d6bd332cec8e56112c0c60f79ebc399030459671ab7e11a08ece132dfc"
+
+[[fixture]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara2-full.archive"
+sha256 = "3c0cfb45fc5dab202d26a16bfb5788af87d88d5c6569621e78c4434542f50c9f"
+
+[[fixture]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara2-partial-a.archive"
+sha256 = "bc89ff51343e8c335496648d7736cf2cd4ab1910320fe1cb6a0197b86b3a5a16"
+
+[[fixture]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara2-partial-b.archive"
+sha256 = "4c1b78096f8a6648c2f843b22b5e6b8a43691355193533a3bebca8f713b2d8b5"
+
+[[fixture]]
+path = "ara2-bridge-testkit/fixtures/scenarios/chunk-wave.wav"
+sha256 = "88dbe314538135405b47393dfac1d0bee801ffb463e658031f6d17fefecdbe53"
+
+[[fixture]]
+path = "ara2-bridge-testkit/fixtures/scenarios/chunk-aiff.aiff"
+sha256 = "090db617e82f530df694d889da5ea084b4a52235dc39ebabd4d4fae0fa401cfa"

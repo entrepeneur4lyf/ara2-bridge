@@ -1,0 +1,16 @@
+[package]
+name = "ara2-bridge-host"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Safe ARA host authoring runtime"
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.2.0-alpha.1" }
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
+bitflags.workspace = true
+
+[dev-dependencies]
+ara2-bridge-testkit = { path = "../ara2-bridge-testkit", version = "=0.2.0-alpha.1" }

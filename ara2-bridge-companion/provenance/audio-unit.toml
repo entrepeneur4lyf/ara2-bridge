@@ -1,0 +1,97 @@
+schema = 1
+component = "audio-unit"
+repository = "https://github.com/apple/AudioUnitSDK.git"
+tag = "AudioUnitSDK-1.0.0"
+commit = "53ea94e5efebf864b70afb673bdd60c977818ec7"
+tree = "bb8b75ec63fe7d9036073287c4f01bf96d8a49f5"
+license = "Apache-2.0"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUBase.h"
+role = "transitive-header"
+sha256 = "ffe220c4766e331fd416b086efd03925eaba4971531133367b440d88a3e4607c"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUBuffer.h"
+role = "transitive-header"
+sha256 = "a27205aa6a5169d85853ceca3c5e18c0fe82a706430c7598d66013ef8987dfd5"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUInputElement.h"
+role = "transitive-header"
+sha256 = "4ade9c6e94841ae7b313733591e7c81785ba0ef04a92de688564fd517b2cea8f"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUMIDIUtility.h"
+role = "transitive-header"
+sha256 = "115a7281273c83b3b42e589fcf08bfd87748579ab7be2699992d7515cf720e41"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUOutputElement.h"
+role = "transitive-header"
+sha256 = "f41fec55dd6ed508481b3c2340a7f274cb48b5b0dfc799fb371215b4a5aa2b09"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUPlugInDispatch.h"
+role = "transitive-header"
+sha256 = "7185828162beff0db567282a7fa01c80c1f31e580b1007d4b9f0f224dc368473"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUScopeElement.h"
+role = "transitive-header"
+sha256 = "ad410ada0dd42a1552267b4142aa931d778c36fee88d5723461b2c1da00ea50e"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/AUUtility.h"
+role = "transitive-header"
+sha256 = "c2855ef762f28e7d25cb4ed158f72f7e96185564281248d9596d98081a07d6b5"
+
+[[file]]
+path = ".third-party/AudioUnitSDK/Source/ComponentBase.h"
+role = "transitive-header"
+sha256 = "482efd3c90a1740fa6f1314619353bbf8b2a56f952b7814813b30a1ef9fdad8d"
+
+[[file]]
+path = "ara2-bridge-companion/build.rs"
+role = "generated-declaration"
+sha256 = "d913489dda9c2f3cc251b452ebd030bede9f20863f3e16666c2c99f43b8c8809"
+
+[[file]]
+path = "ara2-bridge-companion/native/audio_unit/ara_au_shim.h"
+role = "generated-declaration"
+sha256 = "531cfc594a0f6acf501d1d1eeee75277606676c459893484d7aa6129fb55ccc8"
+
+[[file]]
+path = "ara2-bridge-companion/native/audio_unit/ara_au_shim.mm"
+role = "generated-declaration"
+sha256 = "92da7d850c9c209dc25b9f681289d42cd03a83fdc87434413d4c73bc28d0f6ca"
+
+[[file]]
+path = "ara2-bridge-companion/probes/audio-unit-symbols.json"
+role = "generated-declaration"
+sha256 = "fee5c22ef67755bccbe668d6fb96eb2ef5f96243a710b33d37de379a0ad597d6"
+
+[[file]]
+path = "ara2-bridge-companion/src/audio_unit/ffi.rs"
+role = "generated-declaration"
+sha256 = "d55cbb5a806cd66932b6e630a55a0d241dd294827a9e878c06b1bf5de28b56c6"
+
+[[file]]
+path = "ara2-bridge-testkit/native/audio_unit_probe.mm"
+role = "generated-declaration"
+sha256 = "d14ecb1e3631818bcaa0b4f990f88a8b089bf57a5725969f3413ce9510b2b354"
+
+[[file]]
+path = "ara2-bridge-testkit/tests/audio_unit_interop.rs"
+role = "generated-declaration"
+sha256 = "e2ba8b24478928a811d56670e1fea9302c3d47ecc5b9c5c829997f76074c8725"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAAudioUnit.h"
+role = "generated-declaration"
+sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+role = "ara-header"
+sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

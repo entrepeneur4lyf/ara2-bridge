@@ -1,0 +1,72 @@
+[package]
+name = "ara2-bridge-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+ara2-bridge-core = { path = "../ara2-bridge-core" }
+ara2-bridge-sys = { path = "../ara2-bridge-sys" }
+libfuzzer-sys = "0.4"
+
+[[bin]]
+name = "versioned_structs"
+path = "fuzz_targets/versioned_structs.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "references"
+path = "fuzz_targets/references.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "content_events"
+path = "fuzz_targets/content_events.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "archive_filters"
+path = "fuzz_targets/archive_filters.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "audio_file_chunks"
+path = "fuzz_targets/audio_file_chunks.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "dispatch"
+path = "fuzz_targets/dispatch.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "audio_file_xml"
+path = "fuzz_targets/audio_file_xml.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "audio_file_container"
+path = "fuzz_targets/audio_file_container.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]
+members = ["."]

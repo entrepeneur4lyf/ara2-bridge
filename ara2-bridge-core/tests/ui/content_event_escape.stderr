@@ -1,0 +1,8 @@
+error: lifetime may not live long enough
+ --> tests/ui/content_event_escape.rs:6:34
+  |
+6 |     reader.with_event(0, |event| event).unwrap()
+  |                           ------ ^^^^^ returning this value requires that `'1` must outlive `'2`
+  |                           |    |
+  |                           |    return type of closure is EventRef<'2, Notes>
+  |                           has type `EventRef<'1, Notes>`

@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "source_tag": "releases/2.3.0",
+    "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
+    "vst3_tag": "v3.7.11_build_10",
+    "vst3_commit": "7d92338ae922db2d559ac458824a4df40f37e82e",
+    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "notice": "DO NOT EDIT"
+  },
+  "records": [
+    { "symbol": "ARAVST3_h", "rust": "feature vst3 module", "classification": "header-guard" },
+    { "symbol": "ARA_DISABLE_VST3_WARNINGS_BEGIN", "rust": "native shim compile boundary", "classification": "native-only" },
+    { "symbol": "ARA_DISABLE_VST3_WARNINGS_END", "rust": "native shim compile boundary", "classification": "native-only" },
+    { "symbol": "ARA_DISABLE_VST3_PRAGMA_PACK_WARNINGS", "rust": "native shim compile boundary", "classification": "native-only" },
+    { "symbol": "ARA_DISABLE_VST3_GCC_VARIANT_WARNINGS", "rust": "native shim compile boundary", "classification": "native-only" },
+    { "symbol": "IMainFactory", "rust": "vst3::Vst3MainFactoryAdapter", "classification": "native-shim" },
+    { "symbol": "IMainFactory.getFactory", "rust": "vst3::Vst3HostMainFactory::factory", "classification": "native-shim" },
+    { "symbol": "IMainFactory.iid", "rust": "vst3::ffi::Ara2Vst3InterfaceKind::MainFactory", "classification": "native-shim" },
+    { "symbol": "kARAMainFactoryClass", "rust": "vst3::ffi::ara2_vst3_main_factory_category", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint", "rust": "vst3::Vst3PluginEntryAdapter", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint.getFactory", "rust": "vst3::Vst3HostPlugin::factory", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint.bindToDocumentController", "rust": "vst3::Vst3HostPlugin::bind legacy", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint.iid", "rust": "vst3::ffi::Ara2Vst3InterfaceKind::PluginEntry", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint2", "rust": "vst3::Vst3PluginEntryAdapter", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint2.bindToDocumentControllerWithRoles", "rust": "vst3::Vst3HostPlugin::bind", "classification": "native-shim" },
+    { "symbol": "IPlugInEntryPoint2.iid", "rust": "vst3::ffi::Ara2Vst3InterfaceKind::PluginEntry2", "classification": "native-shim" }
+  ]
+}

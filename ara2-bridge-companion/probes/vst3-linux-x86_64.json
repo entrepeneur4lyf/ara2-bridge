@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "component": "vst3",
+  "target": "x86_64-unknown-linux-gnu",
+  "probe_method": "native-execution",
+  "source_commit": "7d92338ae922db2d559ac458824a4df40f37e82e",
+  "source_tree": "1509aeb4426b5e51ff7586b8096f2ab8ccbbd2a4",
+  "source_hash": "e0f56fd53f7536a2e75fcd5a0d596dc07a2dd7d8e7c46e289e05e8bce352585d",
+  "probe_hash": "6e3e65751733e63cf84c3b54083a4c31b2f74328baa859afdaafc3022a3bfa8a",
+  "payload_hash": "3a591017c1ef2a43c7eb42a3e7d287eef9774673ea7986b459c4948c8ad174b6",
+  "payload": {
+    "category": "ARA Main Factory Class",
+    "exception_result": -4,
+    "iids": {
+      "main_factory": [
+        3676968553,
+        4210901669,
+        2821686863,
+        2070442730
+      ],
+      "plugin_entry": [
+        310464084,
+        2714648694,
+        2193188883,
+        378866646
+      ],
+      "plugin_entry_2": [
+        3449444627,
+        3387639511,
+        2529842093,
+        3520825845
+      ],
+      "unknown": [
+        0,
+        0,
+        3221225472,
+        70
+      ]
+    },
+    "layouts": {
+      "entry_callbacks": {
+        "align": 8,
+        "size": 32
+      },
+      "interface_id": {
+        "align": 4,
+        "size": 16
+      },
+      "main_callbacks": {
+        "align": 8,
+        "size": 24
+      }
+    }
+  }
+}

@@ -1,0 +1,198 @@
+name: Safety and Supply Chain
+
+on:
+  schedule:
+    - cron: "17 3 * * 2,5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  miri:
+    name: Explicit Miri suites
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: nightly
+          components: miri, rust-src
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: miri-explicit
+      - run: cargo miri setup
+      - name: Run core, plug-in, and host Miri suites
+        run: |
+          cargo miri test -p ara2-bridge-core --test registry
+          cargo miri test -p ara2-bridge-core --test ffi_validation
+          cargo miri test -p ara2-bridge-core --test lifecycle
+          cargo miri test -p ara2-bridge-core --test dispatch
+          cargo miri test -p ara2-bridge-core --test state_models
+          cargo miri test -p ara2-bridge-plugin --test model_graph
+          cargo miri test -p ara2-bridge-plugin --test callback_manifest
+          cargo miri test -p ara2-bridge-plugin --test extensions
+          cargo miri test -p ara2-bridge-host --test audio_access
+          cargo miri test -p ara2-bridge-host --test plugin_dispatch
+          cargo miri test -p ara2-bridge-host --test document_graph
+          cargo miri test -p ara2-bridge-host --test restoration
+          cargo miri test -p ara2-bridge-host --test extensions
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: x86_64-unknown-linux-gnu
+          EVIDENCE_TOOLCHAIN: nightly-miri
+          EVIDENCE_COMMAND: cargo miri test explicit core, model_graph, audio_access, restoration, and extension suites
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: Cargo.lock
+        run: ci/write-evidence.sh target/evidence/miri.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-miri
+          path: target/evidence/miri.json
+          if-no-files-found: error
+
+  sanitizers:
+    name: ${{ matrix.mode }}
+    strategy:
+      fail-fast: false
+      matrix:
+        mode:
+          - asan-invalid-pointer
+          - ubsan-invalid-pointer
+          - tsan-state-models
+          - tsan-production
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: nightly
+          components: rust-src
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: sanitizer-${{ matrix.mode }}
+      - run: sudo apt-get update && sudo apt-get install --yes clang
+      - run: ci/run-sanitizers.sh ${{ matrix.mode }}
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: ${{ matrix.mode }}-x86_64-unknown-linux-gnu
+          EVIDENCE_TOOLCHAIN: nightly-sanitizer
+          EVIDENCE_COMMAND: ci/run-sanitizers.sh ${{ matrix.mode }}
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            ci/invalid-pointer-ubsan.c
+        run: ci/write-evidence.sh target/evidence/sanitizer-${{ matrix.mode }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-sanitizer-${{ matrix.mode }}
+          path: target/evidence/sanitizer-${{ matrix.mode }}.json
+          if-no-files-found: error
+
+  fuzz:
+    name: Fuzz ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - versioned_structs
+          - references
+          - content_events
+          - archive_filters
+          - audio_file_chunks
+          - audio_file_xml
+          - audio_file_container
+          - dispatch
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: nightly
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: fuzz-${{ matrix.target }}
+      - run: cargo install cargo-fuzz --version 0.13.2 --locked
+      - run: cargo xtask ara fuzz-corpus --check
+      - run: cargo +nightly fuzz run ${{ matrix.target }} -- -max_total_time=30
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: fuzz-${{ matrix.target }}
+          EVIDENCE_TOOLCHAIN: nightly-cargo-fuzz-0.13.2
+          EVIDENCE_COMMAND: cargo +nightly fuzz run ${{ matrix.target }} -- -max_total_time=30
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            fuzz/Cargo.lock
+            fuzz/corpus-manifest.toml
+        run: ci/write-evidence.sh target/evidence/fuzz-${{ matrix.target }}.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-fuzz-${{ matrix.target }}
+          path: target/evidence/fuzz-${{ matrix.target }}.json
+          if-no-files-found: error
+
+  supply-chain-and-features:
+    name: Audit, minimum versions, and feature pairs
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: nightly
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: 1.82.0
+      - uses: Swatinem/rust-cache@42dc69e1aa15d09112580998cf2ef0119e2e91ae # v2
+        with:
+          key: supply-chain-features
+      - run: cargo install cargo-audit --version 0.22.1 --locked
+      - run: cargo install cargo-deny --version 0.20.2 --locked
+      - run: cargo audit
+      - run: cargo deny check licenses sources
+      - name: Resolve and check minimum dependency versions
+        run: |
+          mkdir -p target/minimal-versions
+          cp Cargo.lock target/minimal-versions/Cargo.lock.original
+          restore_lock() { cp target/minimal-versions/Cargo.lock.original Cargo.lock; }
+          trap restore_lock EXIT
+          cargo +nightly update -Z minimal-versions
+          cargo +1.82.0 check --workspace --all-targets
+          restore_lock
+          trap - EXIT
+      - name: Check zero, one, and selected pairwise facade features
+        run: |
+          cargo check -p ara2-bridge --no-default-features
+          cargo check -p ara2-bridge --no-default-features --features testkit
+          cargo check -p ara2-bridge --no-default-features --features clap
+          cargo check -p ara2-bridge --no-default-features --features clap,testkit
+      - name: Write evidence
+        if: always()
+        env:
+          EVIDENCE_TARGET: x86_64-unknown-linux-gnu
+          EVIDENCE_TOOLCHAIN: stable-nightly-1.82.0
+          EVIDENCE_COMMAND: cargo-audit --version 0.22.1; cargo-deny --version 0.20.2; cargo audit; license/source audit; -Z minimal-versions; facade feature pairs
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            deny.toml
+        run: ci/write-evidence.sh target/evidence/supply-chain-and-features.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: evidence-${{ github.run_id }}-supply-chain-and-features
+          path: target/evidence/supply-chain-and-features.json
+          if-no-files-found: error

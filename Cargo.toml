@@ -1,3 +1,40 @@
 [workspace]
-members = ["ara2-bridge-sys", "ara2-bridge"]
+members = [
+    "ara2-bridge-sys",
+    "ara2-bridge-core",
+    "ara2-bridge-plugin",
+    "ara2-bridge-host",
+    "ara2-bridge-companion",
+    "ara2-bridge-testkit",
+    "ara2-bridge",
+    "xtask",
+]
 resolver = "2"
+
+[workspace.package]
+version = "0.2.0-alpha.1"
+edition = "2021"
+rust-version = "1.82"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
+
+[workspace.dependencies]
+base64 = "0.22"
+bitflags = "2"
+bindgen = "0.71"
+cargo_metadata = "0.19"
+cc = "1"
+crossbeam-queue = "0.3"
+libc = "0.2"
+parking_lot = "0.12"
+proptest = "=1.5.0"
+quick-xml = "0.41"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+sha2 = "0.10"
+tar = "0.4"
+thiserror = "2"
+toml = "0.8"
+trybuild = "=1.0.101"
+zstd = "0.13"

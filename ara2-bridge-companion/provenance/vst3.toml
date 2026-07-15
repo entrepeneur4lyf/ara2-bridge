@@ -1,0 +1,82 @@
+schema = 1
+component = "vst3"
+repository = "https://github.com/steinbergmedia/vst3sdk.git"
+tag = "v3.7.11_build_10"
+commit = "7d92338ae922db2d559ac458824a4df40f37e82e"
+tree = "1509aeb4426b5e51ff7586b8096f2ab8ccbbd2a4"
+license = "GPL-3.0-only"
+
+[[file]]
+path = ".third-party/vst3sdk/pluginterfaces/base/falignpop.h"
+role = "transitive-header"
+sha256 = "788952378defe4a0e5ab3a3e1b5315e19b4aff1e89c0723c440ff00ea08ffbee"
+
+[[file]]
+path = ".third-party/vst3sdk/pluginterfaces/base/falignpush.h"
+role = "transitive-header"
+sha256 = "a316966a4c5af5156a45affddbebbda6f49cb385aab7423b86190e73f560dfa6"
+
+[[file]]
+path = ".third-party/vst3sdk/pluginterfaces/base/fplatform.h"
+role = "transitive-header"
+sha256 = "ad51e731fe5ae56979a8821ef0ff8fd74e5c3e613455b014ea39abf747a8b5fd"
+
+[[file]]
+path = ".third-party/vst3sdk/pluginterfaces/base/ftypes.h"
+role = "transitive-header"
+sha256 = "56b90644de5c05173cccf336735f7606e805a925fd8a53d9b78c70af589e89fe"
+
+[[file]]
+path = ".third-party/vst3sdk/pluginterfaces/base/funknown.h"
+role = "transitive-header"
+sha256 = "2ae945ccc4ba69157192a54925a29e4867a793158f0402086907185d41091731"
+
+[[file]]
+path = ".third-party/vst3sdk/pluginterfaces/base/smartpointer.h"
+role = "transitive-header"
+sha256 = "f690163a2d5fa71e76cce1909ae719561031b897f79342ddf38190b2ed9613b3"
+
+[[file]]
+path = "ara2-bridge-companion/build.rs"
+role = "generated-declaration"
+sha256 = "d913489dda9c2f3cc251b452ebd030bede9f20863f3e16666c2c99f43b8c8809"
+
+[[file]]
+path = "ara2-bridge-companion/native/vst3/ara_vst3_shim.cpp"
+role = "generated-declaration"
+sha256 = "2f4f6a32770d6705be10b0e8ff358c89829858f626246d39f7a2af4fb82e98ea"
+
+[[file]]
+path = "ara2-bridge-companion/native/vst3/ara_vst3_shim.hpp"
+role = "generated-declaration"
+sha256 = "4b1e8e729fe585726ffee59bbe76a785f77dc4f2008a8166977bdf8b6d65254f"
+
+[[file]]
+path = "ara2-bridge-companion/probes/vst3-symbols.json"
+role = "generated-declaration"
+sha256 = "948e7cc3384a87f497476e7f3bb9494071f3664831815b2ee4e9c03787d2ae92"
+
+[[file]]
+path = "ara2-bridge-companion/src/vst3/ffi.rs"
+role = "generated-declaration"
+sha256 = "496cb3f19a02ae3ea8f345564b83e1a0d46f7f855de6d97704a90cb693678c6f"
+
+[[file]]
+path = "ara2-bridge-testkit/native/vst3_probe.cpp"
+role = "generated-declaration"
+sha256 = "76cb01919c765603c1c44f59dda99b593729615d3aecf6cad9c613d728604e4d"
+
+[[file]]
+path = "ara2-bridge-testkit/tests/vst3_abi.rs"
+role = "generated-declaration"
+sha256 = "ee54ffcbe494d8019f82725f72e49fad894adabdd4a0697c460a6a0dc1690e51"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+role = "ara-header"
+sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAVST3.h"
+role = "generated-declaration"
+sha256 = "ff2a166975852c177e68baa26d1ebe1bc7d03a3dbfd16bf79e98976c62f68e90"

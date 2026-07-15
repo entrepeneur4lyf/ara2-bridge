@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "component": "clap",
+  "target": "i686-pc-windows-msvc",
+  "probe_method": "clang-target-layout",
+  "source_commit": "094bb76c85366a13cc6c49292226d8608d6ae50c",
+  "source_tree": "4b56d7267e846fbe2a420370ea4f88f3ca7869b3",
+  "source_hash": "4bc1348d912d7bf93eb9766ad481ced2423da6bac0944bb158a8cc92b5d9c957",
+  "probe_hash": "ef7e534deeaed5711e256b5492bbaaf24a2c91633437d06863c22ea2d81618d7",
+  "payload_hash": "16042902a0f28715c0e6a720c901efac5d0f66af36f796061ac9e9717c7c7a82",
+  "payload": {
+    "clap_ara_factory": {
+      "align": 4,
+      "offsets": [
+        0,
+        4,
+        8
+      ],
+      "size": 12
+    },
+    "clap_ara_plugin_extension": {
+      "align": 4,
+      "offsets": [
+        0,
+        4
+      ],
+      "size": 8
+    },
+    "clap_plugin": {
+      "size": 48
+    },
+    "clap_plugin_entry": {
+      "size": 24
+    },
+    "clap_plugin_factory": {
+      "size": 12
+    }
+  }
+}

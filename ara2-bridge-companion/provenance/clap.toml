@@ -1,0 +1,297 @@
+schema = 1
+component = "clap"
+repository = "https://github.com/free-audio/clap.git"
+tag = "1.1.9"
+commit = "094bb76c85366a13cc6c49292226d8608d6ae50c"
+tree = "4b56d7267e846fbe2a420370ea4f88f3ca7869b3"
+license = "MIT"
+
+[[file]]
+path = ".third-party/clap/include/clap/audio-buffer.h"
+role = "transitive-header"
+sha256 = "efe1d90ba87499fc8f930d9c9c86157e023bede2c6ade01a20de6d2dfef3828e"
+
+[[file]]
+path = ".third-party/clap/include/clap/clap.h"
+role = "transitive-header"
+sha256 = "288e50855b1f210940d660eb5b6f153bac0d2691011b95447c64a53e7fc51f89"
+
+[[file]]
+path = ".third-party/clap/include/clap/color.h"
+role = "transitive-header"
+sha256 = "89efbacd91655fa2b3252b2295f4ed88ad148544ed2a9979bc929bf27f98e3b6"
+
+[[file]]
+path = ".third-party/clap/include/clap/entry.h"
+role = "transitive-header"
+sha256 = "1e2cf3b4a97c749be42162762fb905bf42178e9d2e21ef03eebf2c21c49cb536"
+
+[[file]]
+path = ".third-party/clap/include/clap/events.h"
+role = "transitive-header"
+sha256 = "265530fcb724a77b75874d4168da8d0742eb24da337b1364d0cebb670eda9483"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/audio-ports-config.h"
+role = "transitive-header"
+sha256 = "4a1709543128ac3d5b66e3271b3d19a86e8fcf4ffe53823652b74eb21b3e1c16"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/audio-ports.h"
+role = "transitive-header"
+sha256 = "3528fdc217480e6b01a48e3241369073c99ac2de78ed8a053a14a03ba5621e13"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/ambisonic.h"
+role = "transitive-header"
+sha256 = "2d6f5d60894b941b3834ef7d0a9fa441a0ffd83499c0fee5bd56572a9bdd19a5"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/audio-ports-activation.h"
+role = "transitive-header"
+sha256 = "5836841da2d6bda196cf9e615c081ac9f9583122cc095e541f9e20611c7b324f"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/configurable-audio-ports.h"
+role = "transitive-header"
+sha256 = "b58e4309fdd42503636a2ba9ab36d1fc80bd6552084636ef096add1fe311447b"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/context-menu.h"
+role = "transitive-header"
+sha256 = "ea19876552d1f94319dcef18dbf12b5390d47b6af7a267f46446cf1fa757eb83"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/cv.h"
+role = "transitive-header"
+sha256 = "ae1f54a3f26641251de62bc2a3d36ad622209b0f514f421e77c12c565e736414"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/extensible-audio-ports.h"
+role = "transitive-header"
+sha256 = "3b7579343102949316d785eb4ba18b001362e9fdc62f8cf764307762cf255a49"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/midi-mappings.h"
+role = "transitive-header"
+sha256 = "6bfc9ba8621a792195f2a310faa7665f2d0f5925ed1a9216b2689a66c95dcf86"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/param-indication.h"
+role = "transitive-header"
+sha256 = "eebe9e791112c310c1d9c47e210b5a69625637bfd33c0b56e9caeab1acdbad4b"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/preset-load.h"
+role = "transitive-header"
+sha256 = "e53dded3a3eea991fc1fb0b358e33b83b95da5889d7c835565995af332597032"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/remote-controls.h"
+role = "transitive-header"
+sha256 = "3ec125ba7628e15fae65f0a393a80e55fa63db5c508f37302680e1d40eb4f656"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/resource-directory.h"
+role = "transitive-header"
+sha256 = "288179d3858e2125d2ac4fb9c19df22abd30f0c23e51b5e8f854f2e3b1cb85e6"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/state-context.h"
+role = "transitive-header"
+sha256 = "cbb11493ae18bb7ba7d88e3c81859ce5aab94df698a3415f22b17f183e94255a"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/surround.h"
+role = "transitive-header"
+sha256 = "43d14cc7ed5ab1569fbc5decccd627fd402ca46971a4056fa1051e78819e7b18"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/track-info.h"
+role = "transitive-header"
+sha256 = "9ce8af0cb0e9c6fa93ae740dd9896a543a2e21b9c1e3c1a5a5b47e1138160c96"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/triggers.h"
+role = "transitive-header"
+sha256 = "e0f71bb520409c5c00c21e8c96700dc88371da7eac0ea4efab402ad8940580ff"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/draft/tuning.h"
+role = "transitive-header"
+sha256 = "af31899f787c749aaae9a4a27bb501cb12324c64fdfb6412206ddb3e51c8ac5a"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/event-registry.h"
+role = "transitive-header"
+sha256 = "1d0dfa5874b338fe49f88222ff9b04a9e7916eb1773d2a711b0b70a33cdb2510"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/gui.h"
+role = "transitive-header"
+sha256 = "8e7dc7fa43540670914d44d05b11a248f684a1518c5805c04aa207c6f8544fa2"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/latency.h"
+role = "transitive-header"
+sha256 = "e936f50ba838bf0a1181945af94d6f3ea9fbf09165e2a6604da6394c767d4e91"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/log.h"
+role = "transitive-header"
+sha256 = "4c7a28368df3412a1b44b42188f7b4b25920c52a08fd4b525799a7e76f72263c"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/note-name.h"
+role = "transitive-header"
+sha256 = "fac02f93927b0e37d0d662d35233b9293a1aced5854d445c37cd11b1985d26d0"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/note-ports.h"
+role = "transitive-header"
+sha256 = "192a7c91081dce9302fef71e3e6a715a2956a57107c5357030f867d1016fdf37"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/params.h"
+role = "transitive-header"
+sha256 = "385dcab2b8fbdc15ad355ba2e99093d1667d1db76b4be3319f7f6ac7e86cc68a"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/posix-fd-support.h"
+role = "transitive-header"
+sha256 = "bc5f096b603e9a7f64036c5d2fa0df3d54d353a2f3d40c0185a310857e844e4b"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/render.h"
+role = "transitive-header"
+sha256 = "04d36c03bdcc63fd79edb023e9afe3dd02e3e6d9360dd43bc24f33c9c7bb62ba"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/state.h"
+role = "transitive-header"
+sha256 = "ebedc0c6a15daba5a298792312ed0b1652fa2e106e8ef2b763eb9007a698cf1b"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/tail.h"
+role = "transitive-header"
+sha256 = "5cd612fc32a292e0e5f0868cb34a1ca4f3a68336ec1d4b47c8b33190236cff06"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/thread-check.h"
+role = "transitive-header"
+sha256 = "dd983a60d5481d08e6646fd84603fc97cc5f414dc2d333ebdfd883fc97efb713"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/thread-pool.h"
+role = "transitive-header"
+sha256 = "767115f18546eecb6e3016d9a8ac7d4f9db814bc497a3fb53219dceadbae28d3"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/timer-support.h"
+role = "transitive-header"
+sha256 = "3fbd7cd710b49d114fd41376b9bf2303977cea716f7f03bd5a27dc5f0a12722f"
+
+[[file]]
+path = ".third-party/clap/include/clap/ext/voice-info.h"
+role = "transitive-header"
+sha256 = "c8a3d805135085cde70ee96c71886712f0ece709ad78eda4dbcdb21a0995e347"
+
+[[file]]
+path = ".third-party/clap/include/clap/factory/draft/plugin-invalidation.h"
+role = "transitive-header"
+sha256 = "3821af6c0cdeeaca63215eb7c870e7302635303d367ffd14974a7f19ec314a19"
+
+[[file]]
+path = ".third-party/clap/include/clap/factory/draft/preset-discovery.h"
+role = "transitive-header"
+sha256 = "271262c4d74878aad6fd3566e6d1dbe1474405501fb2da89290ed228f5e414b7"
+
+[[file]]
+path = ".third-party/clap/include/clap/factory/plugin-factory.h"
+role = "transitive-header"
+sha256 = "bf9893fff04874f18ebb4a3f3ba7323ab7e0e675bb475081a39b6e69d9e595fa"
+
+[[file]]
+path = ".third-party/clap/include/clap/fixedpoint.h"
+role = "transitive-header"
+sha256 = "58f50936f9539e39b1cf01dfe70f9e95f179c9d730fa6686fbb490b6a7769e8a"
+
+[[file]]
+path = ".third-party/clap/include/clap/host.h"
+role = "transitive-header"
+sha256 = "b9e8182d4330222665a1e9e85bc046b9121c0007be0c137691ac5a59fb3ed558"
+
+[[file]]
+path = ".third-party/clap/include/clap/id.h"
+role = "transitive-header"
+sha256 = "7c8cdeea37bdcc4df1be83473fd42712e1b005c45cb64d5b1fde2f892a182ea4"
+
+[[file]]
+path = ".third-party/clap/include/clap/plugin-features.h"
+role = "transitive-header"
+sha256 = "99aff972b7d887ba1bb7370e776373f8500f5b5b9f8f698e60374fd4ce01cc23"
+
+[[file]]
+path = ".third-party/clap/include/clap/plugin.h"
+role = "transitive-header"
+sha256 = "4d5d56a0b5658ee72991105c0ace86a42e1d04f4bc496c4cbb25e4df56939ef8"
+
+[[file]]
+path = ".third-party/clap/include/clap/private/macros.h"
+role = "transitive-header"
+sha256 = "861b57a204da34542413c021110dc4740f3dd27bc7a1f6ba3619092c7fd90b17"
+
+[[file]]
+path = ".third-party/clap/include/clap/private/std.h"
+role = "transitive-header"
+sha256 = "6e489536d32a059a7f27ccf3c2833e3e09f16336c1aa77d9101c714e70053011"
+
+[[file]]
+path = ".third-party/clap/include/clap/process.h"
+role = "transitive-header"
+sha256 = "93132a2dc8c3ce7073c652ae0c9fa386bebb5ce23408a95a77842d2d85bae0a2"
+
+[[file]]
+path = ".third-party/clap/include/clap/stream.h"
+role = "transitive-header"
+sha256 = "bec9b7c95007ec729a668697d9e0637d0cea57eb767504de5744dbce6741957f"
+
+[[file]]
+path = ".third-party/clap/include/clap/string-sizes.h"
+role = "transitive-header"
+sha256 = "e8ebc287f05c3f068788f27b2db4bfd5727b252e8cc806064cb3dce7eb608b27"
+
+[[file]]
+path = ".third-party/clap/include/clap/version.h"
+role = "transitive-header"
+sha256 = "6fafd49734f37e4d8b7975dddd7cc89867135bee2d423d635e0074d6e0650010"
+
+[[file]]
+path = "ara2-bridge-companion/build.rs"
+role = "generated-declaration"
+sha256 = "d913489dda9c2f3cc251b452ebd030bede9f20863f3e16666c2c99f43b8c8809"
+
+[[file]]
+path = "ara2-bridge-companion/src/clap/sys.rs"
+role = "generated-declaration"
+sha256 = "241be160f35420ed2a4528b83f6889e7fe50a8b14c14cbb765bd80e51a048f39"
+
+[[file]]
+path = "ara2-bridge-testkit/native/clap_layout_probe.c"
+role = "generated-declaration"
+sha256 = "91853de34e11f4937d94db9a15ba236f18dc43c2283d42588976db5690dc5101"
+
+[[file]]
+path = "ara2-bridge-testkit/native/clap_probe.c"
+role = "abi-probe"
+sha256 = "52909a3117f294dee0788c59a1ef22a7fb175534f8d2235685a0493e93a53feb"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARACLAP.h"
+role = "ara-header"
+sha256 = "40cf55e206034087e47be32ed243b33d6748348cecce3eac063e662ae4cf2217"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+role = "ara-header"
+sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

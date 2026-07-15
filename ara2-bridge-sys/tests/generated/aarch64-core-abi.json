@@ -1,0 +1,528 @@
+{
+  "schema": 1,
+  "source_repository": "https://github.com/Celemony/ARA_API",
+  "source_tag": "releases/2.3.0",
+  "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
+  "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+  "spdx_license": "Apache-2.0",
+  "notice": "DO NOT EDIT",
+  "target_triple": "aarch64-unknown-linux-gnu",
+  "family": "aarch64",
+  "source_hashes": {
+    "ara_core.cpp": "d92ddbccee483b850b10048bca3276d08a8aef7cf661210c07c755f616e0016d",
+    "ara_layout.c": "e9d33db6147a1a9a5d052e1710f5a0e92b6754fd31e02656d918c277cf155234",
+    "ara_probe_table.inc": "4d117133d672d199b87369b61bc747b43d6254ef579599bf444050b8cd9c4399"
+  },
+  "probe_hash": "8e9876b5c4ab3efca417327aaa8df3ae806b5499d1e08559d4f79ab967623d83",
+  "payload_hash": "4122561c1231745940545a68139fcba2af226a4504bcbbba8302ba708d9f962d",
+  "payload": {
+    "constants": {
+      "kARAAPIGeneration_2_0_Final": "4",
+      "kARAAPIGeneration_2_3_Final": "6",
+      "kARAAPIGeneration_2_X_Draft": "5",
+      "kARAAnalysisProgressCompleted": "2",
+      "kARAAnalysisProgressStarted": "0",
+      "kARAAnalysisProgressUpdated": "1",
+      "kARAArchivingControllerInterfaceMinSize": "48",
+      "kARAAssertInvalidArgument": "-1",
+      "kARAAssertInvalidState": "-2",
+      "kARAAssertInvalidThread": "-3",
+      "kARAAssertUnspecified": "0",
+      "kARAAudioAccessControllerInterfaceMinSize": "32",
+      "kARAAudioModificationPropertiesMinSize": "24",
+      "kARAAudioSourcePropertiesMinSize": "48",
+      "kARAChannelArrangementAAXStemFormat": "3",
+      "kARAChannelArrangementCLAPAmbisonicInfo": "5",
+      "kARAChannelArrangementCLAPChannelMap": "4",
+      "kARAChannelArrangementCoreAudioChannelLayout": "2",
+      "kARAChannelArrangementUndefined": "0",
+      "kARAChannelArrangementVST3SpeakerArrangement": "1",
+      "kARAContentAccessControllerInterfaceMinSize": "80",
+      "kARAContentGradeAdjusted": "2",
+      "kARAContentGradeApproved": "3",
+      "kARAContentGradeDetected": "1",
+      "kARAContentGradeInitial": "0",
+      "kARAContentTypeBarSignatures": "21",
+      "kARAContentTypeKeySignatures": "42",
+      "kARAContentTypeNotes": "10",
+      "kARAContentTypeSheetChords": "45",
+      "kARAContentTypeStaticTuning": "31",
+      "kARAContentTypeTempoEntries": "20",
+      "kARAContentUpdateEverythingChanged": "0",
+      "kARAContentUpdateHarmonicScopeRemainsUnchanged": "16",
+      "kARAContentUpdateNoteScopeRemainsUnchanged": "2",
+      "kARAContentUpdateSignalScopeRemainsUnchanged": "1",
+      "kARAContentUpdateTimingScopeRemainsUnchanged": "4",
+      "kARAContentUpdateTuningScopeRemainsUnchanged": "8",
+      "kARADefaultConcertPitchFrequency": "440",
+      "kARADocumentControllerHostInstanceMinSize": "88",
+      "kARADocumentControllerInstanceMinSize": "24",
+      "kARADocumentControllerInterfaceMinSize": "336",
+      "kARADocumentPropertiesMinSize": "16",
+      "kARAEditorRendererInterfaceMinSize": "40",
+      "kARAEditorRendererRole": "2",
+      "kARAEditorViewInterfaceMinSize": "24",
+      "kARAEditorViewRole": "4",
+      "kARAFactoryMinSize": "124",
+      "kARAFalse": "0",
+      "kARAInterfaceConfigurationMinSize": "24",
+      "kARAInvalidFrequency": "0",
+      "kARAInvalidPitchNumber": "-2147483648",
+      "kARAModelUpdateControllerInterfaceMinSize": "32",
+      "kARAMusicalContextPropertiesMinSize": "8",
+      "kARAPlaybackControllerInterfaceMinSize": "48",
+      "kARAPlaybackRegionPropertiesMinSize": "56",
+      "kARAPlaybackRendererInterfaceMinSize": "24",
+      "kARAPlaybackRendererRole": "1",
+      "kARAPlaybackTransformationContentBasedFadeAtHead": "8",
+      "kARAPlaybackTransformationContentBasedFadeAtTail": "4",
+      "kARAPlaybackTransformationContentBasedFades": "12",
+      "kARAPlaybackTransformationNoChanges": "0",
+      "kARAPlaybackTransformationTimestretch": "1",
+      "kARAPlaybackTransformationTimestretchReflectingTempo": "2",
+      "kARAPlugInExtensionInstanceMinSize": "24",
+      "kARAPlugInExtensionInterfaceMinSize": "24",
+      "kARAProcessingAlgorithmPropertiesMinSize": "24",
+      "kARARegionSequencePropertiesMinSize": "32",
+      "kARARestoreObjectsFilterMinSize": "64",
+      "kARAStoreObjectsFilterMinSize": "48",
+      "kARATrue": "1",
+      "kARAViewSelectionMinSize": "48"
+    },
+    "cpp": {
+      "kARAXMLName_CreateDistinctAudioModification": "createDistinctAudioModification"
+    },
+    "structs": {
+      "ARAArchivingControllerInterface": {
+        "alignment": 8,
+        "fields": {
+          "getArchiveSize": 8,
+          "getDocumentArchiveID": 48,
+          "notifyDocumentArchivingProgress": 32,
+          "notifyDocumentUnarchivingProgress": 40,
+          "readBytesFromArchive": 16,
+          "structSize": 0,
+          "writeBytesToArchive": 24
+        },
+        "size": 56
+      },
+      "ARAAudioAccessControllerInterface": {
+        "alignment": 8,
+        "fields": {
+          "createAudioReaderForSource": 8,
+          "destroyAudioReader": 24,
+          "readAudioSamples": 16,
+          "structSize": 0
+        },
+        "size": 32
+      },
+      "ARAAudioModificationProperties": {
+        "alignment": 8,
+        "fields": {
+          "name": 8,
+          "persistentID": 16,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARAAudioSourceProperties": {
+        "alignment": 8,
+        "fields": {
+          "channelArrangement": 56,
+          "channelArrangementDataType": 48,
+          "channelCount": 40,
+          "merits64BitSamples": 44,
+          "name": 8,
+          "persistentID": 16,
+          "sampleCount": 24,
+          "sampleRate": 32,
+          "structSize": 0
+        },
+        "size": 64
+      },
+      "ARAColor": {
+        "alignment": 4,
+        "fields": {
+          "b": 8,
+          "g": 4,
+          "r": 0
+        },
+        "size": 12
+      },
+      "ARAContentAccessControllerInterface": {
+        "alignment": 8,
+        "fields": {
+          "createAudioSourceContentReader": 48,
+          "createMusicalContextContentReader": 24,
+          "destroyContentReader": 72,
+          "getAudioSourceContentGrade": 40,
+          "getContentReaderDataForEvent": 64,
+          "getContentReaderEventCount": 56,
+          "getMusicalContextContentGrade": 16,
+          "isAudioSourceContentAvailable": 32,
+          "isMusicalContextContentAvailable": 8,
+          "structSize": 0
+        },
+        "size": 80
+      },
+      "ARAContentBarSignature": {
+        "alignment": 8,
+        "fields": {
+          "denominator": 4,
+          "numerator": 0,
+          "position": 8
+        },
+        "size": 16
+      },
+      "ARAContentChord": {
+        "alignment": 8,
+        "fields": {
+          "bass": 4,
+          "intervals": 8,
+          "name": 24,
+          "position": 32,
+          "root": 0
+        },
+        "size": 40
+      },
+      "ARAContentKeySignature": {
+        "alignment": 8,
+        "fields": {
+          "intervals": 4,
+          "name": 16,
+          "position": 24,
+          "root": 0
+        },
+        "size": 32
+      },
+      "ARAContentNote": {
+        "alignment": 8,
+        "fields": {
+          "attackDuration": 24,
+          "frequency": 0,
+          "noteDuration": 32,
+          "pitchNumber": 4,
+          "signalDuration": 40,
+          "startPosition": 16,
+          "volume": 8
+        },
+        "size": 48
+      },
+      "ARAContentTempoEntry": {
+        "alignment": 8,
+        "fields": {
+          "quarterPosition": 8,
+          "timePosition": 0
+        },
+        "size": 16
+      },
+      "ARAContentTimeRange": {
+        "alignment": 8,
+        "fields": {
+          "duration": 8,
+          "start": 0
+        },
+        "size": 16
+      },
+      "ARAContentTuning": {
+        "alignment": 8,
+        "fields": {
+          "concertPitchFrequency": 0,
+          "name": 56,
+          "root": 4,
+          "tunings": 8
+        },
+        "size": 64
+      },
+      "ARADocumentControllerHostInstance": {
+        "alignment": 8,
+        "fields": {
+          "archivingControllerHostRef": 24,
+          "archivingControllerInterface": 32,
+          "audioAccessControllerHostRef": 8,
+          "audioAccessControllerInterface": 16,
+          "contentAccessControllerHostRef": 40,
+          "contentAccessControllerInterface": 48,
+          "modelUpdateControllerHostRef": 56,
+          "modelUpdateControllerInterface": 64,
+          "playbackControllerHostRef": 72,
+          "playbackControllerInterface": 80,
+          "structSize": 0
+        },
+        "size": 88
+      },
+      "ARADocumentControllerInstance": {
+        "alignment": 8,
+        "fields": {
+          "documentControllerInterface": 16,
+          "documentControllerRef": 8,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARADocumentControllerInterface": {
+        "alignment": 8,
+        "fields": {
+          "beginEditing": 24,
+          "beginRestoringDocumentFromArchive": 48,
+          "cloneAudioModification": 168,
+          "createAudioModification": 160,
+          "createAudioModificationContentReader": 280,
+          "createAudioSource": 112,
+          "createAudioSourceContentReader": 256,
+          "createMusicalContext": 80,
+          "createPlaybackRegion": 200,
+          "createPlaybackRegionContentReader": 304,
+          "createRegionSequence": 336,
+          "deactivateAudioModificationForUndoHistory": 184,
+          "deactivateAudioSourceForUndoHistory": 144,
+          "destroyAudioModification": 192,
+          "destroyAudioSource": 152,
+          "destroyContentReader": 328,
+          "destroyDocumentController": 8,
+          "destroyMusicalContext": 104,
+          "destroyPlaybackRegion": 216,
+          "destroyRegionSequence": 352,
+          "enableAudioSourceSamplesAccess": 136,
+          "endEditing": 32,
+          "endRestoringDocumentFromArchive": 56,
+          "getAudioModificationContentGrade": 272,
+          "getAudioSourceContentGrade": 248,
+          "getContentReaderDataForEvent": 320,
+          "getContentReaderEventCount": 312,
+          "getFactory": 16,
+          "getPlaybackRegionContentGrade": 296,
+          "getPlaybackRegionHeadAndTailTime": 360,
+          "getProcessingAlgorithmForAudioSource": 400,
+          "getProcessingAlgorithmProperties": 392,
+          "getProcessingAlgorithmsCount": 384,
+          "isAudioModificationContentAvailable": 264,
+          "isAudioModificationPreservingAudioSourceSignal": 432,
+          "isAudioSourceContentAnalysisIncomplete": 232,
+          "isAudioSourceContentAvailable": 224,
+          "isLicensedForCapabilities": 416,
+          "isPlaybackRegionContentAvailable": 288,
+          "notifyModelUpdates": 40,
+          "requestAudioSourceContentAnalysis": 240,
+          "requestProcessingAlgorithmForAudioSource": 408,
+          "restoreObjectsFromArchive": 368,
+          "storeAudioSourceToAudioFileChunk": 424,
+          "storeDocumentToArchive": 64,
+          "storeObjectsToArchive": 376,
+          "structSize": 0,
+          "updateAudioModificationProperties": 176,
+          "updateAudioSourceContent": 128,
+          "updateAudioSourceProperties": 120,
+          "updateDocumentProperties": 72,
+          "updateMusicalContextContent": 96,
+          "updateMusicalContextProperties": 88,
+          "updatePlaybackRegionProperties": 208,
+          "updateRegionSequenceProperties": 344
+        },
+        "size": 440
+      },
+      "ARADocumentProperties": {
+        "alignment": 8,
+        "fields": {
+          "name": 8,
+          "structSize": 0
+        },
+        "size": 16
+      },
+      "ARAEditorRendererInterface": {
+        "alignment": 8,
+        "fields": {
+          "addPlaybackRegion": 8,
+          "addRegionSequence": 24,
+          "removePlaybackRegion": 16,
+          "removeRegionSequence": 32,
+          "structSize": 0
+        },
+        "size": 40
+      },
+      "ARAEditorViewInterface": {
+        "alignment": 8,
+        "fields": {
+          "notifyHideRegionSequences": 16,
+          "notifySelection": 8,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARAFactory": {
+        "alignment": 8,
+        "fields": {
+          "analyzeableContentTypes": 112,
+          "analyzeableContentTypesCount": 104,
+          "compatibleDocumentArchiveIDs": 96,
+          "compatibleDocumentArchiveIDsCount": 88,
+          "createDocumentControllerWithDocument": 72,
+          "documentArchiveID": 80,
+          "factoryID": 16,
+          "highestSupportedApiGeneration": 12,
+          "informationURL": 56,
+          "initializeARAWithConfiguration": 24,
+          "lowestSupportedApiGeneration": 8,
+          "manufacturerName": 48,
+          "plugInName": 40,
+          "structSize": 0,
+          "supportedPlaybackTransformationFlags": 120,
+          "supportsStoringAudioFileChunks": 124,
+          "uninitializeARA": 32,
+          "version": 64
+        },
+        "size": 128
+      },
+      "ARAInterfaceConfiguration": {
+        "alignment": 8,
+        "fields": {
+          "assertFunctionAddress": 16,
+          "desiredApiGeneration": 8,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARAModelUpdateControllerInterface": {
+        "alignment": 8,
+        "fields": {
+          "notifyAudioModificationContentChanged": 24,
+          "notifyAudioSourceAnalysisProgress": 8,
+          "notifyAudioSourceContentChanged": 16,
+          "notifyDocumentDataChanged": 40,
+          "notifyPlaybackRegionContentChanged": 32,
+          "structSize": 0
+        },
+        "size": 48
+      },
+      "ARAMusicalContextProperties": {
+        "alignment": 8,
+        "fields": {
+          "color": 24,
+          "name": 8,
+          "orderIndex": 16,
+          "structSize": 0
+        },
+        "size": 32
+      },
+      "ARAPlaybackControllerInterface": {
+        "alignment": 8,
+        "fields": {
+          "requestEnableCycle": 40,
+          "requestSetCycleRange": 32,
+          "requestSetPlaybackPosition": 24,
+          "requestStartPlayback": 8,
+          "requestStopPlayback": 16,
+          "structSize": 0
+        },
+        "size": 48
+      },
+      "ARAPlaybackRegionProperties": {
+        "alignment": 8,
+        "fields": {
+          "color": 72,
+          "durationInModificationTime": 24,
+          "durationInPlaybackTime": 40,
+          "musicalContextRef": 48,
+          "name": 64,
+          "regionSequenceRef": 56,
+          "startInModificationTime": 16,
+          "startInPlaybackTime": 32,
+          "structSize": 0,
+          "transformationFlags": 8
+        },
+        "size": 80
+      },
+      "ARAPlaybackRendererInterface": {
+        "alignment": 8,
+        "fields": {
+          "addPlaybackRegion": 8,
+          "removePlaybackRegion": 16,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARAPlugInExtensionInstance": {
+        "alignment": 8,
+        "fields": {
+          "editorRendererInterface": 48,
+          "editorRendererRef": 40,
+          "editorViewInterface": 64,
+          "editorViewRef": 56,
+          "playbackRendererInterface": 32,
+          "playbackRendererRef": 24,
+          "plugInExtensionInterface": 16,
+          "plugInExtensionRef": 8,
+          "structSize": 0
+        },
+        "size": 72
+      },
+      "ARAPlugInExtensionInterface": {
+        "alignment": 8,
+        "fields": {
+          "removePlaybackRegion": 16,
+          "setPlaybackRegion": 8,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARAProcessingAlgorithmProperties": {
+        "alignment": 8,
+        "fields": {
+          "name": 16,
+          "persistentID": 8,
+          "structSize": 0
+        },
+        "size": 24
+      },
+      "ARARegionSequenceProperties": {
+        "alignment": 8,
+        "fields": {
+          "color": 32,
+          "musicalContextRef": 24,
+          "name": 8,
+          "orderIndex": 16,
+          "structSize": 0
+        },
+        "size": 40
+      },
+      "ARARestoreObjectsFilter": {
+        "alignment": 8,
+        "fields": {
+          "audioModificationArchiveIDs": 48,
+          "audioModificationCurrentIDs": 56,
+          "audioModificationIDsCount": 40,
+          "audioSourceArchiveIDs": 24,
+          "audioSourceCurrentIDs": 32,
+          "audioSourceIDsCount": 16,
+          "documentData": 8,
+          "structSize": 0
+        },
+        "size": 64
+      },
+      "ARAStoreObjectsFilter": {
+        "alignment": 8,
+        "fields": {
+          "audioModificationRefs": 40,
+          "audioModificationRefsCount": 32,
+          "audioSourceRefs": 24,
+          "audioSourceRefsCount": 16,
+          "documentData": 8,
+          "structSize": 0
+        },
+        "size": 48
+      },
+      "ARAViewSelection": {
+        "alignment": 8,
+        "fields": {
+          "playbackRegionRefs": 16,
+          "playbackRegionRefsCount": 8,
+          "regionSequenceRefs": 32,
+          "regionSequenceRefsCount": 24,
+          "structSize": 0,
+          "timeRange": 40
+        },
+        "size": 48
+      }
+    }
+  }
+}

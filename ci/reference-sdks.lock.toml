@@ -1,0 +1,119 @@
+schema = 1
+
+[[component]]
+name = "ara"
+path = "reference/ARA_SDK"
+repository = "https://github.com/Celemony/ARA_SDK.git"
+tag = "releases/2.3.0"
+commit = "a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c"
+tree = "305a0dc9ba4759963c1e974353a999c3810b2319"
+license_url = "https://github.com/Celemony/ARA_API/blob/65ec5c43b943a48cb5446f448a0492db6af8534b/LICENSE.txt"
+accepted_licenses = ["Apache-2.0"]
+
+[[component.submodule]]
+path = "ARA_API"
+repository = "https://github.com/Celemony/ARA_API.git"
+commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+tree = "2e3b0455f61314068d34501c5f71407d6ed0051b"
+
+[[component.submodule]]
+path = "ARA_Library"
+repository = "https://github.com/Celemony/ARA_Library.git"
+commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
+tree = "a53995463c520ba7aa1015a5cf8d7ae448007800"
+
+[[component.submodule]]
+path = "ARA_Examples"
+repository = "https://github.com/Celemony/ARA_Examples.git"
+commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
+tree = "34919bd48ed748fc0889f1a0a8e532e37c8d4500"
+
+[[component.submodule]]
+path = "ARA_Examples/3rdParty/ICST_AudioFile"
+repository = "https://github.com/Celemony/ICST_AudioFile.git"
+commit = "148e3c7828ebbe0ddafd29d83e67f91b9458b1bd"
+tree = "a4e9010e03f09cd9ee40b791ba3f3c5aac4222d7"
+
+[[component.submodule]]
+path = "ARA_Examples/3rdParty/cpp-base64"
+repository = "https://github.com/ReneNyffenegger/cpp-base64.git"
+commit = "07ae5045d67b5bf6ffb46646b8ac2370eff1ae3e"
+tree = "708d22699d429aa02b8c65e0de8407c83d5462de"
+
+[[component.submodule]]
+path = "ARA_Examples/3rdParty/pugixml"
+repository = "https://github.com/zeux/pugixml.git"
+commit = "08b3433180727ea2f78fe02e860a08471db1e03c"
+tree = "e55b03e893c5204712655b5abe5b0525a3df415b"
+
+[[component]]
+name = "clap"
+path = ".third-party/clap"
+repository = "https://github.com/free-audio/clap.git"
+tag = "1.1.9"
+commit = "094bb76c85366a13cc6c49292226d8608d6ae50c"
+tree = "4b56d7267e846fbe2a420370ea4f88f3ca7869b3"
+license_url = "https://github.com/free-audio/clap/blob/094bb76c85366a13cc6c49292226d8608d6ae50c/LICENSE"
+accepted_licenses = ["MIT"]
+
+[[component]]
+name = "vst3"
+path = ".third-party/vst3sdk"
+repository = "https://github.com/steinbergmedia/vst3sdk.git"
+tag = "v3.7.11_build_10"
+commit = "7d92338ae922db2d559ac458824a4df40f37e82e"
+tree = "1509aeb4426b5e51ff7586b8096f2ab8ccbbd2a4"
+license_url = "https://github.com/steinbergmedia/vst3sdk/blob/7d92338ae922db2d559ac458824a4df40f37e82e/LICENSE.txt"
+accepted_licenses = ["GPL-3.0-only", "LicenseRef-Steinberg-VST3"]
+
+[[component.submodule]]
+path = "base"
+repository = "https://github.com/steinbergmedia/vst3_base.git"
+commit = "4aa851d4e54993b19717539aa520deadc945148d"
+tree = "55906b52e2c406eac4107569827ba17e0be88b61"
+
+[[component.submodule]]
+path = "cmake"
+repository = "https://github.com/steinbergmedia/vst3_cmake.git"
+commit = "970594cd6d82f866e5115553e5171e96d4bbf449"
+tree = "0b5ee7a1a732895393a5a3588f6c0379f14c9fe5"
+
+[[component.submodule]]
+path = "doc"
+repository = "https://github.com/steinbergmedia/vst3_doc.git"
+commit = "f066e175c07659b98d77792a0637fb1c05525470"
+tree = "2ea43b88f75a62accd12f6a723ab56e37d06072a"
+
+[[component.submodule]]
+path = "pluginterfaces"
+repository = "https://github.com/steinbergmedia/vst3_pluginterfaces.git"
+commit = "cf187058ae79fe557fd854f2cc66a2b587d8cbe9"
+tree = "f4aebd86e7bff7b0d6d653715ddc1cce202adbf4"
+
+[[component.submodule]]
+path = "public.sdk"
+repository = "https://github.com/steinbergmedia/vst3_public_sdk.git"
+commit = "3f20bcbf36283b1e5c450e088571be6226cd4e64"
+tree = "1393e44c324f9ceffd9c8f2d36a360f60ab9e108"
+
+[[component.submodule]]
+path = "tutorials"
+repository = "https://github.com/steinbergmedia/vst3_tutorials.git"
+commit = "4e327f1f11756ab88833874175ae950708c778f2"
+tree = "30dbc7f78bd6142dbcfedd4a64edd9dd60ab34fd"
+
+[[component.submodule]]
+path = "vstgui4"
+repository = "https://github.com/steinbergmedia/vstgui.git"
+commit = "480b0c8d71a35e4280acf49b505ad64d3ee5bb79"
+tree = "eb70954069321ec96c6d4031b3e2de1cfefcd32e"
+
+[[component]]
+name = "audio-unit"
+path = ".third-party/AudioUnitSDK"
+repository = "https://github.com/apple/AudioUnitSDK.git"
+tag = "AudioUnitSDK-1.0.0"
+commit = "53ea94e5efebf864b70afb673bdd60c977818ec7"
+tree = "bb8b75ec63fe7d9036073287c4f01bf96d8a49f5"
+license_url = "https://github.com/apple/AudioUnitSDK/blob/53ea94e5efebf864b70afb673bdd60c977818ec7/LICENSE.txt"
+accepted_licenses = ["Apache-2.0"]

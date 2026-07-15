@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "source_repository": "https://github.com/Celemony/ARA_API",
+    "source_tag": "releases/2.3.0",
+    "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
+    "clap_repository": "https://github.com/free-audio/clap.git",
+    "clap_tag": "1.1.9",
+    "clap_commit": "094bb76c85366a13cc6c49292226d8608d6ae50c",
+    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "spdx_license": "Apache-2.0 AND MIT",
+    "notice": "DO NOT EDIT"
+  },
+  "records": [
+    { "symbol": "ARACLAP_h", "rust": "feature clap module", "classification": "header-guard" },
+    { "symbol": "CLAP_EXT_ARA_FACTORY", "rust": "clap::sys::CLAP_EXT_ARA_FACTORY", "classification": "direct-rust" },
+    { "symbol": "CLAP_EXT_ARA_FACTORY_COMPAT", "rust": "clap::sys::CLAP_EXT_ARA_FACTORY_COMPAT", "classification": "direct-rust" },
+    { "symbol": "CLAP_EXT_ARA_PLUGINEXTENSION", "rust": "clap::sys::CLAP_EXT_ARA_PLUGIN_EXTENSION", "classification": "direct-rust" },
+    { "symbol": "CLAP_EXT_ARA_PLUGINEXTENSION_COMPAT", "rust": "clap::sys::CLAP_EXT_ARA_PLUGIN_EXTENSION_COMPAT", "classification": "direct-rust" },
+    { "symbol": "CLAP_PLUGIN_FEATURE_ARA_SUPPORTED", "rust": "clap::sys::CLAP_PLUGIN_FEATURE_ARA_SUPPORTED", "classification": "direct-rust" },
+    { "symbol": "CLAP_PLUGIN_FEATURE_ARA_REQUIRED", "rust": "clap::sys::CLAP_PLUGIN_FEATURE_ARA_REQUIRED", "classification": "direct-rust" },
+    { "symbol": "clap_ara_factory", "rust": "clap::sys::ClapAraFactory", "classification": "direct-rust" },
+    { "symbol": "clap_ara_factory.get_factory_count", "rust": "ClapAraFactory::get_factory_count", "classification": "direct-rust" },
+    { "symbol": "clap_ara_factory.get_ara_factory", "rust": "ClapAraFactory::get_ara_factory", "classification": "direct-rust" },
+    { "symbol": "clap_ara_factory.get_plugin_id", "rust": "ClapAraFactory::get_plugin_id", "classification": "direct-rust" },
+    { "symbol": "clap_ara_factory_t", "rust": "clap::sys::ClapAraFactory", "classification": "direct-rust" },
+    { "symbol": "clap_ara_plugin_extension", "rust": "clap::sys::ClapAraPluginExtension", "classification": "direct-rust" },
+    { "symbol": "clap_ara_plugin_extension.get_factory", "rust": "ClapAraPluginExtension::get_factory", "classification": "direct-rust" },
+    { "symbol": "clap_ara_plugin_extension.bind_to_document_controller", "rust": "ClapAraPluginExtension::bind_to_document_controller", "classification": "direct-rust" },
+    { "symbol": "clap_ara_plugin_extension_t", "rust": "clap::sys::ClapAraPluginExtension", "classification": "direct-rust" }
+  ]
+}

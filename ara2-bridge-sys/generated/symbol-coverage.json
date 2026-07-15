@@ -1,0 +1,7225 @@
+{
+  "metadata": {
+    "source_repository": "https://github.com/Celemony/ARA_API",
+    "source_tag": "releases/2.3.0",
+    "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
+    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "spdx_license": "Apache-2.0",
+    "notice": "DO NOT EDIT"
+  },
+  "core_headers": [
+    "ARAInterface.h",
+    "ARAAudioFileChunks.h"
+  ],
+  "records": [
+    {
+      "symbol": "ARAAudioFileChunks_h",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 22,
+        "start_column": 9,
+        "end_line": 22,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_ARAVendorKeyword",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 160,
+        "start_column": 13,
+        "end_line": 160,
+        "end_column": 41
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_AudioSources",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 162,
+        "start_column": 13,
+        "end_line": 162,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_AudioSource",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 164,
+        "start_column": 13,
+        "end_line": 164,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_DocumentArchiveID",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 166,
+        "start_column": 13,
+        "end_line": 166,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_OpenAutomatically",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 167,
+        "start_column": 13,
+        "end_line": 167,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_SuggestedPlugIn",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 168,
+        "start_column": 13,
+        "end_line": 168,
+        "end_column": 40
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_PersistentID",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 169,
+        "start_column": 13,
+        "end_line": 169,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_ArchiveData",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 170,
+        "start_column": 13,
+        "end_line": 170,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_PlugInName",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 172,
+        "start_column": 13,
+        "end_line": 172,
+        "end_column": 35
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_LowestSupportedVersion",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 173,
+        "start_column": 13,
+        "end_line": 173,
+        "end_column": 47
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_ManufacturerName",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 174,
+        "start_column": 13,
+        "end_line": 174,
+        "end_column": 41
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAXMLName_InformationURL",
+      "kind": "macro",
+      "header": "ARAAudioFileChunks.h",
+      "span": {
+        "start_line": 175,
+        "start_column": 13,
+        "end_line": 175,
+        "end_column": 39
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioUnit_h",
+      "kind": "macro",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 21,
+        "start_column": 9,
+        "end_line": 21,
+        "end_column": 23
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "kARAAudioComponentTag",
+      "kind": "macro",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 81,
+        "start_column": 37,
+        "end_line": 81,
+        "end_column": 58
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitFactory",
+      "kind": "struct",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 84,
+        "start_column": 16,
+        "end_line": 84,
+        "end_column": 35
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitFactory.inOutMagicNumber",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 87,
+        "start_column": 12,
+        "end_line": 87,
+        "end_column": 28
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitFactory.outFactory",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 90,
+        "start_column": 24,
+        "end_line": 90,
+        "end_column": 34
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitFactory",
+      "kind": "typedef",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 91,
+        "start_column": 3,
+        "end_line": 91,
+        "end_column": 22
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding",
+      "kind": "struct",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 94,
+        "start_column": 16,
+        "end_line": 94,
+        "end_column": 50
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding.inOutMagicNumber",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 97,
+        "start_column": 12,
+        "end_line": 97,
+        "end_column": 28
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding.inDocumentControllerRef",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 100,
+        "start_column": 30,
+        "end_line": 100,
+        "end_column": 53
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding.outPlugInExtension",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 103,
+        "start_column": 40,
+        "end_line": 103,
+        "end_column": 58
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding.knownRoles",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 109,
+        "start_column": 56,
+        "end_line": 109,
+        "end_column": 66
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding.assignedRoles",
+      "kind": "field",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 114,
+        "start_column": 56,
+        "end_line": 114,
+        "end_column": 69
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARAAudioUnitPlugInExtensionBinding",
+      "kind": "typedef",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 115,
+        "start_column": 3,
+        "end_line": 115,
+        "end_column": 37
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "kARAAudioUnitMagic",
+      "kind": "constant",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 120,
+        "start_column": 5,
+        "end_line": 120,
+        "end_column": 23
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "kAudioUnitProperty_ARAFactory",
+      "kind": "constant",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 127,
+        "start_column": 5,
+        "end_line": 127,
+        "end_column": 34
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "kAudioUnitProperty_ARAPlugInExtensionBinding",
+      "kind": "constant",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 141,
+        "start_column": 5,
+        "end_line": 141,
+        "end_column": 49
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "kAudioUnitProperty_ARAPlugInExtensionBindingWithRoles",
+      "kind": "constant",
+      "header": "ARAAudioUnit.h",
+      "span": {
+        "start_line": 157,
+        "start_column": 5,
+        "end_line": 157,
+        "end_column": 58
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "audio-unit"
+      ]
+    },
+    {
+      "symbol": "ARACLAP_h",
+      "kind": "macro",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 21,
+        "start_column": 9,
+        "end_line": 21,
+        "end_column": 18
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "CLAP_EXT_ARA_FACTORY",
+      "kind": "constant",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 39,
+        "start_column": 34,
+        "end_line": 39,
+        "end_column": 54
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "CLAP_EXT_ARA_FACTORY_COMPAT",
+      "kind": "constant",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 43,
+        "start_column": 44,
+        "end_line": 43,
+        "end_column": 71
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "CLAP_EXT_ARA_PLUGINEXTENSION",
+      "kind": "constant",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 46,
+        "start_column": 34,
+        "end_line": 46,
+        "end_column": 62
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "CLAP_EXT_ARA_PLUGINEXTENSION_COMPAT",
+      "kind": "constant",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 50,
+        "start_column": 44,
+        "end_line": 50,
+        "end_column": 79
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "CLAP_PLUGIN_FEATURE_ARA_SUPPORTED",
+      "kind": "macro",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 54,
+        "start_column": 9,
+        "end_line": 54,
+        "end_column": 42
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "CLAP_PLUGIN_FEATURE_ARA_REQUIRED",
+      "kind": "macro",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 58,
+        "start_column": 9,
+        "end_line": 58,
+        "end_column": 41
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_factory",
+      "kind": "struct",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 69,
+        "start_column": 16,
+        "end_line": 69,
+        "end_column": 32
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_factory.get_factory_count",
+      "kind": "field",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 75,
+        "start_column": 24,
+        "end_line": 75,
+        "end_column": 41
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_factory.get_ara_factory",
+      "kind": "field",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 81,
+        "start_column": 48,
+        "end_line": 81,
+        "end_column": 63
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_factory.get_plugin_id",
+      "kind": "field",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 86,
+        "start_column": 28,
+        "end_line": 86,
+        "end_column": 41
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_factory_t",
+      "kind": "typedef",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 87,
+        "start_column": 3,
+        "end_line": 87,
+        "end_column": 21
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_plugin_extension",
+      "kind": "struct",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 96,
+        "start_column": 16,
+        "end_line": 96,
+        "end_column": 41
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_plugin_extension.get_factory",
+      "kind": "field",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 99,
+        "start_column": 48,
+        "end_line": 99,
+        "end_column": 59
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_plugin_extension.bind_to_document_controller",
+      "kind": "field",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 114,
+        "start_column": 64,
+        "end_line": 118,
+        "end_column": 91
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "clap_ara_plugin_extension_t",
+      "kind": "typedef",
+      "header": "ARACLAP.h",
+      "span": {
+        "start_line": 119,
+        "start_column": 3,
+        "end_line": 119,
+        "end_column": 30
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "clap"
+      ]
+    },
+    {
+      "symbol": "ARAInterface_h",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 30,
+        "start_column": 9,
+        "end_line": 30,
+        "end_column": 23
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_DOXYGEN_BUILD",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 52,
+        "start_column": 13,
+        "end_line": 52,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_NAMESPACE",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 66,
+        "start_column": 13,
+        "end_line": 66,
+        "end_column": 26
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_CPU_X86",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 74,
+        "start_column": 13,
+        "end_line": 74,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_CPU_ARM",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 75,
+        "start_column": 13,
+        "end_line": 75,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_CALL",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 113,
+        "start_column": 13,
+        "end_line": 113,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAPIGeneration",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 121,
+        "start_column": 68,
+        "end_line": 121,
+        "end_column": 84
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_WARN_DEPRECATED",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 128,
+        "start_column": 17,
+        "end_line": 128,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_DEPRECATED",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 146,
+        "start_column": 9,
+        "end_line": 146,
+        "end_column": 23
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_DISABLE_DOCUMENTATION_DEPRECATED_WARNINGS_BEGIN",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 147,
+        "start_column": 9,
+        "end_line": 147,
+        "end_column": 60
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_DISABLE_DOCUMENTATION_DEPRECATED_WARNINGS_END",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 148,
+        "start_column": 9,
+        "end_line": 148,
+        "end_column": 58
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_DISABLE_DOCUMENTATION_WARNINGS_END",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 163,
+        "start_column": 17,
+        "end_line": 163,
+        "end_column": 55
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_ADDENDUM",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 173,
+        "start_column": 9,
+        "end_line": 173,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_DRAFT",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 180,
+        "start_column": 9,
+        "end_line": 180,
+        "end_column": 18
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAByte",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 210,
+        "start_column": 17,
+        "end_line": 210,
+        "end_column": 17
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInt32",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 213,
+        "start_column": 17,
+        "end_line": 213,
+        "end_column": 17
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInt64",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 216,
+        "start_column": 17,
+        "end_line": 216,
+        "end_column": 17
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARASize",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 219,
+        "start_column": 16,
+        "end_line": 219,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentType",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 229,
+        "start_column": 5,
+        "end_line": 229,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARABool",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 244,
+        "start_column": 18,
+        "end_line": 244,
+        "end_column": 18
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARATrue",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 252,
+        "start_column": 13,
+        "end_line": 252,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAFalse",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 253,
+        "start_column": 13,
+        "end_line": 253,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_32_BIT_ENUM",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 271,
+        "start_column": 13,
+        "end_line": 271,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAUtf8Char",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 297,
+        "start_column": 14,
+        "end_line": 297,
+        "end_column": 14
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAUtf8String",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 300,
+        "start_column": 29,
+        "end_line": 300,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARATimePosition",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 311,
+        "start_column": 16,
+        "end_line": 311,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARATimeDuration",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 314,
+        "start_column": 16,
+        "end_line": 314,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARASamplePosition",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 318,
+        "start_column": 18,
+        "end_line": 318,
+        "end_column": 18
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARASampleCount",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 321,
+        "start_column": 18,
+        "end_line": 321,
+        "end_column": 18
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAQuarterPosition",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 325,
+        "start_column": 16,
+        "end_line": 325,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAQuarterDuration",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 328,
+        "start_column": 16,
+        "end_line": 328,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARASampleRate",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 340,
+        "start_column": 16,
+        "end_line": 340,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAChannelArrangementDataType",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 343,
+        "start_column": 65,
+        "end_line": 343,
+        "end_column": 94
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAChannelCount",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 344,
+        "start_column": 18,
+        "end_line": 344,
+        "end_column": 18
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChannelArrangementUndefined",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 353,
+        "start_column": 5,
+        "end_line": 353,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChannelArrangementVST3SpeakerArrangement",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 355,
+        "start_column": 5,
+        "end_line": 355,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChannelArrangementCoreAudioChannelLayout",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 361,
+        "start_column": 5,
+        "end_line": 361,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChannelArrangementAAXStemFormat",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 363,
+        "start_column": 5,
+        "end_line": 363,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChannelArrangementCLAPChannelMap",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 366,
+        "start_column": 5,
+        "end_line": 366,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChannelArrangementCLAPAmbisonicInfo",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 368,
+        "start_column": 5,
+        "end_line": 368,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAColor",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 382,
+        "start_column": 40,
+        "end_line": 387,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAColor.r",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 384,
+        "start_column": 11,
+        "end_line": 384,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAColor.g",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 385,
+        "start_column": 11,
+        "end_line": 385,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAColor.b",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 386,
+        "start_column": 11,
+        "end_line": 386,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAColor",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 387,
+        "start_column": 3,
+        "end_line": 387,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 405,
+        "start_column": 13,
+        "end_line": 405,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 406,
+        "start_column": 13,
+        "end_line": 406,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 414,
+        "start_column": 7,
+        "end_line": 414,
+        "end_column": 27
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 416,
+        "start_column": 7,
+        "end_line": 416,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 417,
+        "start_column": 7,
+        "end_line": 417,
+        "end_column": 27
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentReaderRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 418,
+        "start_column": 7,
+        "end_line": 418,
+        "end_column": 26
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 419,
+        "start_column": 7,
+        "end_line": 419,
+        "end_column": 31
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 420,
+        "start_column": 7,
+        "end_line": 420,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 421,
+        "start_column": 7,
+        "end_line": 421,
+        "end_column": 27
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 422,
+        "start_column": 7,
+        "end_line": 422,
+        "end_column": 23
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_REF",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 423,
+        "start_column": 9,
+        "end_line": 423,
+        "end_column": 16
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 427,
+        "start_column": 7,
+        "end_line": 427,
+        "end_column": 31
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 428,
+        "start_column": 7,
+        "end_line": 428,
+        "end_column": 31
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 429,
+        "start_column": 7,
+        "end_line": 429,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 430,
+        "start_column": 7,
+        "end_line": 430,
+        "end_column": 34
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 431,
+        "start_column": 7,
+        "end_line": 431,
+        "end_column": 31
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentReaderHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 432,
+        "start_column": 7,
+        "end_line": 432,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 433,
+        "start_column": 7,
+        "end_line": 433,
+        "end_column": 38
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioReaderHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 434,
+        "start_column": 7,
+        "end_line": 434,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 435,
+        "start_column": 7,
+        "end_line": 435,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchiveReaderHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 436,
+        "start_column": 7,
+        "end_line": 436,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchiveWriterHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 437,
+        "start_column": 7,
+        "end_line": 437,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 438,
+        "start_column": 7,
+        "end_line": 438,
+        "end_column": 40
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 439,
+        "start_column": 7,
+        "end_line": 439,
+        "end_column": 38
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerHostRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 440,
+        "start_column": 7,
+        "end_line": 440,
+        "end_column": 35
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_HOST_REF",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 441,
+        "start_column": 9,
+        "end_line": 441,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPersistentID",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 454,
+        "start_column": 22,
+        "end_line": 454,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAPIGeneration_1_0_Draft",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 490,
+        "start_column": 5,
+        "end_line": 490,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAPIGeneration_1_0_Final",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 492,
+        "start_column": 5,
+        "end_line": 492,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAPIGeneration_2_0_Draft",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 494,
+        "start_column": 5,
+        "end_line": 494,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAPIGeneration_2_0_Final",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 498,
+        "start_column": 5,
+        "end_line": 498,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAPIGeneration_2_X_Draft",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 500,
+        "start_column": 5,
+        "end_line": 500,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAPIGeneration_2_3_Final",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 503,
+        "start_column": 5,
+        "end_line": 503,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_IMPLEMENTED_STRUCT_SIZE",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 539,
+        "start_column": 13,
+        "end_line": 539,
+        "end_column": 40
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARA_IMPLEMENTS_FIELD",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 550,
+        "start_column": 13,
+        "end_line": 550,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAssertCategory",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 601,
+        "start_column": 25,
+        "end_line": 601,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAssertUnspecified",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 604,
+        "start_column": 5,
+        "end_line": 604,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAssertInvalidArgument",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 607,
+        "start_column": 5,
+        "end_line": 607,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAssertInvalidState",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 612,
+        "start_column": 5,
+        "end_line": 612,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAssertInvalidThread",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 615,
+        "start_column": 5,
+        "end_line": 615,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAssertFunction",
+      "kind": "callback",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 631,
+        "start_column": 26,
+        "end_line": 632,
+        "end_column": 68
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 670,
+        "start_column": 16,
+        "end_line": 682,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 673,
+        "start_column": 13,
+        "end_line": 673,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 681,
+        "start_column": 19,
+        "end_line": 681,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 682,
+        "start_column": 3,
+        "end_line": 682,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARADocumentPropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 685,
+        "start_column": 8,
+        "end_line": 685,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 701,
+        "start_column": 9,
+        "end_line": 701,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 703,
+        "start_column": 9,
+        "end_line": 703,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 709,
+        "start_column": 16,
+        "end_line": 733,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 712,
+        "start_column": 13,
+        "end_line": 712,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 721,
+        "start_column": 43,
+        "end_line": 721,
+        "end_column": 43
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextProperties.orderIndex",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 727,
+        "start_column": 38,
+        "end_line": 727,
+        "end_column": 38
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextProperties.color",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 732,
+        "start_column": 46,
+        "end_line": 732,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAMusicalContextProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 733,
+        "start_column": 3,
+        "end_line": 733,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAMusicalContextPropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 736,
+        "start_column": 8,
+        "end_line": 736,
+        "end_column": 43
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 758,
+        "start_column": 33,
+        "end_line": 758,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 760,
+        "start_column": 33,
+        "end_line": 760,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 766,
+        "start_column": 40,
+        "end_line": 794,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 769,
+        "start_column": 13,
+        "end_line": 769,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 777,
+        "start_column": 19,
+        "end_line": 777,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties.orderIndex",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 783,
+        "start_column": 14,
+        "end_line": 783,
+        "end_column": 14
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties.musicalContextRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 788,
+        "start_column": 26,
+        "end_line": 788,
+        "end_column": 26
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties.color",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 793,
+        "start_column": 46,
+        "end_line": 793,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARegionSequenceProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 794,
+        "start_column": 3,
+        "end_line": 794,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARARegionSequencePropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 797,
+        "start_column": 32,
+        "end_line": 797,
+        "end_column": 67
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 816,
+        "start_column": 9,
+        "end_line": 816,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 818,
+        "start_column": 9,
+        "end_line": 818,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 824,
+        "start_column": 16,
+        "end_line": 889,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 827,
+        "start_column": 13,
+        "end_line": 827,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 835,
+        "start_column": 19,
+        "end_line": 835,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.persistentID",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 840,
+        "start_column": 21,
+        "end_line": 840,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.sampleCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 845,
+        "start_column": 20,
+        "end_line": 845,
+        "end_column": 20
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.sampleRate",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 856,
+        "start_column": 19,
+        "end_line": 856,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.channelCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 863,
+        "start_column": 21,
+        "end_line": 863,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.merits64BitSamples",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 870,
+        "start_column": 13,
+        "end_line": 870,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.channelArrangementDataType",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 875,
+        "start_column": 59,
+        "end_line": 875,
+        "end_column": 59
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties.channelArrangement",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 888,
+        "start_column": 42,
+        "end_line": 888,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioSourceProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 889,
+        "start_column": 3,
+        "end_line": 889,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAudioSourcePropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 892,
+        "start_column": 8,
+        "end_line": 892,
+        "end_column": 40
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 909,
+        "start_column": 9,
+        "end_line": 909,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 911,
+        "start_column": 9,
+        "end_line": 911,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 917,
+        "start_column": 16,
+        "end_line": 934,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 920,
+        "start_column": 13,
+        "end_line": 920,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 928,
+        "start_column": 19,
+        "end_line": 928,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationProperties.persistentID",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 933,
+        "start_column": 21,
+        "end_line": 933,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioModificationProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 934,
+        "start_column": 3,
+        "end_line": 934,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAudioModificationPropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 937,
+        "start_column": 8,
+        "end_line": 937,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 961,
+        "start_column": 9,
+        "end_line": 961,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 963,
+        "start_column": 9,
+        "end_line": 963,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackTransformationFlags",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 969,
+        "start_column": 25,
+        "end_line": 969,
+        "end_column": 55
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackTransformationNoChanges",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 974,
+        "start_column": 5,
+        "end_line": 974,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackTransformationTimestretch",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 980,
+        "start_column": 5,
+        "end_line": 980,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackTransformationTimestretchReflectingTempo",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 987,
+        "start_column": 5,
+        "end_line": 987,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackTransformationContentBasedFadeAtTail",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 990,
+        "start_column": 29,
+        "end_line": 990,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackTransformationContentBasedFadeAtHead",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 991,
+        "start_column": 29,
+        "end_line": 991,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackTransformationContentBasedFades",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1004,
+        "start_column": 29,
+        "end_line": 1004,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1012,
+        "start_column": 16,
+        "end_line": 1073,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1015,
+        "start_column": 13,
+        "end_line": 1015,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.transformationFlags",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1019,
+        "start_column": 36,
+        "end_line": 1019,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.startInModificationTime",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1025,
+        "start_column": 21,
+        "end_line": 1025,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.durationInModificationTime",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1029,
+        "start_column": 21,
+        "end_line": 1029,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.startInPlaybackTime",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1036,
+        "start_column": 21,
+        "end_line": 1036,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.durationInPlaybackTime",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1040,
+        "start_column": 21,
+        "end_line": 1040,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.musicalContextRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1051,
+        "start_column": 52,
+        "end_line": 1051,
+        "end_column": 52
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.regionSequenceRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1055,
+        "start_column": 50,
+        "end_line": 1055,
+        "end_column": 50
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1063,
+        "start_column": 43,
+        "end_line": 1063,
+        "end_column": 43
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties.color",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1071,
+        "start_column": 46,
+        "end_line": 1071,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRegionProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1073,
+        "start_column": 3,
+        "end_line": 1073,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackRegionPropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1076,
+        "start_column": 8,
+        "end_line": 1076,
+        "end_column": 43
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentUpdateFlags",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1132,
+        "start_column": 25,
+        "end_line": 1132,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentUpdateEverythingChanged",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1135,
+        "start_column": 5,
+        "end_line": 1135,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentUpdateSignalScopeRemainsUnchanged",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1143,
+        "start_column": 5,
+        "end_line": 1143,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentUpdateNoteScopeRemainsUnchanged",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1146,
+        "start_column": 5,
+        "end_line": 1146,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentUpdateTimingScopeRemainsUnchanged",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1149,
+        "start_column": 5,
+        "end_line": 1149,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentUpdateTuningScopeRemainsUnchanged",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1152,
+        "start_column": 29,
+        "end_line": 1152,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentUpdateHarmonicScopeRemainsUnchanged",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1155,
+        "start_column": 29,
+        "end_line": 1155,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentReaderRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1188,
+        "start_column": 9,
+        "end_line": 1188,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentReaderHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1190,
+        "start_column": 9,
+        "end_line": 1190,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentTypeNotes",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1203,
+        "start_column": 5,
+        "end_line": 1203,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentTypeTempoEntries",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1217,
+        "start_column": 5,
+        "end_line": 1217,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentTypeBarSignatures",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1223,
+        "start_column": 5,
+        "end_line": 1223,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentTypeStaticTuning",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1230,
+        "start_column": 29,
+        "end_line": 1230,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentTypeKeySignatures",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1236,
+        "start_column": 29,
+        "end_line": 1236,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentTypeSheetChords",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1241,
+        "start_column": 29,
+        "end_line": 1241,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTimeRange",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1257,
+        "start_column": 16,
+        "end_line": 1264,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTimeRange.start",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1260,
+        "start_column": 21,
+        "end_line": 1260,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTimeRange.duration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1263,
+        "start_column": 21,
+        "end_line": 1263,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTimeRange",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1264,
+        "start_column": 3,
+        "end_line": 1264,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentGrade",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1272,
+        "start_column": 25,
+        "end_line": 1272,
+        "end_column": 40
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentGradeInitial",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1279,
+        "start_column": 5,
+        "end_line": 1279,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentGradeDetected",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1283,
+        "start_column": 5,
+        "end_line": 1283,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentGradeAdjusted",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1287,
+        "start_column": 5,
+        "end_line": 1287,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentGradeApproved",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1291,
+        "start_column": 5,
+        "end_line": 1291,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTempoEntry",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1345,
+        "start_column": 16,
+        "end_line": 1352,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTempoEntry.timePosition",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1348,
+        "start_column": 21,
+        "end_line": 1348,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTempoEntry.quarterPosition",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1351,
+        "start_column": 24,
+        "end_line": 1351,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTempoEntry",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1352,
+        "start_column": 3,
+        "end_line": 1352,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentBarSignature",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1365,
+        "start_column": 16,
+        "end_line": 1375,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentBarSignature.numerator",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1368,
+        "start_column": 14,
+        "end_line": 1368,
+        "end_column": 14
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentBarSignature.denominator",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1371,
+        "start_column": 14,
+        "end_line": 1371,
+        "end_column": 14
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentBarSignature.position",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1374,
+        "start_column": 24,
+        "end_line": 1374,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentBarSignature",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1375,
+        "start_column": 3,
+        "end_line": 1375,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPitchNumber",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1397,
+        "start_column": 18,
+        "end_line": 1397,
+        "end_column": 18
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAInvalidPitchNumber",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1403,
+        "start_column": 13,
+        "end_line": 1403,
+        "end_column": 35
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAInvalidFrequency",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1410,
+        "start_column": 13,
+        "end_line": 1410,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARADefaultConcertPitchFrequency",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1417,
+        "start_column": 13,
+        "end_line": 1417,
+        "end_column": 45
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1426,
+        "start_column": 16,
+        "end_line": 1450,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.frequency",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1429,
+        "start_column": 11,
+        "end_line": 1429,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.pitchNumber",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1432,
+        "start_column": 20,
+        "end_line": 1432,
+        "end_column": 20
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.volume",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1436,
+        "start_column": 11,
+        "end_line": 1436,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.startPosition",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1440,
+        "start_column": 21,
+        "end_line": 1440,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.attackDuration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1443,
+        "start_column": 21,
+        "end_line": 1443,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.noteDuration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1446,
+        "start_column": 21,
+        "end_line": 1446,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote.signalDuration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1449,
+        "start_column": 21,
+        "end_line": 1449,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentNote",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1450,
+        "start_column": 3,
+        "end_line": 1450,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARACircleOfFifthsIndex",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1483,
+        "start_column": 42,
+        "end_line": 1483,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTuning",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1495,
+        "start_column": 40,
+        "end_line": 1523,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTuning.concertPitchFrequency",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1498,
+        "start_column": 11,
+        "end_line": 1498,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTuning.root",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1501,
+        "start_column": 28,
+        "end_line": 1501,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTuning.tunings",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1510,
+        "start_column": 11,
+        "end_line": 1510,
+        "end_column": 11
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTuning.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1522,
+        "start_column": 19,
+        "end_line": 1522,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentTuning",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1523,
+        "start_column": 3,
+        "end_line": 1523,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAKeySignatureIntervalUsage",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1531,
+        "start_column": 41,
+        "end_line": 1531,
+        "end_column": 41
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAKeySignatureIntervalUnused",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1542,
+        "start_column": 13,
+        "end_line": 1542,
+        "end_column": 43
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAKeySignatureIntervalUsed",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1543,
+        "start_column": 13,
+        "end_line": 1543,
+        "end_column": 41
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentKeySignature",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1560,
+        "start_column": 40,
+        "end_line": 1593,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentKeySignature.root",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1563,
+        "start_column": 28,
+        "end_line": 1563,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentKeySignature.intervals",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1572,
+        "start_column": 34,
+        "end_line": 1572,
+        "end_column": 34
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentKeySignature.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1589,
+        "start_column": 19,
+        "end_line": 1589,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentKeySignature.position",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1592,
+        "start_column": 24,
+        "end_line": 1592,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentKeySignature",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1593,
+        "start_column": 3,
+        "end_line": 1593,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAChordIntervalUsage",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1601,
+        "start_column": 17,
+        "end_line": 1601,
+        "end_column": 17
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree1",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1629,
+        "start_column": 13,
+        "end_line": 1629,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree2",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1630,
+        "start_column": 13,
+        "end_line": 1630,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree3",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1631,
+        "start_column": 13,
+        "end_line": 1631,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree4",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1632,
+        "start_column": 13,
+        "end_line": 1632,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree5",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1633,
+        "start_column": 13,
+        "end_line": 1633,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree6",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1634,
+        "start_column": 13,
+        "end_line": 1634,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree7",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1635,
+        "start_column": 13,
+        "end_line": 1635,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree9",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1636,
+        "start_column": 13,
+        "end_line": 1636,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree11",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1637,
+        "start_column": 13,
+        "end_line": 1637,
+        "end_column": 38
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordDiatonicDegree13",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1638,
+        "start_column": 13,
+        "end_line": 1638,
+        "end_column": 38
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordIntervalUsed",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1639,
+        "start_column": 13,
+        "end_line": 1639,
+        "end_column": 34
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAChordIntervalUnused",
+      "kind": "macro",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1640,
+        "start_column": 13,
+        "end_line": 1640,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1657,
+        "start_column": 40,
+        "end_line": 1725,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord.root",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1662,
+        "start_column": 28,
+        "end_line": 1662,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord.bass",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1669,
+        "start_column": 28,
+        "end_line": 1669,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord.intervals",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1687,
+        "start_column": 27,
+        "end_line": 1687,
+        "end_column": 27
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1721,
+        "start_column": 19,
+        "end_line": 1721,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord.position",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1724,
+        "start_column": 24,
+        "end_line": 1724,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentChord",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1725,
+        "start_column": 3,
+        "end_line": 1725,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1766,
+        "start_column": 9,
+        "end_line": 1766,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioReaderHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1769,
+        "start_column": 9,
+        "end_line": 1769,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1774,
+        "start_column": 16,
+        "end_line": 1818,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1777,
+        "start_column": 13,
+        "end_line": 1777,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerInterface.createAudioReaderForSource",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1790,
+        "start_column": 38,
+        "end_line": 1791,
+        "end_column": 132
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerInterface.readAudioSamples",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1810,
+        "start_column": 24,
+        "end_line": 1811,
+        "end_column": 133
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerInterface.destroyAudioReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1816,
+        "start_column": 21,
+        "end_line": 1816,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAudioAccessControllerInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1818,
+        "start_column": 3,
+        "end_line": 1818,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAudioAccessControllerInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1821,
+        "start_column": 8,
+        "end_line": 1821,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1863,
+        "start_column": 9,
+        "end_line": 1863,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchiveReaderHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1866,
+        "start_column": 9,
+        "end_line": 1866,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchiveWriterHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1868,
+        "start_column": 9,
+        "end_line": 1868,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1873,
+        "start_column": 16,
+        "end_line": 1947,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1876,
+        "start_column": 13,
+        "end_line": 1876,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.getArchiveSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1885,
+        "start_column": 24,
+        "end_line": 1885,
+        "end_column": 24
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.readBytesFromArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1895,
+        "start_column": 24,
+        "end_line": 1896,
+        "end_column": 97
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.writeBytesToArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1914,
+        "start_column": 24,
+        "end_line": 1915,
+        "end_column": 102
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.notifyDocumentArchivingProgress",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1924,
+        "start_column": 21,
+        "end_line": 1924,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.notifyDocumentUnarchivingProgress",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1933,
+        "start_column": 21,
+        "end_line": 1933,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface.getDocumentArchiveID",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1945,
+        "start_column": 56,
+        "end_line": 1945,
+        "end_column": 56
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAArchivingControllerInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1947,
+        "start_column": 3,
+        "end_line": 1947,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAArchivingControllerInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1950,
+        "start_column": 8,
+        "end_line": 1950,
+        "end_column": 47
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1967,
+        "start_column": 9,
+        "end_line": 1967,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1972,
+        "start_column": 16,
+        "end_line": 2028,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1975,
+        "start_column": 13,
+        "end_line": 1975,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.isMusicalContextContentAvailable",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1981,
+        "start_column": 24,
+        "end_line": 1982,
+        "end_column": 133
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.getMusicalContextContentGrade",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1985,
+        "start_column": 32,
+        "end_line": 1986,
+        "end_column": 138
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.createMusicalContextContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1994,
+        "start_column": 40,
+        "end_line": 1995,
+        "end_column": 137
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.isAudioSourceContentAvailable",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 1998,
+        "start_column": 24,
+        "end_line": 1999,
+        "end_column": 124
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.getAudioSourceContentGrade",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2002,
+        "start_column": 32,
+        "end_line": 2003,
+        "end_column": 129
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.createAudioSourceContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2013,
+        "start_column": 40,
+        "end_line": 2014,
+        "end_column": 134
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.getContentReaderEventCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2017,
+        "start_column": 25,
+        "end_line": 2017,
+        "end_column": 25
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.getContentReaderDataForEvent",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2022,
+        "start_column": 29,
+        "end_line": 2023,
+        "end_column": 125
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface.destroyContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2026,
+        "start_column": 21,
+        "end_line": 2026,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAContentAccessControllerInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2028,
+        "start_column": 3,
+        "end_line": 2028,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAContentAccessControllerInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2031,
+        "start_column": 8,
+        "end_line": 2031,
+        "end_column": 51
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2046,
+        "start_column": 9,
+        "end_line": 2046,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAAnalysisProgressState",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2049,
+        "start_column": 25,
+        "end_line": 2049,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAnalysisProgressStarted",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2052,
+        "start_column": 5,
+        "end_line": 2052,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAnalysisProgressUpdated",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2055,
+        "start_column": 5,
+        "end_line": 2055,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAAnalysisProgressCompleted",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2058,
+        "start_column": 5,
+        "end_line": 2058,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2065,
+        "start_column": 16,
+        "end_line": 2147,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2068,
+        "start_column": 13,
+        "end_line": 2068,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface.notifyAudioSourceAnalysisProgress",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2083,
+        "start_column": 21,
+        "end_line": 2084,
+        "end_column": 100
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface.notifyAudioSourceContentChanged",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2100,
+        "start_column": 21,
+        "end_line": 2101,
+        "end_column": 117
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface.notifyAudioModificationContentChanged",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2118,
+        "start_column": 21,
+        "end_line": 2119,
+        "end_column": 123
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface.notifyPlaybackRegionContentChanged",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2137,
+        "start_column": 45,
+        "end_line": 2138,
+        "end_column": 144
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface.notifyDocumentDataChanged",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2146,
+        "start_column": 45,
+        "end_line": 2146,
+        "end_column": 45
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAModelUpdateControllerInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2147,
+        "start_column": 3,
+        "end_line": 2147,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAModelUpdateControllerInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2150,
+        "start_column": 8,
+        "end_line": 2150,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerHostRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2168,
+        "start_column": 9,
+        "end_line": 2168,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2173,
+        "start_column": 16,
+        "end_line": 2195,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2176,
+        "start_column": 13,
+        "end_line": 2176,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface.requestStartPlayback",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2179,
+        "start_column": 21,
+        "end_line": 2179,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface.requestStopPlayback",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2182,
+        "start_column": 21,
+        "end_line": 2182,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface.requestSetPlaybackPosition",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2186,
+        "start_column": 21,
+        "end_line": 2187,
+        "end_column": 78
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface.requestSetCycleRange",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2190,
+        "start_column": 21,
+        "end_line": 2191,
+        "end_column": 95
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface.requestEnableCycle",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2194,
+        "start_column": 21,
+        "end_line": 2194,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackControllerInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2195,
+        "start_column": 3,
+        "end_line": 2195,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackControllerInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2198,
+        "start_column": 8,
+        "end_line": 2198,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2215,
+        "start_column": 16,
+        "end_line": 2254,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2218,
+        "start_column": 13,
+        "end_line": 2218,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.audioAccessControllerHostRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2223,
+        "start_column": 37,
+        "end_line": 2223,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.audioAccessControllerInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2224,
+        "start_column": 47,
+        "end_line": 2224,
+        "end_column": 47
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.archivingControllerHostRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2230,
+        "start_column": 35,
+        "end_line": 2230,
+        "end_column": 35
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.archivingControllerInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2231,
+        "start_column": 45,
+        "end_line": 2231,
+        "end_column": 45
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.contentAccessControllerHostRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2237,
+        "start_column": 39,
+        "end_line": 2237,
+        "end_column": 39
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.contentAccessControllerInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2238,
+        "start_column": 49,
+        "end_line": 2238,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.modelUpdateControllerHostRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2244,
+        "start_column": 37,
+        "end_line": 2244,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.modelUpdateControllerInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2245,
+        "start_column": 47,
+        "end_line": 2245,
+        "end_column": 47
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.playbackControllerHostRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2251,
+        "start_column": 34,
+        "end_line": 2251,
+        "end_column": 34
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance.playbackControllerInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2252,
+        "start_column": 44,
+        "end_line": 2252,
+        "end_column": 44
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerHostInstance",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2254,
+        "start_column": 3,
+        "end_line": 2254,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARADocumentControllerHostInstanceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2257,
+        "start_column": 8,
+        "end_line": 2257,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2276,
+        "start_column": 8,
+        "end_line": 2276,
+        "end_column": 8
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2277,
+        "start_column": 27,
+        "end_line": 2277,
+        "end_column": 27
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2298,
+        "start_column": 40,
+        "end_line": 2334,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2301,
+        "start_column": 13,
+        "end_line": 2301,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.documentData",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2305,
+        "start_column": 13,
+        "end_line": 2305,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.audioSourceIDsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2308,
+        "start_column": 13,
+        "end_line": 2308,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.audioSourceArchiveIDs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2312,
+        "start_column": 29,
+        "end_line": 2312,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.audioSourceCurrentIDs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2319,
+        "start_column": 29,
+        "end_line": 2319,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.audioModificationIDsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2322,
+        "start_column": 13,
+        "end_line": 2322,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.audioModificationArchiveIDs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2326,
+        "start_column": 29,
+        "end_line": 2326,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter.audioModificationCurrentIDs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2333,
+        "start_column": 29,
+        "end_line": 2333,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARARestoreObjectsFilter",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2334,
+        "start_column": 3,
+        "end_line": 2334,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARARestoreObjectsFilterMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2337,
+        "start_column": 32,
+        "end_line": 2337,
+        "end_column": 63
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2347,
+        "start_column": 40,
+        "end_line": 2389,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2350,
+        "start_column": 13,
+        "end_line": 2350,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter.documentData",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2374,
+        "start_column": 13,
+        "end_line": 2374,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter.audioSourceRefsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2377,
+        "start_column": 13,
+        "end_line": 2377,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter.audioSourceRefs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2381,
+        "start_column": 31,
+        "end_line": 2381,
+        "end_column": 31
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter.audioModificationRefsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2384,
+        "start_column": 13,
+        "end_line": 2384,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter.audioModificationRefs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2388,
+        "start_column": 37,
+        "end_line": 2388,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAStoreObjectsFilter",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2389,
+        "start_column": 3,
+        "end_line": 2389,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAStoreObjectsFilterMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2392,
+        "start_column": 32,
+        "end_line": 2392,
+        "end_column": 61
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAProcessingAlgorithmProperties",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2403,
+        "start_column": 40,
+        "end_line": 2413,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAProcessingAlgorithmProperties.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2406,
+        "start_column": 13,
+        "end_line": 2406,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAProcessingAlgorithmProperties.persistentID",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2409,
+        "start_column": 21,
+        "end_line": 2409,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAProcessingAlgorithmProperties.name",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2412,
+        "start_column": 19,
+        "end_line": 2412,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAProcessingAlgorithmProperties",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2413,
+        "start_column": 3,
+        "end_line": 2413,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAProcessingAlgorithmPropertiesMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2416,
+        "start_column": 32,
+        "end_line": 2416,
+        "end_column": 72
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2451,
+        "start_column": 9,
+        "end_line": 2451,
+        "end_column": 9
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2456,
+        "start_column": 16,
+        "end_line": 3151,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2459,
+        "start_column": 13,
+        "end_line": 2459,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyDocumentController",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2469,
+        "start_column": 21,
+        "end_line": 2469,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getFactory",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2477,
+        "start_column": 35,
+        "end_line": 2477,
+        "end_column": 35
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.beginEditing",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2487,
+        "start_column": 21,
+        "end_line": 2487,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.endEditing",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2501,
+        "start_column": 21,
+        "end_line": 2501,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.notifyModelUpdates",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2512,
+        "start_column": 21,
+        "end_line": 2512,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.beginRestoringDocumentFromArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2523,
+        "start_column": 50,
+        "end_line": 2523,
+        "end_column": 50
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.endRestoringDocumentFromArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2535,
+        "start_column": 50,
+        "end_line": 2535,
+        "end_column": 50
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.storeDocumentToArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2541,
+        "start_column": 50,
+        "end_line": 2541,
+        "end_column": 50
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateDocumentProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2549,
+        "start_column": 21,
+        "end_line": 2549,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createMusicalContext",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2556,
+        "start_column": 37,
+        "end_line": 2557,
+        "end_column": 106
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateMusicalContextProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2561,
+        "start_column": 21,
+        "end_line": 2562,
+        "end_column": 100
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateMusicalContextContent",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2568,
+        "start_column": 21,
+        "end_line": 2569,
+        "end_column": 113
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyMusicalContext",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2574,
+        "start_column": 21,
+        "end_line": 2574,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createAudioSource",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2585,
+        "start_column": 34,
+        "end_line": 2586,
+        "end_column": 97
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateAudioSourceProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2593,
+        "start_column": 21,
+        "end_line": 2594,
+        "end_column": 94
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateAudioSourceContent",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2605,
+        "start_column": 21,
+        "end_line": 2606,
+        "end_column": 110
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.enableAudioSourceSamplesAccess",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2620,
+        "start_column": 21,
+        "end_line": 2620,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.deactivateAudioSourceForUndoHistory",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2635,
+        "start_column": 21,
+        "end_line": 2636,
+        "end_column": 111
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyAudioSource",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2643,
+        "start_column": 21,
+        "end_line": 2643,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createAudioModification",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2650,
+        "start_column": 40,
+        "end_line": 2651,
+        "end_column": 152
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.cloneAudioModification",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2660,
+        "start_column": 40,
+        "end_line": 2661,
+        "end_column": 151
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateAudioModificationProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2665,
+        "start_column": 21,
+        "end_line": 2666,
+        "end_column": 106
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.deactivateAudioModificationForUndoHistory",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2681,
+        "start_column": 21,
+        "end_line": 2682,
+        "end_column": 129
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyAudioModification",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2688,
+        "start_column": 21,
+        "end_line": 2688,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createPlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2695,
+        "start_column": 37,
+        "end_line": 2696,
+        "end_column": 140
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updatePlaybackRegionProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2700,
+        "start_column": 21,
+        "end_line": 2701,
+        "end_column": 100
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyPlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2706,
+        "start_column": 21,
+        "end_line": 2706,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.isAudioSourceContentAvailable",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2728,
+        "start_column": 24,
+        "end_line": 2729,
+        "end_column": 116
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.isAudioSourceContentAnalysisIncomplete",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2740,
+        "start_column": 24,
+        "end_line": 2741,
+        "end_column": 125
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.requestAudioSourceContentAnalysis",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2763,
+        "start_column": 21,
+        "end_line": 2764,
+        "end_column": 119
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getAudioSourceContentGrade",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2767,
+        "start_column": 32,
+        "end_line": 2768,
+        "end_column": 121
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createAudioSourceContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2775,
+        "start_column": 36,
+        "end_line": 2776,
+        "end_column": 130
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.isAudioModificationContentAvailable",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2781,
+        "start_column": 24,
+        "end_line": 2782,
+        "end_column": 134
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getAudioModificationContentGrade",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2787,
+        "start_column": 32,
+        "end_line": 2788,
+        "end_column": 139
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createAudioModificationContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2805,
+        "start_column": 36,
+        "end_line": 2806,
+        "end_column": 136
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.isPlaybackRegionContentAvailable",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2809,
+        "start_column": 24,
+        "end_line": 2810,
+        "end_column": 125
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getPlaybackRegionContentGrade",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2813,
+        "start_column": 32,
+        "end_line": 2814,
+        "end_column": 130
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createPlaybackRegionContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2824,
+        "start_column": 36,
+        "end_line": 2825,
+        "end_column": 133
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getContentReaderEventCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2828,
+        "start_column": 25,
+        "end_line": 2828,
+        "end_column": 25
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getContentReaderDataForEvent",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2833,
+        "start_column": 29,
+        "end_line": 2834,
+        "end_column": 117
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyContentReader",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2837,
+        "start_column": 21,
+        "end_line": 2837,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.createRegionSequence",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2844,
+        "start_column": 61,
+        "end_line": 2845,
+        "end_column": 130
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.updateRegionSequenceProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2849,
+        "start_column": 45,
+        "end_line": 2850,
+        "end_column": 124
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.destroyRegionSequence",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2854,
+        "start_column": 45,
+        "end_line": 2854,
+        "end_column": 45
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getPlaybackRegionHeadAndTailTime",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2885,
+        "start_column": 45,
+        "end_line": 2886,
+        "end_column": 134
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.restoreObjectsFromArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2976,
+        "start_column": 48,
+        "end_line": 2977,
+        "end_column": 114
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.storeObjectsToArchive",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 2992,
+        "start_column": 48,
+        "end_line": 2993,
+        "end_column": 108
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getProcessingAlgorithmsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3025,
+        "start_column": 49,
+        "end_line": 3025,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getProcessingAlgorithmProperties",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3039,
+        "start_column": 81,
+        "end_line": 3040,
+        "end_column": 139
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.getProcessingAlgorithmForAudioSource",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3057,
+        "start_column": 49,
+        "end_line": 3057,
+        "end_column": 49
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.requestProcessingAlgorithmForAudioSource",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3070,
+        "start_column": 45,
+        "end_line": 3071,
+        "end_column": 111
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.isLicensedForCapabilities",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3101,
+        "start_column": 48,
+        "end_line": 3104,
+        "end_column": 126
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.storeAudioSourceToAudioFileChunk",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3124,
+        "start_column": 48,
+        "end_line": 3125,
+        "end_column": 181
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface.isAudioModificationPreservingAudioSourceSignal",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3149,
+        "start_column": 48,
+        "end_line": 3149,
+        "end_column": 48
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3151,
+        "start_column": 3,
+        "end_line": 3151,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARADocumentControllerInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3154,
+        "start_column": 8,
+        "end_line": 3154,
+        "end_column": 46
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInstance",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3171,
+        "start_column": 16,
+        "end_line": 3181,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInstance.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3174,
+        "start_column": 13,
+        "end_line": 3174,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInstance.documentControllerRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3178,
+        "start_column": 30,
+        "end_line": 3178,
+        "end_column": 30
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInstance.documentControllerInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3179,
+        "start_column": 44,
+        "end_line": 3179,
+        "end_column": 44
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARADocumentControllerInstance",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3181,
+        "start_column": 3,
+        "end_line": 3181,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARADocumentControllerInstanceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3184,
+        "start_column": 8,
+        "end_line": 3184,
+        "end_column": 45
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInterfaceConfiguration",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3198,
+        "start_column": 16,
+        "end_line": 3213,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInterfaceConfiguration.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3201,
+        "start_column": 13,
+        "end_line": 3201,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInterfaceConfiguration.desiredApiGeneration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3204,
+        "start_column": 22,
+        "end_line": 3204,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInterfaceConfiguration.assertFunctionAddress",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3212,
+        "start_column": 25,
+        "end_line": 3212,
+        "end_column": 25
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAInterfaceConfiguration",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3213,
+        "start_column": 3,
+        "end_line": 3213,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAInterfaceConfigurationMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3216,
+        "start_column": 8,
+        "end_line": 3216,
+        "end_column": 41
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3223,
+        "start_column": 20,
+        "end_line": 3340,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3226,
+        "start_column": 13,
+        "end_line": 3226,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.lowestSupportedApiGeneration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3237,
+        "start_column": 22,
+        "end_line": 3237,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.highestSupportedApiGeneration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3238,
+        "start_column": 22,
+        "end_line": 3238,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.factoryID",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3250,
+        "start_column": 21,
+        "end_line": 3250,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.initializeARAWithConfiguration",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3253,
+        "start_column": 22,
+        "end_line": 3253,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.uninitializeARA",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3255,
+        "start_column": 22,
+        "end_line": 3255,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.plugInName",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3267,
+        "start_column": 19,
+        "end_line": 3267,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.manufacturerName",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3270,
+        "start_column": 19,
+        "end_line": 3270,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.informationURL",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3273,
+        "start_column": 19,
+        "end_line": 3273,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.version",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3276,
+        "start_column": 19,
+        "end_line": 3276,
+        "end_column": 19
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.createDocumentControllerWithDocument",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3288,
+        "start_column": 54,
+        "end_line": 3289,
+        "end_column": 133
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.documentArchiveID",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3297,
+        "start_column": 21,
+        "end_line": 3297,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.compatibleDocumentArchiveIDsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3300,
+        "start_column": 13,
+        "end_line": 3300,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.compatibleDocumentArchiveIDs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3307,
+        "start_column": 29,
+        "end_line": 3307,
+        "end_column": 29
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.analyzeableContentTypesCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3319,
+        "start_column": 13,
+        "end_line": 3319,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.analyzeableContentTypes",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3327,
+        "start_column": 28,
+        "end_line": 3327,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.supportedPlaybackTransformationFlags",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3331,
+        "start_column": 36,
+        "end_line": 3331,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAFactory.supportsStoringAudioFileChunks",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3338,
+        "start_column": 37,
+        "end_line": 3338,
+        "end_column": 37
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAFactoryMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3343,
+        "start_column": 8,
+        "end_line": 3343,
+        "end_column": 26
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInInstanceRoleFlags",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3402,
+        "start_column": 25,
+        "end_line": 3402,
+        "end_column": 51
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackRendererRole",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3428,
+        "start_column": 5,
+        "end_line": 3428,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAEditorRendererRole",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3443,
+        "start_column": 5,
+        "end_line": 3443,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAEditorViewRole",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3454,
+        "start_column": 5,
+        "end_line": 3454,
+        "end_column": 5
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3468,
+        "start_column": 33,
+        "end_line": 3468,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3473,
+        "start_column": 40,
+        "end_line": 3505,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3478,
+        "start_column": 13,
+        "end_line": 3478,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererInterface.addPlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3502,
+        "start_column": 21,
+        "end_line": 3502,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererInterface.removePlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3503,
+        "start_column": 21,
+        "end_line": 3503,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlaybackRendererInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3505,
+        "start_column": 3,
+        "end_line": 3505,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlaybackRendererInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3508,
+        "start_column": 32,
+        "end_line": 3508,
+        "end_column": 68
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3523,
+        "start_column": 33,
+        "end_line": 3523,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3528,
+        "start_column": 40,
+        "end_line": 3563,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3531,
+        "start_column": 13,
+        "end_line": 3531,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface.addPlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3557,
+        "start_column": 21,
+        "end_line": 3557,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface.removePlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3558,
+        "start_column": 21,
+        "end_line": 3558,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface.addRegionSequence",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3560,
+        "start_column": 21,
+        "end_line": 3560,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface.removeRegionSequence",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3561,
+        "start_column": 21,
+        "end_line": 3561,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorRendererInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3563,
+        "start_column": 3,
+        "end_line": 3563,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAEditorRendererInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3566,
+        "start_column": 32,
+        "end_line": 3566,
+        "end_column": 66
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3598,
+        "start_column": 16,
+        "end_line": 3628,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3601,
+        "start_column": 13,
+        "end_line": 3601,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection.playbackRegionRefsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3604,
+        "start_column": 13,
+        "end_line": 3604,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection.playbackRegionRefs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3610,
+        "start_column": 34,
+        "end_line": 3610,
+        "end_column": 34
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection.regionSequenceRefsCount",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3613,
+        "start_column": 13,
+        "end_line": 3613,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection.regionSequenceRefs",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3619,
+        "start_column": 34,
+        "end_line": 3619,
+        "end_column": 34
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection.timeRange",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3627,
+        "start_column": 33,
+        "end_line": 3627,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAViewSelection",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3628,
+        "start_column": 3,
+        "end_line": 3628,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAViewSelectionMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3631,
+        "start_column": 8,
+        "end_line": 3631,
+        "end_column": 32
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3634,
+        "start_column": 33,
+        "end_line": 3634,
+        "end_column": 33
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3639,
+        "start_column": 40,
+        "end_line": 3712,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3642,
+        "start_column": 13,
+        "end_line": 3642,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewInterface.notifySelection",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3698,
+        "start_column": 21,
+        "end_line": 3698,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewInterface.notifyHideRegionSequences",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3709,
+        "start_column": 21,
+        "end_line": 3710,
+        "end_column": 129
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAEditorViewInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3712,
+        "start_column": 3,
+        "end_line": 3712,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAEditorViewInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3715,
+        "start_column": 32,
+        "end_line": 3715,
+        "end_column": 62
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionRefMarkupType",
+      "kind": "opaque-struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3731,
+        "start_column": 35,
+        "end_line": 3731,
+        "end_column": 35
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionRef",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3731,
+        "start_column": 43,
+        "end_line": 3731,
+        "end_column": 64
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInterface",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3732,
+        "start_column": 42,
+        "end_line": 3737,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInterface.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3734,
+        "start_column": 13,
+        "end_line": 3734,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInterface.setPlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3735,
+        "start_column": 21,
+        "end_line": 3735,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInterface.removePlaybackRegion",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3736,
+        "start_column": 21,
+        "end_line": 3736,
+        "end_column": 21
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInterface",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3737,
+        "start_column": 3,
+        "end_line": 3737,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlugInExtensionInterfaceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3738,
+        "start_column": 34,
+        "end_line": 3738,
+        "end_column": 69
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance",
+      "kind": "struct",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3750,
+        "start_column": 16,
+        "end_line": 3769,
+        "end_column": 1
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.structSize",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3753,
+        "start_column": 13,
+        "end_line": 3753,
+        "end_column": 13
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.plugInExtensionRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3755,
+        "start_column": 53,
+        "end_line": 3755,
+        "end_column": 53
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.plugInExtensionInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3756,
+        "start_column": 67,
+        "end_line": 3756,
+        "end_column": 67
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.playbackRendererRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3760,
+        "start_column": 28,
+        "end_line": 3760,
+        "end_column": 28
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.playbackRendererInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3761,
+        "start_column": 42,
+        "end_line": 3761,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.editorRendererRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3763,
+        "start_column": 26,
+        "end_line": 3763,
+        "end_column": 26
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.editorRendererInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3764,
+        "start_column": 40,
+        "end_line": 3764,
+        "end_column": 40
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.editorViewRef",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3766,
+        "start_column": 22,
+        "end_line": 3766,
+        "end_column": 22
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance.editorViewInterface",
+      "kind": "field",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3767,
+        "start_column": 36,
+        "end_line": 3767,
+        "end_column": 36
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAPlugInExtensionInstance",
+      "kind": "typedef",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3769,
+        "start_column": 3,
+        "end_line": 3769,
+        "end_column": 3
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "kARAPlugInExtensionInstanceMinSize",
+      "kind": "constant",
+      "header": "ARAInterface.h",
+      "span": {
+        "start_line": 3772,
+        "start_column": 8,
+        "end_line": 3772,
+        "end_column": 42
+      },
+      "classification": "core-abi",
+      "required_sdks": []
+    },
+    {
+      "symbol": "ARAVST3_h",
+      "kind": "macro",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 21,
+        "start_column": 9,
+        "end_line": 21,
+        "end_column": 18
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "ARA_DISABLE_VST3_WARNINGS_BEGIN",
+      "kind": "macro",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 36,
+        "start_column": 17,
+        "end_line": 36,
+        "end_column": 48
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "ARA_DISABLE_VST3_WARNINGS_END",
+      "kind": "macro",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 39,
+        "start_column": 17,
+        "end_line": 39,
+        "end_column": 46
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "ARA_DISABLE_VST3_PRAGMA_PACK_WARNINGS",
+      "kind": "macro",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 42,
+        "start_column": 17,
+        "end_line": 42,
+        "end_column": 54
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "ARA_DISABLE_VST3_GCC_VARIANT_WARNINGS",
+      "kind": "macro",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 50,
+        "start_column": 21,
+        "end_line": 50,
+        "end_column": 58
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IMainFactory",
+      "kind": "class",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 106,
+        "start_column": 7,
+        "end_line": 106,
+        "end_column": 19
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IMainFactory.getFactory",
+      "kind": "method",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 113,
+        "start_column": 42,
+        "end_line": 113,
+        "end_column": 52
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IMainFactory.iid",
+      "kind": "field",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 115,
+        "start_column": 34,
+        "end_line": 115,
+        "end_column": 37
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "kARAMainFactoryClass",
+      "kind": "macro",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 120,
+        "start_column": 13,
+        "end_line": 120,
+        "end_column": 33
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint",
+      "kind": "class",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 128,
+        "start_column": 7,
+        "end_line": 128,
+        "end_column": 24
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint.getFactory",
+      "kind": "method",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 136,
+        "start_column": 42,
+        "end_line": 136,
+        "end_column": 52
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint.bindToDocumentController",
+      "kind": "method",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 147,
+        "start_column": 85,
+        "end_line": 147,
+        "end_column": 109
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint.iid",
+      "kind": "field",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 149,
+        "start_column": 34,
+        "end_line": 149,
+        "end_column": 37
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint2",
+      "kind": "class",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 155,
+        "start_column": 32,
+        "end_line": 155,
+        "end_column": 50
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint2.bindToDocumentControllerWithRoles",
+      "kind": "method",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 172,
+        "start_column": 58,
+        "end_line": 173,
+        "end_column": 91
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    },
+    {
+      "symbol": "IPlugInEntryPoint2.iid",
+      "kind": "field",
+      "header": "ARAVST3.h",
+      "span": {
+        "start_line": 174,
+        "start_column": 34,
+        "end_line": 174,
+        "end_column": 37
+      },
+      "classification": "companion-deferred",
+      "required_sdks": [
+        "vst3"
+      ]
+    }
+  ]
+}

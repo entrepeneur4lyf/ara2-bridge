@@ -1,0 +1,257 @@
+schema_version = 1
+source_header = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+source_commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+
+[rules]
+callback_if_represented = "non_null"
+field_present = "structSize >= offset_of(field) + size_of(field)"
+future_tail = "ignore"
+partial_field = "reject"
+nullable_pairs = "both ref and interface are null, or both are valid"
+
+[[target_family]]
+name = "x86"
+generations = [1, 2, 3, 4, 5, 6]
+pack = 1
+
+[[target_family]]
+name = "aarch64"
+generations = [4, 5, 6]
+pack = 8
+
+[[prefix]]
+surface = "ARAFactory"
+generation_min = 1
+required_terminal = "supportedPlaybackTransformationFlags"
+callbacks = ["initializeARAWithConfiguration", "uninitializeARA", "createDocumentControllerWithDocument"]
+optional_tail = "supportsStoringAudioFileChunks"
+tail_absent_fallback = "false"
+
+[[prefix]]
+surface = "ARADocumentControllerHostInstance"
+generation_min = 1
+required_terminal = "playbackControllerInterface"
+required_pairs = ["audioAccessController", "archivingController"]
+nullable_pairs = ["contentAccessController", "modelUpdateController", "playbackController"]
+
+[[prefix]]
+surface = "ARAAudioAccessControllerInterface"
+generation_min = 1
+required_terminal = "destroyAudioReader"
+callbacks = ["createAudioReaderForSource", "readAudioSamples", "destroyAudioReader"]
+
+[[prefix]]
+surface = "ARAArchivingControllerInterface"
+generation_min = 1
+required_terminal = "notifyDocumentUnarchivingProgress"
+callbacks = ["getArchiveSize", "readBytesFromArchive", "writeBytesToArchive", "notifyDocumentArchivingProgress", "notifyDocumentUnarchivingProgress"]
+
+[[prefix]]
+surface = "ARAArchivingControllerInterface"
+generation_min = 4
+required_terminal = "getDocumentArchiveID"
+callbacks = ["getDocumentArchiveID"]
+
+[[prefix]]
+surface = "ARAContentAccessControllerInterface"
+generation_min = 1
+whole_interface = "optional"
+required_terminal = "destroyContentReader"
+callbacks = ["isMusicalContextContentAvailable", "getMusicalContextContentGrade", "createMusicalContextContentReader", "isAudioSourceContentAvailable", "getAudioSourceContentGrade", "createAudioSourceContentReader", "getContentReaderEventCount", "getContentReaderDataForEvent", "destroyContentReader"]
+
+[[prefix]]
+surface = "ARAModelUpdateControllerInterface"
+generation_min = 1
+whole_interface = "optional"
+required_terminal = "notifyAudioModificationContentChanged"
+callbacks = ["notifyAudioSourceAnalysisProgress", "notifyAudioSourceContentChanged", "notifyAudioModificationContentChanged"]
+
+[[prefix]]
+surface = "ARAModelUpdateControllerInterface"
+generation_min = 3
+optional_terminal = "notifyPlaybackRegionContentChanged"
+callbacks = ["notifyPlaybackRegionContentChanged"]
+tail_absent_fallback = "suppress_playback_region_notification_and_treat_category_potentially_dirty"
+
+[[prefix]]
+surface = "ARAModelUpdateControllerInterface"
+generation_min = 6
+optional_terminal = "notifyDocumentDataChanged"
+callbacks = ["notifyDocumentDataChanged"]
+tail_absent_fallback = "suppress_document_notification_and_treat_category_potentially_dirty"
+
+[[prefix]]
+surface = "ARAPlaybackControllerInterface"
+generation_min = 1
+whole_interface = "optional"
+required_terminal = "requestEnableCycle"
+callbacks = ["requestStartPlayback", "requestStopPlayback", "requestSetPlaybackPosition", "requestSetCycleRange", "requestEnableCycle"]
+
+[[prefix]]
+surface = "ARADocumentControllerInterface"
+generation_min = 1
+required_terminal = "destroyContentReader"
+callbacks = ["destroyDocumentController", "getFactory", "beginEditing", "endEditing", "notifyModelUpdates", "beginRestoringDocumentFromArchive", "endRestoringDocumentFromArchive", "storeDocumentToArchive", "updateDocumentProperties", "createMusicalContext", "updateMusicalContextProperties", "updateMusicalContextContent", "destroyMusicalContext", "createAudioSource", "updateAudioSourceProperties", "updateAudioSourceContent", "enableAudioSourceSamplesAccess", "deactivateAudioSourceForUndoHistory", "destroyAudioSource", "createAudioModification", "cloneAudioModification", "updateAudioModificationProperties", "deactivateAudioModificationForUndoHistory", "destroyAudioModification", "createPlaybackRegion", "updatePlaybackRegionProperties", "destroyPlaybackRegion", "isAudioSourceContentAvailable", "isAudioSourceContentAnalysisIncomplete", "requestAudioSourceContentAnalysis", "getAudioSourceContentGrade", "createAudioSourceContentReader", "isAudioModificationContentAvailable", "getAudioModificationContentGrade", "createAudioModificationContentReader", "isPlaybackRegionContentAvailable", "getPlaybackRegionContentGrade", "createPlaybackRegionContentReader", "getContentReaderEventCount", "getContentReaderDataForEvent", "destroyContentReader"]
+
+[[prefix]]
+surface = "ARADocumentControllerInterface"
+generation_min = 3
+required_terminal = "getPlaybackRegionHeadAndTailTime"
+callbacks = ["createRegionSequence", "updateRegionSequenceProperties", "destroyRegionSequence", "getPlaybackRegionHeadAndTailTime"]
+
+[[prefix]]
+surface = "ARADocumentControllerInterface"
+generation_min = 4
+required_terminal = "storeObjectsToArchive"
+callbacks = ["restoreObjectsFromArchive", "storeObjectsToArchive"]
+
+[[capability_group]]
+surface = "ARADocumentControllerInterface"
+name = "processing_algorithms"
+generation_min = 4
+terminal = "requestProcessingAlgorithmForAudioSource"
+callbacks = ["getProcessingAlgorithmsCount", "getProcessingAlgorithmProperties", "getProcessingAlgorithmForAudioSource", "requestProcessingAlgorithmForAudioSource"]
+presence = "all_or_absent_by_prefix"
+absent_or_default_fallback = "count_zero"
+
+[[capability_group]]
+surface = "ARADocumentControllerInterface"
+name = "licensing"
+generation_min = 4
+terminal = "isLicensedForCapabilities"
+callbacks = ["isLicensedForCapabilities"]
+presence = "optional_by_prefix"
+absent_or_default_fallback = "true"
+
+[[capability_group]]
+surface = "ARADocumentControllerInterface"
+name = "audio_file_chunk_storage"
+generation_min = 4
+terminal = "storeAudioSourceToAudioFileChunk"
+callbacks = ["storeAudioSourceToAudioFileChunk"]
+presence = "required_when_factory_supportsStoringAudioFileChunks_else_not_called"
+represented_default_when_factory_flag_false = "return_false"
+
+[[capability_group]]
+surface = "ARADocumentControllerInterface"
+name = "signal_preservation"
+generation_min = 4
+terminal = "isAudioModificationPreservingAudioSourceSignal"
+callbacks = ["isAudioModificationPreservingAudioSourceSignal"]
+presence = "optional_by_prefix"
+absent_or_default_fallback = "false"
+
+[[prefix]]
+surface = "ARAPlugInExtensionInterface"
+generations = [1, 2]
+required_terminal = "removePlaybackRegion"
+callbacks = ["setPlaybackRegion", "removePlaybackRegion"]
+
+[[prefix]]
+surface = "ARAPlaybackRendererInterface"
+generation_min = 3
+required_terminal = "removePlaybackRegion"
+callbacks = ["addPlaybackRegion", "removePlaybackRegion"]
+
+[[prefix]]
+surface = "ARAEditorRendererInterface"
+generation_min = 3
+required_terminal = "removeRegionSequence"
+callbacks = ["addPlaybackRegion", "removePlaybackRegion", "addRegionSequence", "removeRegionSequence"]
+
+[[prefix]]
+surface = "ARAEditorViewInterface"
+generation_min = 3
+required_terminal = "notifyHideRegionSequences"
+callbacks = ["notifySelection", "notifyHideRegionSequences"]
+
+[[data_surface]]
+name = "ARAInterfaceConfiguration"
+generation_min = 1
+required_terminal = "assertFunctionAddress"
+required_non_null = ["assertFunctionAddress"]
+
+[[data_surface]]
+name = "ARADocumentControllerInstance"
+generation_min = 1
+required_terminal = "documentControllerInterface"
+required_non_null = ["documentControllerRef", "documentControllerInterface"]
+
+[[data_surface]]
+name = "ARADocumentProperties"
+generation_min = 1
+required_terminal = "name"
+nullable_data = ["name"]
+
+[[data_surface]]
+name = "ARAMusicalContextProperties"
+generation_min = 1
+required_terminal = "structSize"
+optional_tail_from_generation_3 = ["name", "orderIndex", "color"]
+nullable_data = ["name", "color"]
+
+[[data_surface]]
+name = "ARAAudioModificationProperties"
+generation_min = 1
+required_terminal = "persistentID"
+required_non_null = ["persistentID"]
+
+[[data_surface]]
+name = "ARAViewSelection"
+generation_min = 3
+required_terminal = "timeRange"
+nullable_data = ["playbackRegionRefs_when_count_zero", "regionSequenceRefs_when_count_zero", "timeRange"]
+
+[[data_surface]]
+name = "ARAPlugInExtensionInstance"
+generations = [1, 2]
+required_terminal = "plugInExtensionInterface"
+required_pairs = ["plugInExtension"]
+
+[[data_surface]]
+name = "ARAPlugInExtensionInstance"
+generation_min = 3
+required_terminal = "editorViewInterface"
+nullable_pairs = ["plugInExtension", "playbackRenderer", "editorRenderer", "editorView"]
+pair_rule = "role enabled iff role supported and (!known(role) || assigned(role)); enabled ARA2 pairs valid, disabled pairs null; assigned subset known"
+
+[[data_surface]]
+name = "ARAPlaybackRegionProperties"
+generations = [1, 2]
+required_terminal = "musicalContextRef"
+
+[[data_surface]]
+name = "ARAPlaybackRegionProperties"
+generation_min = 3
+required_terminal = "regionSequenceRef"
+required_non_null = ["regionSequenceRef"]
+optional_tail = ["name", "color"]
+
+[[data_surface]]
+name = "ARARegionSequenceProperties"
+generation_min = 3
+required_terminal = "musicalContextRef"
+required_non_null = ["musicalContextRef"]
+optional_tail = ["color"]
+
+[[data_surface]]
+name = "ARAAudioSourceProperties"
+generation_min = 1
+required_terminal = "merits64BitSamples"
+optional_tail_from_generation_4 = ["channelArrangementDataType", "channelArrangement"]
+tail_default = "undefined_and_null"
+
+[[data_surface]]
+name = "ARARestoreObjectsFilter"
+generation_min = 4
+required_terminal = "audioModificationCurrentIDs"
+
+[[data_surface]]
+name = "ARAStoreObjectsFilter"
+generation_min = 4
+required_terminal = "audioModificationRefs"
+
+[[data_surface]]
+name = "ARAProcessingAlgorithmProperties"
+generation_min = 4
+required_terminal = "name"

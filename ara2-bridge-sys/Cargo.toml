@@ -1,15 +1,16 @@
 [package]
 name = "ara2-bridge-sys"
-version = "0.1.7"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
 description = "Raw FFI bindings for Celemony ARA2 SDK"
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
+license.workspace = true
+repository.workspace = true
 readme = "../README.md"
 keywords = ["audio", "ara2", "daw", "vst", "plugin"]
 categories = ["multimedia::audio", "development-tools::ffi"]
 
-[build-dependencies]
-bindgen = "0.71"
-
 [dependencies]
+
+[dev-dependencies]
+serde_json.workspace = true

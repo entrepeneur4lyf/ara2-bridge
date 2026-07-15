@@ -1,0 +1,22 @@
+error[E0277]: `Rc<()>` cannot be sent between threads safely
+ --> tests/ui/handle_not_send.rs:8:20
+  |
+  8 |     require_send::<Handle<AudioSourceKind>>();
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^ `Rc<()>` cannot be sent between threads safely
+    |
+    = help: within `Handle<AudioSourceKind>`, the trait `Send` is not implemented for `Rc<()>`
+note: required because it appears within the type `PhantomData<Rc<()>>`
+   --> $RUST/core/src/marker.rs
+    |
+    | pub struct PhantomData<T: PointeeSized>;
+    |            ^^^^^^^^^^^
+note: required because it appears within the type `Handle<AudioSourceKind>`
+   --> src/handles.rs
+    |
+ 28 | pub struct Handle<K> {
+    |            ^^^^^^
+note: required by a bound in `require_send`
+   --> tests/ui/handle_not_send.rs:5:20
+    |
+  5 | fn require_send<T: Send>() {}
+    |                    ^^^^ required by this bound in `require_send`

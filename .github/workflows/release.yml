@@ -1,0 +1,100 @@
+name: Release Evidence
+
+on:
+  workflow_dispatch:
+    inputs:
+      head_sha:
+        description: Exact successful candidate commit
+        required: true
+        type: string
+      ci_run_id:
+        description: CI run ID for head_sha
+        required: true
+        type: string
+      native_run_id:
+        description: Native Conformance run ID for head_sha
+        required: true
+        type: string
+      safety_run_id:
+        description: Safety run ID for head_sha
+        required: true
+        type: string
+
+permissions:
+  actions: read
+  attestations: write
+  contents: read
+  id-token: write
+
+env:
+  CARGO_TERM_COLOR: always
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  bundle-evidence:
+    name: Bundle and attest same-SHA evidence
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ inputs.head_sha }}
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
+        with:
+          toolchain: stable
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.ci_run_id }}
+          pattern: evidence-*
+          path: target/release-evidence/ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.native_run_id }}
+          pattern: evidence-*
+          path: target/release-evidence/native
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.safety_run_id }}
+          pattern: evidence-*
+          path: target/release-evidence/safety
+      - name: Verify candidate identity
+        run: test "$(git rev-parse HEAD)" = "${{ inputs.head_sha }}"
+      - name: Build deterministic same-SHA archive
+        run: |
+          mkdir -p target/release
+          cargo xtask ci bundle-evidence --input target/release-evidence --output target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst --head-sha ${{ inputs.head_sha }} --matrix docs/conformance/ci-matrix.md
+          sha256sum target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst > target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst.sha256
+      - name: Write release-gate evidence
+        if: always()
+        env:
+          GITHUB_SHA: ${{ inputs.head_sha }}
+          EVIDENCE_TARGET: release-evidence
+          EVIDENCE_TOOLCHAIN: stable
+          EVIDENCE_COMMAND: cargo xtask ci bundle-evidence; SHA-256 digest; archive attestation
+          EVIDENCE_CONCLUSION: ${{ job.status }}
+          EVIDENCE_INPUTS: |
+            Cargo.lock
+            docs/conformance/evidence-schema.json
+          EVIDENCE_OUTPUTS: |
+            target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst
+            target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst.sha256
+        run: ci/write-evidence.sh target/release/release-gate.json
+      - if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ara2-evidence-${{ inputs.head_sha }}
+          path: |
+            target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst
+            target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst.sha256
+            target/release/release-gate.json
+          if-no-files-found: error
+      - name: Attest archive
+        uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661 # v3
+        with:
+          subject-path: target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst

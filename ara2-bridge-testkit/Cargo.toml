@@ -1,0 +1,32 @@
+[package]
+name = "ara2-bridge-testkit"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+description = "Mock peers and conformance scenarios for ara2-bridge"
+license.workspace = true
+repository.workspace = true
+
+[features]
+default = []
+clap = ["ara2-bridge-companion/clap"]
+vst3 = ["ara2-bridge-companion/vst3"]
+audio-unit-v2 = ["ara2-bridge-companion/audio-unit-v2"]
+cpp-interop = []
+
+[dependencies]
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
+ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.2.0-alpha.1" }
+ara2-bridge-plugin = { path = "../ara2-bridge-plugin", version = "=0.2.0-alpha.1" }
+ara2-bridge-host = { path = "../ara2-bridge-host", version = "=0.2.0-alpha.1" }
+ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.2.0-alpha.1" }
+libc.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+
+[build-dependencies]
+cc.workspace = true
+
+[[test]]
+name = "cpp_interop"
+required-features = ["cpp-interop"]

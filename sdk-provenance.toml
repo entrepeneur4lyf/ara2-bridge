@@ -1,0 +1,174 @@
+ara_api_commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+ara_examples_commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
+ara_library_commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
+schema = 1
+sdk_commit = "a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/audio/aifc-unknown-odd.aifc"
+role = "generated-fixture;set=audio-containers;source=reviewed-recipe;license=Apache-2.0;input-sha256=e7b0f1d4ce898cf6e0ba0177f5702e3a7a178085c47015a019998f2836acb884"
+sha256 = "e7b0f1d4ce898cf6e0ba0177f5702e3a7a178085c47015a019998f2836acb884"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/audio/aiff-unknown-odd.aiff"
+role = "generated-fixture;set=audio-containers;source=reviewed-recipe;license=Apache-2.0;input-sha256=fc968a7d93364583627785d762cf271a1b7eb32c7106afe35a73b6b2c9430bc9"
+sha256 = "fc968a7d93364583627785d762cf271a1b7eb32c7106afe35a73b6b2c9430bc9"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/audio/bw64-ds64.wav"
+role = "generated-fixture;set=audio-containers;source=reviewed-recipe;license=Apache-2.0;input-sha256=07b59d5d8dea981060dfa24bd13f0ab25b57eebb73b48f87d2bf0a734e004f4a"
+sha256 = "07b59d5d8dea981060dfa24bd13f0ab25b57eebb73b48f87d2bf0a734e004f4a"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/audio/rf64-ds64.wav"
+role = "generated-fixture;set=audio-containers;source=reviewed-recipe;license=Apache-2.0;input-sha256=96321f5b8a751443f6a21229b41128fe16c8baf7697d7ae87cd54c85170c8a24"
+sha256 = "96321f5b8a751443f6a21229b41128fe16c8baf7697d7ae87cd54c85170c8a24"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/audio/wave-unknown-odd.wav"
+role = "generated-fixture;set=audio-containers;source=reviewed-recipe;license=Apache-2.0;input-sha256=15f9805fe0dd999bba46960f6eaddae30c0833f97d9531f6873efb02cf07a5f9"
+sha256 = "15f9805fe0dd999bba46960f6eaddae30c0833f97d9531f6873efb02cf07a5f9"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/chunks/full-2.3.xml"
+role = "generated-fixture;set=chunk-xml;source=reviewed-recipe;license=Apache-2.0;input-sha256=ab9149beb163d4a5b49b768e4e51e9c32acf378fe40eb0e25ce76ead6647ec62"
+sha256 = "ab9149beb163d4a5b49b768e4e51e9c32acf378fe40eb0e25ce76ead6647ec62"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/chunks/legacy-missing-distinct.xml"
+role = "generated-fixture;set=chunk-xml;source=reviewed-recipe;license=Apache-2.0;input-sha256=4278c7ded8ecad9da41e467a1ff51455d04657664fd4465df4168b61b2b83c28"
+sha256 = "4278c7ded8ecad9da41e467a1ff51455d04657664fd4465df4168b61b2b83c28"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/chunks/multi-entry-order.xml"
+role = "generated-fixture;set=chunk-xml;source=reviewed-recipe;license=Apache-2.0;input-sha256=464dd2eaad15e6593db5f06935bf2eb6b4c3a57e1c90e72dbec245f74c77fa58"
+sha256 = "464dd2eaad15e6593db5f06935bf2eb6b4c3a57e1c90e72dbec245f74c77fa58"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/chunks/namespace-qualified.xml"
+role = "generated-fixture;set=chunk-xml;source=reviewed-recipe;license=Apache-2.0;input-sha256=05060bffd3c95b20007927fa87d23f70b0568c29607f28362a6b650f670b50d8"
+sha256 = "05060bffd3c95b20007927fa87d23f70b0568c29607f28362a6b650f670b50d8"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/chunks/unrelated-ordering.xml"
+role = "generated-fixture;set=chunk-xml;source=reviewed-recipe;license=Apache-2.0;input-sha256=642952d6b924184682b9286530968201f1bd825152dd78c4706494deb937feb5"
+sha256 = "642952d6b924184682b9286530968201f1bd825152dd78c4706494deb937feb5"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara1-full.archive"
+role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=Apache-2.0;input-sha256=3071f1d6bd332cec8e56112c0c60f79ebc399030459671ab7e11a08ece132dfc"
+sha256 = "3071f1d6bd332cec8e56112c0c60f79ebc399030459671ab7e11a08ece132dfc"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara2-full.archive"
+role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=Apache-2.0;input-sha256=3c0cfb45fc5dab202d26a16bfb5788af87d88d5c6569621e78c4434542f50c9f"
+sha256 = "3c0cfb45fc5dab202d26a16bfb5788af87d88d5c6569621e78c4434542f50c9f"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara2-partial-a.archive"
+role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=Apache-2.0;input-sha256=bc89ff51343e8c335496648d7736cf2cd4ab1910320fe1cb6a0197b86b3a5a16"
+sha256 = "bc89ff51343e8c335496648d7736cf2cd4ab1910320fe1cb6a0197b86b3a5a16"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/scenarios/ara2-partial-b.archive"
+role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=Apache-2.0;input-sha256=4c1b78096f8a6648c2f843b22b5e6b8a43691355193533a3bebca8f713b2d8b5"
+sha256 = "4c1b78096f8a6648c2f843b22b5e6b8a43691355193533a3bebca8f713b2d8b5"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/scenarios/chunk-aiff.aiff"
+role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=Apache-2.0;input-sha256=090db617e82f530df694d889da5ea084b4a52235dc39ebabd4d4fae0fa401cfa"
+sha256 = "090db617e82f530df694d889da5ea084b4a52235dc39ebabd4d4fae0fa401cfa"
+
+[[file]]
+path = "ara2-bridge-testkit/fixtures/scenarios/chunk-wave.wav"
+role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=Apache-2.0;input-sha256=88dbe314538135405b47393dfac1d0bee801ffb463e658031f6d17fefecdbe53"
+sha256 = "88dbe314538135405b47393dfac1d0bee801ffb463e658031f6d17fefecdbe53"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAAudioFileChunks.h"
+role = "core-abi-and-cpp-behavior-header"
+sha256 = "88b1756c733881868f50f0e8f5b8092a4937d4af0e642e9a99c123fa5922df41"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAAudioUnit.h"
+role = "companion-declaration-header"
+sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARACLAP.h"
+role = "companion-declaration-header"
+sha256 = "40cf55e206034087e47be32ed243b33d6748348cecce3eac063e662ae4cf2217"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+role = "core-abi-header"
+sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/ARAVST3.h"
+role = "companion-declaration-header"
+sha256 = "ff2a166975852c177e68baa26d1ebe1bc7d03a3dbfd16bf79e98976c62f68e90"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_API/LICENSE.txt"
+role = "api-license"
+sha256 = "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_Library/Utilities/ARAChannelFormat.cpp"
+role = "ported-utility-source;license=Apache-2.0"
+sha256 = "dd276e184c0780c6655fec4baf843a41cd3b3909551458aa3cebc693274fb40b"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_Library/Utilities/ARAChannelFormat.h"
+role = "ported-utility-source;license=Apache-2.0"
+sha256 = "26f23aa88e5d5186b8b9ec3d23e85e3d65f185b8fae399a15cdc93cf64eb372f"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_Library/Utilities/ARAPitchInterpretation.cpp"
+role = "ported-utility-source;license=Apache-2.0"
+sha256 = "a0af238c119ecdbb279a8ff8ec17e2863eb9c3adcfd079ed464d8b83e478758e"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_Library/Utilities/ARAPitchInterpretation.h"
+role = "ported-utility-source;license=Apache-2.0"
+sha256 = "e598ab20c2e38908f5d39678d802143ccd2c1e37dba640784c2d7c331a93cc27"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_Library/Utilities/ARASamplePositionConversion.h"
+role = "ported-utility-source;license=Apache-2.0"
+sha256 = "b2b9af8029785505aeea19ed5e3fb19decad214c17104b427ed09c8d0a0390b9"
+
+[[file]]
+path = "reference/ARA_SDK/ARA_Library/Utilities/ARATimelineConversion.h"
+role = "ported-utility-source;license=Apache-2.0"
+sha256 = "93b92b8c3ec162d8177f041134d43232485d369e8b4bbc94dcac423c838cb343"
+
+[[file]]
+path = "reference/ARA_SDK/NOTICE.txt"
+role = "upstream-notice"
+sha256 = "c2cb0f6d2e7142c4eaa437c658e2fef1aa6d304b9eb75e5de8a9be09f317cdd3"
+
+[[submodule]]
+commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+path = "ARA_API"
+
+[[submodule]]
+commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
+path = "ARA_Library"
+
+[[submodule]]
+commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
+path = "ARA_Examples"
+
+[[submodule]]
+commit = "148e3c7828ebbe0ddafd29d83e67f91b9458b1bd"
+path = "ARA_Examples/3rdParty/ICST_AudioFile"
+
+[[submodule]]
+commit = "07ae5045d67b5bf6ffb46646b8ac2370eff1ae3e"
+path = "ARA_Examples/3rdParty/cpp-base64"
+
+[[submodule]]
+commit = "08b3433180727ea2f78fe02e860a08471db1e03c"
+path = "ARA_Examples/3rdParty/pugixml"

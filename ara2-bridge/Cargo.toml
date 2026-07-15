@@ -1,13 +1,69 @@
 [package]
 name = "ara2-bridge"
-version = "0.1.7"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
 description = "Safe Rust bindings for the Celemony ARA2 SDK"
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
+license.workspace = true
+repository.workspace = true
 readme = "../README.md"
 keywords = ["audio", "ara2", "daw", "vst", "plugin"]
 categories = ["multimedia::audio", "development-tools::ffi"]
 
 [dependencies]
-ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "0.1.7" }
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
+ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.2.0-alpha.1" }
+ara2-bridge-plugin = { path = "../ara2-bridge-plugin", version = "=0.2.0-alpha.1", optional = true }
+ara2-bridge-host = { path = "../ara2-bridge-host", version = "=0.2.0-alpha.1", optional = true }
+ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.2.0-alpha.1", optional = true }
+ara2-bridge-testkit = { path = "../ara2-bridge-testkit", version = "=0.2.0-alpha.1", optional = true }
+
+[features]
+default = ["plugin"]
+plugin = ["dep:ara2-bridge-plugin"]
+host = ["dep:ara2-bridge-host"]
+testkit = ["dep:ara2-bridge-testkit"]
+clap = ["dep:ara2-bridge-companion", "ara2-bridge-companion/clap"]
+vst3 = ["dep:ara2-bridge-companion", "ara2-bridge-companion/vst3"]
+audio-unit-v2 = [
+    "dep:ara2-bridge-companion",
+    "ara2-bridge-companion/audio-unit-v2",
+]
+full-portable = ["plugin", "host", "clap", "vst3"]
+full-apple = ["full-portable", "audio-unit-v2"]
+testkit-clap = ["testkit", "clap", "ara2-bridge-testkit/clap"]
+testkit-vst3 = ["testkit", "vst3", "ara2-bridge-testkit/vst3"]
+testkit-audio-unit-v2 = [
+    "testkit",
+    "audio-unit-v2",
+    "ara2-bridge-testkit/audio-unit-v2",
+]
+
+[[example]]
+name = "minimal-plugin"
+required-features = ["plugin"]
+
+[[example]]
+name = "minimal-host"
+required-features = ["host"]
+
+[[example]]
+name = "content-reader"
+
+[[example]]
+name = "archive-roundtrip"
+
+[[example]]
+name = "audio-file-chunk"
+
+[[example]]
+name = "clap-binding"
+required-features = ["plugin", "clap"]
+
+[[example]]
+name = "vst3-binding"
+required-features = ["plugin", "vst3"]
+
+[[example]]
+name = "audio-unit-v2-binding"
+required-features = ["plugin", "audio-unit-v2"]

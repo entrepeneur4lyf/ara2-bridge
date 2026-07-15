@@ -306,6 +306,12 @@ pub fn create_source_bundle(root: &Path, output: &Path, allow_dirty: bool) -> Re
     bundle::create(root, output, allow_dirty)
 }
 
+/// Verifies the clean tracked-tree precondition used by candidate packaging.
+#[doc(hidden)]
+pub fn verify_clean_candidate(root: &Path) -> Result<(), String> {
+    bundle::require_clean_tree(root)
+}
+
 /// Verifies a source bundle without network or ambient Cargo state.
 #[doc(hidden)]
 pub fn verify_source_bundle(bundle: &Path) -> Result<(), String> {

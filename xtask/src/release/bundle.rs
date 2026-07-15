@@ -128,7 +128,7 @@ fn read_recipe(root: &Path) -> Result<Recipe, String> {
     toml::from_str(&source).map_err(|error| format!("invalid source-bundle recipe: {error}"))
 }
 
-fn require_clean_tree(root: &Path) -> Result<(), String> {
+pub(super) fn require_clean_tree(root: &Path) -> Result<(), String> {
     let output = command_output(
         {
             let mut command = Command::new("git");

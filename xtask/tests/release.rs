@@ -170,20 +170,25 @@ fn source_bundle_is_deterministic_and_builds_offline() {
 }
 
 #[test]
-fn source_bundle_command_rejects_a_dirty_candidate() {
-    let output = tempfile::tempdir()
-        .unwrap()
-        .path()
-        .join("candidate.tar.zst");
-    let error = xtask::run([
-        "release".to_owned(),
-        "source-bundle".to_owned(),
-        "--version".to_owned(),
-        VERSION.to_owned(),
-        "--output".to_owned(),
-        output.display().to_string(),
-    ])
-    .unwrap_err();
+fn source_bundle_clean_candidate_gate_rejects_a_dirty_tree() {
+    let repository = tempfile::tempdir().unwrap();
+    let git = |args: &[&str]| {
+        let status = Command::new("git")
+            .current_dir(repository.path())
+            .args(args)
+            .status()
+            .unwrap();
+        assert!(status.success(), "git {args:?} failed");
+    };
+    git(&["init", "--quiet"]);
+    git(&["config", "user.name", "ARA2 Bridge Test"]);
+    git(&["config", "user.email", "test@ara2-bridge.invalid"]);
+    std::fs::write(repository.path().join("tracked.txt"), "clean\n").unwrap();
+    git(&["add", "tracked.txt"]);
+    git(&["commit", "--quiet", "-m", "test fixture"]);
+    std::fs::write(repository.path().join("tracked.txt"), "dirty\n").unwrap();
+
+    let error = xtask::release::verify_clean_candidate(repository.path()).unwrap_err();
     assert!(error.contains("clean tracked candidate tree"), "{error}");
 }
 

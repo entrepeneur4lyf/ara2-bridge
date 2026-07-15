@@ -123,6 +123,7 @@ fn ara2_restore_rejects_incompatible_archive_before_plugin_dispatch() {
 }
 
 #[test]
+#[cfg(not(target_arch = "aarch64"))]
 fn ara1_restore_uses_the_balanced_legacy_scope() {
     let trace = TestPluginTrace::new();
     let factory = build_test_factory(trace.clone()).unwrap();
@@ -263,6 +264,7 @@ fn ara2_partial_store_serializes_checked_peer_references_outside_editing() {
 }
 
 #[test]
+#[cfg(not(target_arch = "aarch64"))]
 fn legacy_store_uses_the_full_document_callback() {
     let trace = TestPluginTrace::new();
     let factory = build_test_factory(trace.clone()).unwrap();

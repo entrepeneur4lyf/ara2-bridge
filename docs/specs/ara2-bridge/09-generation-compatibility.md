@@ -2,7 +2,7 @@
 
 Status: Normative cross-cutting specification  
 Depends on: [ABI and Binding Generation](01-abi-and-generation.md), [Core Safety and Dispatch](02-core-safety-and-dispatch.md)  
-Last revised: 2026-07-14
+Last revised: 2026-07-15
 
 ## Scope
 
@@ -97,3 +97,4 @@ The conformance kit runs generation-specific host/plug-in pairings for every row
 
 - 2026-07-14: Audit introduced a single compatibility matrix and an ARA1 synthetic-sequence normalization layer.
 - 2026-07-14: Audit made generation state factory-local, corrected role enablement, and expanded 2.3 reliability to every persistent-state category.
+- 2026-07-15: Conformance fixtures advertise only generations present in the compiled target ABI; AArch64 retains the ARA1 manifest row as explicitly inapplicable rather than synthesizing legacy support.

@@ -15,6 +15,7 @@ const SOURCE_TAG: &str = "releases/2.3.0";
 const SOURCE_COMMIT: &str = "65ec5c43b943a48cb5446f448a0492db6af8534b";
 const GENERATOR: &str = "ara2-bridge xtask 0.2.0-alpha.1";
 const LICENSE: &str = "Apache-2.0";
+const COVERAGE_TARGET_ARG: &str = "--target=x86_64-unknown-linux-gnu";
 
 /// One target ABI family emitted by the binding generator.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -626,7 +627,15 @@ fn clang_resource_include() -> Result<PathBuf, DynError> {
 fn preprocess_core_header(api: &Path, header: &str) -> Result<(), DynError> {
     let output = Command::new(clang())
         .current_dir(api)
-        .args(["-E", "-dD", "-x", "c", "-std=c11", header])
+        .args([
+            COVERAGE_TARGET_ARG,
+            "-E",
+            "-dD",
+            "-x",
+            "c",
+            "-std=c11",
+            header,
+        ])
         .output()?;
     if !output.status.success() {
         return Err(message(format!(
@@ -646,6 +655,7 @@ fn ast_records(api: &Path, header: &str) -> Result<Vec<CoverageRecord>, DynError
     let output = Command::new(clang())
         .current_dir(api)
         .args([
+            COVERAGE_TARGET_ARG,
             "-x",
             "c",
             "-std=c11",

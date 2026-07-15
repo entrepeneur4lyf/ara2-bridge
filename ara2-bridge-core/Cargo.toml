@@ -19,5 +19,18 @@ thiserror.workspace = true
 
 [dev-dependencies]
 proptest.workspace = true
+static_assertions.workspace = true
 tempfile = "=3.14.0"
 trybuild.workspace = true
+
+[[example]]
+name = "core-archive-roundtrip"
+path = "examples/archive-roundtrip.rs"
+
+[[example]]
+name = "core-audio-file-chunk"
+path = "examples/audio-file-chunk.rs"
+
+[[example]]
+name = "core-content-reader"
+path = "examples/content-reader.rs"

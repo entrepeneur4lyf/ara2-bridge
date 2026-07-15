@@ -7,7 +7,7 @@ semantic_class = "count-and-range-overflow"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "af9613760f72635fbdb44a5a0a63c39f12af30f950a6ee5c971be188e89c4051"
 
 [[seed]]
@@ -47,7 +47,7 @@ semantic_class = "malformed-chunk"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "bb5d4b7f44685a3c614827f7bf12a5aa3aa1dd2b43df94fc035ae25bb3c5209a"
 
 [[seed]]
@@ -137,7 +137,7 @@ semantic_class = "truncated-and-invalid-event"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "b1f49e29ce2b29a2c0482fb066e9ccd62a6b7fbe8d21d66ae3445f5fda2b676c"
 
 [[seed]]
@@ -147,8 +147,8 @@ semantic_class = "upstream-all-event-kinds"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
-output_sha256 = "6f5a24baf24dae9394958de667aabcb8b58f29ed9f00ffdf92c0771004a4fdb6"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
+output_sha256 = "9c8433633d7eed5586c6e8f2bad2bf5cec05d8a6b4dff0d570113b5c97ba3046"
 
 [[seed]]
 path = "fuzz/corpus/dispatch/generation-1.bin"
@@ -157,7 +157,7 @@ semantic_class = "generation-1-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "85f90dfea1d8027e1463e5ca971a250110a20df0119d204a74220bc63516d15b"
 
 [[seed]]
@@ -167,7 +167,7 @@ semantic_class = "generation-6-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "ed3a3d49410a4c39626e809fe7ce956bf0f2807d80ddf50e05c3371258dc185c"
 
 [[seed]]
@@ -177,7 +177,7 @@ semantic_class = "null-callback-slot"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "ca99b62e263a85a8674d2917d23ddbffc3e95e3d11760bc75960d6498855e6ed"
 
 [[seed]]
@@ -187,7 +187,7 @@ semantic_class = "truncated-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "67586e98fad27da0b9968bc039a1ef34c939b9b8e523a8bef89d478608c5ecf6"
 
 [[seed]]
@@ -197,7 +197,7 @@ semantic_class = "foreign-session-reference"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "dc21e6421ad23388fb5c3f3e1f7a3c721dc73973f3173389d92dbb455b779274"
 
 [[seed]]
@@ -207,7 +207,7 @@ semantic_class = "null-reference"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
 
 [[seed]]
@@ -217,7 +217,7 @@ semantic_class = "stale-reference"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "494d799e953876ac6022c3f7da5e0f3c04b549be12d1c283c9f877ad2d227a8d"
 
 [[seed]]
@@ -227,7 +227,7 @@ semantic_class = "field-boundary-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "77a54f86f9b22d605e0e41fefc0fddcb6a2a3661b0a30efbc584d9891b8f6a5f"
 
 [[seed]]
@@ -237,7 +237,7 @@ semantic_class = "released-generation-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "3a87f02ff96dea453597691af3b1d12d16275ce0f5f92e5d716b004cc7c4654d"
 
 [[seed]]
@@ -247,7 +247,7 @@ semantic_class = "released-generation-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "12b4f0c224feaa0388a0df1d889127975e239ebedf89fc48b53260dbd15793a4"
 
 [[seed]]
@@ -257,7 +257,7 @@ semantic_class = "released-generation-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "6230b39702ceb291ec5bf93f2a6af11e29acd35a6844cbe663b83e4d5113a96a"
 
 [[seed]]
@@ -267,7 +267,7 @@ semantic_class = "released-generation-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "7d5b2975fd575adb8814b1e511a2ced7f261ed2203817040d8d6d7083084890c"
 
 [[seed]]
@@ -277,7 +277,7 @@ semantic_class = "released-generation-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "d7bc4bc9b50b53fbc74df4eb6925a5603964bb950173962d772cfcca76d10bf4"
 
 [[seed]]
@@ -287,5 +287,5 @@ semantic_class = "released-generation-prefix"
 source_path = "xtask/src/fuzz_corpus.rs"
 source_repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 source_license = "MIT OR Apache-2.0"
-source_sha256 = "6803592a55f715bce1961e17f7c3a92f3534fe1816f6bdfbfba0284a3c07196b"
+source_sha256 = "c59095bdc975d2347667c868baec2f63d2429684d26cdbc548c85441f93de2ed"
 output_sha256 = "2e6fa47b726d6947af4efd8bc6b2020f901450cc2222a6a94906b78b42ac1cd0"

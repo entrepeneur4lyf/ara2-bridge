@@ -1,5 +1,5 @@
-use cargo_metadata::DependencyKind;
-use std::collections::BTreeSet;
+use cargo_metadata::{DependencyKind, TargetKind};
+use std::collections::{BTreeMap, BTreeSet};
 
 #[test]
 fn expected_packages_are_workspace_members() {
@@ -26,6 +26,32 @@ fn expected_packages_are_workspace_members() {
             "missing workspace member {expected}"
         );
     }
+}
+
+#[test]
+fn workspace_example_targets_have_unique_output_names() {
+    let metadata = cargo_metadata::MetadataCommand::new().exec().unwrap();
+    let mut owners = BTreeMap::<&str, Vec<&str>>::new();
+
+    for package in metadata.workspace_packages() {
+        for target in &package.targets {
+            if target.kind.contains(&TargetKind::Example) {
+                owners
+                    .entry(target.name.as_str())
+                    .or_default()
+                    .push(package.name.as_str());
+            }
+        }
+    }
+
+    let collisions: BTreeMap<_, _> = owners
+        .into_iter()
+        .filter(|(_, packages)| packages.len() > 1)
+        .collect();
+    assert!(
+        collisions.is_empty(),
+        "example output names must be workspace-unique: {collisions:?}"
+    );
 }
 
 #[test]

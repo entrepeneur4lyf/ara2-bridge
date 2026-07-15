@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "component": "audio-unit-v2",
+  "target": "aarch64-apple-darwin",
+  "probe_method": "native-execution",
+  "source_commit": "53ea94e5efebf864b70afb673bdd60c977818ec7",
+  "source_tree": "bb8b75ec63fe7d9036073287c4f01bf96d8a49f5",
+  "source_hash": "39e7da631db8b4f37db08d41657b89f72f33450ca0c39fbf1f121cbc706ff291",
+  "probe_hash": "fc46268577409953cb832eba95399d9c56e19d882f42f3077fb44edc992d4685",
+  "payload_hash": "f74a4e05d7049f9173d33c164c28532949fb98cd11937983a7aefeb47f1a7977",
+  "payload": {
+    "binding": {
+      "align": 8,
+      "offsets": [
+        0,
+        8,
+        16,
+        24,
+        28
+      ],
+      "size": 32
+    },
+    "constants": {
+      "binding": 1098015042,
+      "binding_with_roles": 1098015045,
+      "factory": 1098015046,
+      "magic": 1098015009
+    },
+    "factory": {
+      "align": 8,
+      "offsets": [
+        0,
+        8
+      ],
+      "size": 16
+    }
+  }
+}

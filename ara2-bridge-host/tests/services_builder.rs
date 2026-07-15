@@ -91,6 +91,7 @@ fn required_services_are_stable_and_optional_services_are_absent() {
 }
 
 #[test]
+#[cfg(not(target_arch = "aarch64"))]
 fn legacy_archive_prefix_omits_the_ara2_archive_id_tail() {
     let services = HostServicesBuilder::new()
         .audio(SilentAudio)

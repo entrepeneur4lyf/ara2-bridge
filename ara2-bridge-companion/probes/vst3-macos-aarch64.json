@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "component": "vst3",
-  "target": "x86_64-unknown-linux-gnu",
+  "target": "aarch64-apple-darwin",
   "probe_method": "native-execution",
   "source_commit": "7d92338ae922db2d559ac458824a4df40f37e82e",
   "source_tree": "1509aeb4426b5e51ff7586b8096f2ab8ccbbd2a4",

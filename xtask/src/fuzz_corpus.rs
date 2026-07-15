@@ -325,19 +325,12 @@ fn copied(
 }
 
 fn content_event_seed() -> Vec<u8> {
-    let sizes = [
-        std::mem::size_of::<ara2_bridge_sys::ARAContentTempoEntry>(),
-        std::mem::size_of::<ara2_bridge_sys::ARAContentBarSignature>(),
-        std::mem::size_of::<ara2_bridge_sys::ARAContentNote>(),
-        std::mem::size_of::<ara2_bridge_sys::ARAContentTuning>(),
-        std::mem::size_of::<ara2_bridge_sys::ARAContentKeySignature>(),
-        std::mem::size_of::<ara2_bridge_sys::ARAContentChord>(),
-    ];
+    const EVENT_STORAGE_BYTES: usize = 256;
     let mut output = Vec::new();
-    for (kind, size) in (0_u8..6).zip(sizes) {
+    for kind in 0_u8..6 {
         output.push(kind);
-        output.extend_from_slice(&(size as u16).to_le_bytes());
-        output.resize(output.len() + size, 0);
+        output.extend_from_slice(&(EVENT_STORAGE_BYTES as u16).to_le_bytes());
+        output.resize(output.len() + EVENT_STORAGE_BYTES, 0);
     }
     output
 }

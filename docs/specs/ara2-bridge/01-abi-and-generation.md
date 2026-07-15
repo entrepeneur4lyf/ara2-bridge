@@ -24,6 +24,8 @@ Consumed headers are `ARAInterface.h`, `ARAAudioFileChunks.h`, `ARACLAP.h`, `ARA
 4. write a packaged machine-readable coverage manifest mapping every public declaration from all five ARA headers to its generated Rust symbol, audited companion shim symbol, explicit target/SDK-gated classification, or companion-deferred declaration that the final companion manifests must close; core headers are preprocessed in Phase 0, while companion headers are lexically inventoried without resolving their external includes and are compiled/preprocessed only after the corresponding pinned SDK is provisioned; and
 5. compare output against checked-in artifacts in CI.
 
+Coverage discovery is a source-inventory operation, not a host-ABI probe. Its preprocessing and AST passes therefore use the canonical x86_64 Linux target on every maintainer host; the separate per-family binding and C/C++ probe stages remain authoritative for target layout.
+
 Handwritten code may wrap generated symbols but must not edit generated files. The generator itself is tested and versioned.
 
 ## Required ABI surface
@@ -72,3 +74,4 @@ Downstream `cargo build` works without libclang. Regeneration from the pinned SD
 - 2026-07-14: Audit requires per-ABI packing and unaligned access; ordinary references to packed fields are forbidden.
 - 2026-07-15: Audit made external SDK bootstrap, exhaustive all-symbol coverage, and the synthetic chunk constant explicit release artifacts.
 - 2026-07-15: Implementation evidence requires generator normalization and compile-time type tests for bindgen-omitted or widened scalar macros.
+- 2026-07-15: Coverage discovery uses one canonical preprocessing target so regeneration is byte-identical on Linux and macOS; target ABI evidence remains per-family.

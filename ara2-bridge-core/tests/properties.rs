@@ -3,7 +3,9 @@ use ara2_bridge_core::{
     DocumentProperties, MusicalContextKind, MusicalContextProperties, PlaybackRegionKind,
     PlaybackRegionProperties, RegionSequenceKind, Registry, ViewSelection,
 };
-use ara2_bridge_sys::{access, layout, ARAAudioSourceProperties, ARASize};
+#[cfg(not(target_arch = "aarch64"))]
+use ara2_bridge_sys::layout;
+use ara2_bridge_sys::{access, ARAAudioSourceProperties, ARASize};
 use std::ffi::{CStr, CString};
 use std::mem::offset_of;
 
@@ -48,19 +50,27 @@ fn audio_source_output_retains_backing_and_uses_generation_prefix() {
     )
     .unwrap();
 
-    let legacy = owned.as_ffi(ApiGeneration::V1Final).unwrap();
-    let legacy_pointer = legacy.as_ref().as_ptr().cast::<u8>();
-    // SAFETY: the pinned guard owns a fully initialized raw record.
-    let legacy_size: ARASize = unsafe {
-        access::read_field(
-            legacy_pointer,
-            offset_of!(ARAAudioSourceProperties, structSize),
-        )
-    };
-    assert_eq!(
-        legacy_size,
-        layout::ARAAUDIO_SOURCE_PROPERTIES_MERITS64_BIT_SAMPLES
-    );
+    #[cfg(not(target_arch = "aarch64"))]
+    {
+        let legacy = owned.as_ffi(ApiGeneration::V1Final).unwrap();
+        let legacy_pointer = legacy.as_ref().as_ptr().cast::<u8>();
+        // SAFETY: the pinned guard owns a fully initialized raw record.
+        let legacy_size: ARASize = unsafe {
+            access::read_field(
+                legacy_pointer,
+                offset_of!(ARAAudioSourceProperties, structSize),
+            )
+        };
+        assert_eq!(
+            legacy_size,
+            layout::ARAAUDIO_SOURCE_PROPERTIES_MERITS64_BIT_SAMPLES
+        );
+    }
+    #[cfg(target_arch = "aarch64")]
+    assert!(matches!(
+        owned.as_ffi(ApiGeneration::V1Final),
+        Err(AraError::Unsupported(_))
+    ));
 
     let current = owned.as_ffi(ApiGeneration::V23Final).unwrap();
     let current_pointer = current.as_ref().as_ptr().cast::<u8>();
@@ -112,9 +122,15 @@ fn ara2_playback_regions_require_a_region_sequence() {
 
     let legacy =
         PlaybackRegionProperties::for_ara1(0, 0.0, 1.0, 2.0, 1.0, context, None, None).unwrap();
+    #[cfg(not(target_arch = "aarch64"))]
     assert!(legacy.as_ffi(ApiGeneration::V1Final).is_ok());
+    #[cfg(target_arch = "aarch64")]
     assert!(matches!(
-        legacy.as_ffi(ApiGeneration::V2Draft),
+        legacy.as_ffi(ApiGeneration::V1Final),
+        Err(AraError::Unsupported(_))
+    ));
+    assert!(matches!(
+        legacy.as_ffi(ApiGeneration::V2Final),
         Err(AraError::InvalidArgument(
             "ARA2 playback region requires a region sequence"
         ))

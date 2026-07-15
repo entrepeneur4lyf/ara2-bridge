@@ -17,7 +17,7 @@ fn each_factory_entry_has_independent_generation_state() {
     let registry = PluginRegistry::builder()
         .factory(factory(
             "one",
-            ApiGeneration::V1Final,
+            ApiGeneration::V2Final,
             ApiGeneration::V23Final,
         ))
         .factory(factory(
@@ -32,7 +32,7 @@ fn each_factory_entry_has_independent_generation_state() {
     registry
         .entry("one")
         .unwrap()
-        .initialize(ApiGeneration::V1Final, &raw mut first_assert)
+        .initialize(ApiGeneration::V2Final, &raw mut first_assert)
         .unwrap();
     registry
         .entry("two")
@@ -41,7 +41,7 @@ fn each_factory_entry_has_independent_generation_state() {
         .unwrap();
     assert_eq!(
         registry.entry("one").unwrap().generation(),
-        Some(ApiGeneration::V1Final)
+        Some(ApiGeneration::V2Final)
     );
     assert_eq!(
         registry.entry("two").unwrap().generation(),

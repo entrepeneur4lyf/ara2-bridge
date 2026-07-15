@@ -99,10 +99,14 @@ fn build_cpp_interop() {
         .file("native/test_host_bridge.cpp")
         .file("native/test_plugin_bridge.cpp");
     let prelude = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("native/cpp_prelude.h");
-    if std::env::var("TARGET").is_ok_and(|target| target.contains("msvc")) {
+    let target = std::env::var("TARGET").expect("Cargo always provides TARGET to build scripts");
+    if target.contains("msvc") {
         cpp.flag(format!("/FI{}", prelude.display()));
     } else {
         cpp.flag(format!("-include{}", prelude.display()));
+    }
+    if target.contains("apple-darwin") {
+        cpp.flag("-mmacosx-version-min=11.0");
     }
     for include in &includes {
         cpp.include(include);
@@ -117,6 +121,9 @@ fn build_cpp_interop() {
         .define("ARA_VALIDATE_API_CALLS", "1")
         .define("ARA_ENABLE_INTERNAL_ASSERTS", "1")
         .define("ARA_ENABLE_DEBUG_OUTPUT", "1");
+    if target.contains("apple-darwin") {
+        c.flag("-mmacosx-version-min=11.0");
+    }
     for include in &includes {
         c.include(include);
     }
@@ -139,5 +146,9 @@ fn build_cpp_interop() {
     if cfg!(all(unix, not(target_os = "macos"))) {
         println!("cargo:rustc-link-lib=m");
         println!("cargo:rustc-link-lib=dl");
+    }
+    if target.contains("apple-darwin") {
+        println!("cargo:rustc-link-lib=framework=ApplicationServices");
+        println!("cargo:rustc-link-lib=framework=CoreFoundation");
     }
 }

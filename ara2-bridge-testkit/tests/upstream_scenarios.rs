@@ -25,7 +25,7 @@ const REQUIRED: &[&str] = &[
 ];
 
 #[test]
-fn every_required_scenario_has_a_runner_and_executes_without_skips() {
+fn every_required_scenario_has_a_runner_and_supported_scenarios_execute_without_skips() {
     let scenarios = upstream_scenarios();
     let actual = scenarios
         .iter()
@@ -36,8 +36,13 @@ fn every_required_scenario_has_a_runner_and_executes_without_skips() {
     assert!(missing.is_empty(), "missing scenario runners: {missing:?}");
     assert_eq!(actual.len(), scenarios.len(), "duplicate scenario names");
 
+    let mut unsupported = Vec::new();
     for scenario in scenarios {
         assert!(!scenario.required_capabilities.is_empty());
+        if !scenario.generation.supported_on_target() {
+            unsupported.push(scenario.name);
+            continue;
+        }
         let report = (scenario.run)()
             .unwrap_or_else(|error| panic!("scenario {} failed: {error}", scenario.name));
         assert_eq!(report.name(), scenario.name);
@@ -46,4 +51,9 @@ fn every_required_scenario_has_a_runner_and_executes_without_skips() {
         assert!(report.expected_calls() > 0);
         assert_eq!(report.skip_count(), 0);
     }
+
+    #[cfg(target_arch = "aarch64")]
+    assert_eq!(unsupported, ["ara1-persistence"]);
+    #[cfg(not(target_arch = "aarch64"))]
+    assert!(unsupported.is_empty());
 }

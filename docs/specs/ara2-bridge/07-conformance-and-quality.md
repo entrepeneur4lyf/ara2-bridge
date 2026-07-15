@@ -38,7 +38,7 @@ The upstream TestHost scenarios are a named conformance manifest. Each has a Rus
 - audio-file chunk loading;
 - audio-file chunk saving.
 
-The shared basic-document creation path also verifies factory initialization, graph construction, sample access, requested analysis, editing boundaries, and destruction. A capability-rich Rust TestPlugIn must enable partial persistence, algorithms, chunk writing, all content kinds, analysis, licensing, signal preservation, head/tail, and all roles so no optional scenario passes by skipping. Golden archives and chunk-bearing WAVE/AIFF fixtures prove that load paths found and restored compatible data. Additional bridge-specific scenarios cover deprecated generation-1 persistence, 2.3 document dirtiness, all extension-role combinations, poisoning, and both companion/controller destruction orders.
+The shared basic-document creation path also verifies factory initialization, graph construction, sample access, requested analysis, editing boundaries, and destruction. A capability-rich Rust TestPlugIn must enable partial persistence, algorithms, chunk writing, all content kinds, analysis, licensing, signal preservation, head/tail, and all roles so no target-supported optional scenario passes by skipping. The manifest retains every scenario on every target, but a generation absent from the target ABI is classified as inapplicable and asserted explicitly; in particular, AArch64 excludes only the generation-1 persistence scenario. Golden archives and chunk-bearing WAVE/AIFF fixtures prove that load paths found and restored compatible data. Additional bridge-specific scenarios cover deprecated generation-1 persistence on supported targets, 2.3 document dirtiness, all extension-role combinations, poisoning, and both companion/controller destruction orders.
 
 ## Interface contract matrix
 
@@ -58,7 +58,7 @@ The machine-readable ABI coverage manifest and the test manifest are joined in C
 
 ## Safety verification
 
-Core registries, RAII guards, callback recovery, and destruction run under Miri. FFI integration runs under AddressSanitizer and UndefinedBehaviorSanitizer where supported. ThreadSanitizer runs both deterministic state models and integration tests that exercise the production analysis-job, audio-reader/access-revocation, and editor-renderer update paths. Loom or deterministic model tests remain a separate layer for interleavings representable without foreign code.
+Core registries, RAII guards, callback recovery, and destruction run under Miri. Compile-time ownership tests use semantic trait assertions for negative `Send`/`Sync` guarantees; compiler-diagnostic snapshots are reserved for contracts whose error text is itself meaningful. FFI integration runs under AddressSanitizer and UndefinedBehaviorSanitizer where supported. ThreadSanitizer runs both deterministic state models and integration tests that exercise the production analysis-job, audio-reader/access-revocation, and editor-renderer update paths. Loom or deterministic model tests remain a separate layer for interleavings representable without foreign code.
 
 Fuzz targets cover every inbound versioned struct family, opaque reference lookup, content-event validation, archive filters, Base64/XML audio-file chunks, AIFF/WAVE chunk mutation, and generated dispatch decoders. Corpus seeds include upstream examples, boundary sizes, previous failures, and all API generations.
 
@@ -96,3 +96,4 @@ All manifests join without gaps; upstream and bridge-specific scenarios pass in 
 - 2026-07-14: Audit requires capability-rich fixtures and non-skipped positive coverage for every optional surface.
 - 2026-07-15: Audit requires TSan against production synchronization paths in addition to abstract state models.
 - 2026-07-15: Direct Rust/C++ pairing runs the ten upstream scenarios that require only an ARA factory. Rendering/editor scenarios remain companion-suite gates, while chunk loading remains a decoder-only gate; neither category is recorded as a runtime capability skip.
+- 2026-07-15: Scenario parity distinguishes target-inapplicable API generations from capability skips, and negative auto-trait contracts use compiler-stable semantic assertions.

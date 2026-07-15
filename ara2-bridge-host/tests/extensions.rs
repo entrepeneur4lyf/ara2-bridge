@@ -198,6 +198,7 @@ fn ara2_roles_assign_graph_objects_and_copy_view_state() {
 }
 
 #[test]
+#[cfg(not(target_arch = "aarch64"))]
 fn ara1_legacy_extension_maps_set_and_remove_playback_region() {
     let trace = TestPluginTrace::new();
     let factory = build_test_factory(trace).unwrap();

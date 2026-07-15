@@ -94,10 +94,31 @@ fn source_hash(root: &Path, component: &str) -> Result<String, DynError> {
         ],
         _ => return Err(error(format!("unknown companion component: {component}"))),
     };
+    hash_source_files(root, &files)
+}
+
+fn hash_source_files(root: &Path, files: &[PathBuf]) -> Result<String, DynError> {
     let mut hasher = Sha256::new();
+    hasher.update(b"ara2-bridge-companion-probe-source-v1\0");
     for file in files {
-        hasher.update(file.to_string_lossy().as_bytes());
-        hasher.update(std::fs::read(file)?);
+        let relative = file.strip_prefix(root).map_err(|_| {
+            error(format!(
+                "probe input is outside the repository: {}",
+                file.display()
+            ))
+        })?;
+        let mut normalized_path = Vec::new();
+        for (index, component) in relative.components().enumerate() {
+            if index != 0 {
+                normalized_path.push(b'/');
+            }
+            normalized_path.extend_from_slice(component.as_os_str().to_string_lossy().as_bytes());
+        }
+        let contents = std::fs::read(file)?;
+        hasher.update((normalized_path.len() as u64).to_be_bytes());
+        hasher.update(normalized_path);
+        hasher.update((contents.len() as u64).to_be_bytes());
+        hasher.update(contents);
     }
     Ok(hasher
         .finalize()
@@ -566,4 +587,40 @@ fn validate_symbol_manifest(root: &Path, component: &str) -> Result<(), DynError
         )));
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod source_hash_tests {
+    use super::hash_source_files;
+    use std::fs;
+
+    #[test]
+    fn source_hash_is_independent_of_checkout_location() {
+        let first = tempfile::tempdir().unwrap();
+        let second = tempfile::tempdir().unwrap();
+        for root in [first.path(), second.path()] {
+            fs::create_dir(root.join("nested")).unwrap();
+            fs::write(root.join("nested/input.h"), b"same bytes").unwrap();
+        }
+
+        let first_hash =
+            hash_source_files(first.path(), &[first.path().join("nested/input.h")]).unwrap();
+        let second_hash =
+            hash_source_files(second.path(), &[second.path().join("nested/input.h")]).unwrap();
+
+        assert_eq!(first_hash, second_hash);
+    }
+
+    #[test]
+    fn source_hash_frames_paths_and_file_contents() {
+        let first = tempfile::tempdir().unwrap();
+        let second = tempfile::tempdir().unwrap();
+        fs::write(first.path().join("ab"), b"c").unwrap();
+        fs::write(second.path().join("a"), b"bc").unwrap();
+
+        let first_hash = hash_source_files(first.path(), &[first.path().join("ab")]).unwrap();
+        let second_hash = hash_source_files(second.path(), &[second.path().join("a")]).unwrap();
+
+        assert_ne!(first_hash, second_hash);
+    }
 }

@@ -304,6 +304,7 @@ fn factory_creates_and_drives_an_owned_document_controller() {
 }
 
 #[test]
+#[cfg(not(target_arch = "aarch64"))]
 fn ara1_playback_regions_use_internal_synthetic_sequences() {
     let factory = FactoryBuilder::new("controller.ara1", "archive.controller.ara1")
         .display("ARA1 Test", "Example", "https://example.test", "1.0")

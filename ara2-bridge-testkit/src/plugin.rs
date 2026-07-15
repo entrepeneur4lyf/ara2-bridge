@@ -560,6 +560,11 @@ pub fn build_minimal_test_plugin(
 
 /// Builds the capability-rich fixture as an initialized-factory-ready definition.
 pub fn build_test_factory(trace: TestPluginTrace) -> Result<Factory, AraError> {
+    let minimum_generation = if cfg!(target_arch = "aarch64") {
+        ApiGeneration::V2Final
+    } else {
+        ApiGeneration::V1Final
+    };
     FactoryBuilder::new("org.ara2-bridge.test", "org.ara2-bridge.test.archive")
         .display(
             "ARA2 Bridge Test Plug-In",
@@ -567,7 +572,7 @@ pub fn build_test_factory(trace: TestPluginTrace) -> Result<Factory, AraError> {
             "https://github.com/entrepeneur4lyf/ara2-bridge",
             env!("CARGO_PKG_VERSION"),
         )
-        .generations(ApiGeneration::V1Final, ApiGeneration::V23Final)
+        .generations(minimum_generation, ApiGeneration::V23Final)
         .capabilities(
             FactoryCapabilities::default()
                 .with_analyzable_content_types(all_content_types())
@@ -580,6 +585,11 @@ pub fn build_test_factory(trace: TestPluginTrace) -> Result<Factory, AraError> {
 
 /// Builds a factory whose controllers omit every optional capability tail.
 pub fn build_minimal_test_factory(trace: TestPluginTrace) -> Result<Factory, AraError> {
+    let minimum_generation = if cfg!(target_arch = "aarch64") {
+        ApiGeneration::V2Final
+    } else {
+        ApiGeneration::V1Draft
+    };
     FactoryBuilder::new(
         "org.ara2-bridge.test.minimal",
         "org.ara2-bridge.test.minimal.archive",
@@ -590,7 +600,7 @@ pub fn build_minimal_test_factory(trace: TestPluginTrace) -> Result<Factory, Ara
         "https://github.com/entrepeneur4lyf/ara2-bridge",
         env!("CARGO_PKG_VERSION"),
     )
-    .generations(ApiGeneration::V1Draft, ApiGeneration::V23Final)
+    .generations(minimum_generation, ApiGeneration::V23Final)
     .document_controller(move || build_minimal_test_plugin(trace.clone()))
     .build()
 }

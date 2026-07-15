@@ -437,6 +437,7 @@ fn graph_updates_clones_and_deactivation_preserve_local_invariants() {
 }
 
 #[test]
+#[cfg(not(target_arch = "aarch64"))]
 fn ara1_playback_regions_translate_context_refs_to_the_peer_graph() {
     let trace = TestPluginTrace::new();
     let factory = build_test_factory(trace.clone()).unwrap();

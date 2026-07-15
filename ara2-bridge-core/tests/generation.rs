@@ -3,18 +3,18 @@ use ara2_bridge_core::{ApiGeneration, AraError, AssertCoordinator, FactoryInitia
 #[test]
 fn factories_keep_independent_generations_but_share_generation_cell() {
     let coordinator = AssertCoordinator::default();
-    let mut first = FactoryInitialization::begin(ApiGeneration::V1Final, &coordinator).unwrap();
+    let mut first = FactoryInitialization::begin(ApiGeneration::V2Final, &coordinator).unwrap();
     let second = FactoryInitialization::begin(ApiGeneration::V23Final, &coordinator).unwrap();
     let third = FactoryInitialization::begin(ApiGeneration::V23Final, &coordinator).unwrap();
 
     assert_ne!(first.generation(), second.generation());
     assert_eq!(second.assert_address(), third.assert_address());
     assert_ne!(first.assert_address(), second.assert_address());
-    assert_eq!(coordinator.active_count(ApiGeneration::V1Final), 1);
+    assert_eq!(coordinator.active_count(ApiGeneration::V2Final), 1);
     assert_eq!(coordinator.active_count(ApiGeneration::V23Final), 2);
 
     first.uninitialize().unwrap();
-    assert_eq!(coordinator.active_count(ApiGeneration::V1Final), 0);
+    assert_eq!(coordinator.active_count(ApiGeneration::V2Final), 0);
     assert!(matches!(
         first.uninitialize(),
         Err(AraError::InvalidState("factory is not initialized"))

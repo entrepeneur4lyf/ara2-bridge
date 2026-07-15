@@ -10,13 +10,12 @@ ara2-bridge-testkit = { path = "../ara2-bridge-testkit" }
 ara2-bridge-sys = { path = "../ara2-bridge-sys" }
 bindgen.workspace = true
 cargo_metadata.workspace = true
+flate2.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 serde_yaml.workspace = true
 sha2.workspace = true
 tar.workspace = true
+tempfile.workspace = true
 toml.workspace = true
 zstd.workspace = true
-
-[dev-dependencies]
-tempfile = "=3.14.0"

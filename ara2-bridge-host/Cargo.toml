@@ -13,4 +13,6 @@ ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
 bitflags.workspace = true
 
 [dev-dependencies]
-ara2-bridge-testkit = { path = "../ara2-bridge-testkit", version = "=0.2.0-alpha.1" }
+# Path-only by design: publishing this dev-only fixture would create a package cycle because the
+# testkit depends on the host runtime. Cargo omits path-only dev-dependencies from the crate.
+ara2-bridge-testkit = { path = "../ara2-bridge-testkit" }

@@ -1,4 +1,5 @@
 use std::fs;
+use std::io::Read;
 use std::path::Path;
 
 const HEAD: &str = "0123456789abcdef0123456789abcdef01234567";
@@ -99,6 +100,51 @@ fn evidence_bundle_is_deterministic_and_rejects_mixed_commits() {
     );
     let error = xtask::ci::bundle_evidence(&input, &second, HEAD).unwrap_err();
     assert!(error.contains("expected 0123456789abcdef"), "{error}");
+}
+
+#[test]
+fn release_evidence_bundle_embeds_the_verified_source_bundle() {
+    let temp = tempfile::tempdir().unwrap();
+    let input = temp.path().join("input");
+    fs::create_dir(&input).unwrap();
+    write_fragment(&input.join("one.json"), HEAD, "quality");
+    let source = temp.path().join("ara2-bridge-0.2.0-alpha.1-source.tar.zst");
+    fs::write(&source, b"source bundle bytes").unwrap();
+    let output = temp.path().join("evidence.tar.zst");
+    xtask::ci::run([
+        "bundle-evidence".to_owned(),
+        "--input".to_owned(),
+        input.display().to_string(),
+        "--output".to_owned(),
+        output.display().to_string(),
+        "--head-sha".to_owned(),
+        HEAD.to_owned(),
+        "--source-bundle".to_owned(),
+        source.display().to_string(),
+    ])
+    .unwrap();
+
+    let decoder = zstd::stream::read::Decoder::new(fs::File::open(output).unwrap()).unwrap();
+    let mut archive = tar::Archive::new(decoder);
+    let mut embedded = None;
+    let mut digest = None;
+    for entry in archive.entries().unwrap() {
+        let mut entry = entry.unwrap();
+        let path = entry.path().unwrap().into_owned();
+        if path == Path::new("release/ara2-bridge-0.2.0-alpha.1-source.tar.zst") {
+            let mut bytes = Vec::new();
+            entry.read_to_end(&mut bytes).unwrap();
+            embedded = Some(bytes);
+        } else if path == Path::new("release/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256") {
+            let mut text = String::new();
+            entry.read_to_string(&mut text).unwrap();
+            digest = Some(text);
+        }
+    }
+    assert_eq!(embedded.as_deref(), Some(b"source bundle bytes".as_slice()));
+    let digest = digest.unwrap();
+    assert!(digest.ends_with("  ara2-bridge-0.2.0-alpha.1-source.tar.zst\n"));
+    assert_eq!(digest.split_whitespace().next().unwrap().len(), 64);
 }
 
 fn write_fragment(path: &Path, head_sha: &str, job_id: &str) {

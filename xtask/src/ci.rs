@@ -78,6 +78,7 @@ pub fn run(args: impl IntoIterator<Item = String>) -> Result<(), String> {
             let mut output = None;
             let mut head_sha = None;
             let mut matrix = None;
+            let mut source_bundle = None;
             while let Some(argument) = args.next() {
                 let value = required_argument(&mut args, &format!("value for {argument}"))?;
                 match argument.as_str() {
@@ -85,6 +86,7 @@ pub fn run(args: impl IntoIterator<Item = String>) -> Result<(), String> {
                     "--output" => output = Some(PathBuf::from(value)),
                     "--head-sha" => head_sha = Some(value),
                     "--matrix" => matrix = Some(PathBuf::from(value)),
+                    "--source-bundle" => source_bundle = Some(PathBuf::from(value)),
                     _ => return Err(format!("unknown bundle-evidence option: {argument}")),
                 }
             }
@@ -93,6 +95,7 @@ pub fn run(args: impl IntoIterator<Item = String>) -> Result<(), String> {
                 &output.ok_or_else(|| "bundle-evidence requires --output".to_owned())?,
                 &head_sha.ok_or_else(|| "bundle-evidence requires --head-sha".to_owned())?,
                 matrix.as_deref(),
+                source_bundle.as_deref(),
             )
         }
         Some(command) => Err(format!("unknown ci command: {command}")),
@@ -206,7 +209,17 @@ pub fn validate_evidence_path(path: &Path) -> Result<EvidenceFragment, String> {
 
 /// Creates a deterministic zstd-compressed tar containing same-SHA evidence.
 pub fn bundle_evidence(input: &Path, output: &Path, head_sha: &str) -> Result<(), String> {
-    bundle_evidence_inner(input, output, head_sha, None)
+    bundle_evidence_inner(input, output, head_sha, None, None)
+}
+
+/// Returns the exact non-release evidence multiplicities from the canonical matrix.
+pub fn expected_evidence_counts(matrix_path: &Path) -> Result<BTreeMap<String, usize>, String> {
+    Ok(read_matrix(matrix_path)?
+        .job
+        .into_iter()
+        .filter(|job| job.workflow != "release.yml")
+        .map(|job| (job.id, job.evidence_count))
+        .collect())
 }
 
 fn bundle_evidence_inner(
@@ -214,6 +227,7 @@ fn bundle_evidence_inner(
     output: &Path,
     head_sha: &str,
     matrix_path: Option<&Path>,
+    source_bundle: Option<&Path>,
 ) -> Result<(), String> {
     validate_sha(head_sha, "requested head SHA")?;
     let mut paths = Vec::new();
@@ -258,13 +272,7 @@ fn bundle_evidence_inner(
     entries.sort_by(|left, right| left.0.cmp(&right.0));
 
     if let Some(matrix_path) = matrix_path {
-        let matrix = read_matrix(matrix_path)?;
-        let expected_jobs: BTreeMap<_, _> = matrix
-            .job
-            .into_iter()
-            .filter(|job| job.workflow != "release.yml")
-            .map(|job| (job.id, job.evidence_count))
-            .collect();
+        let expected_jobs = expected_evidence_counts(matrix_path)?;
         if observed_jobs != expected_jobs {
             return Err(format!(
                 "evidence job set differs; expected {expected_jobs:?}, found {observed_jobs:?}"
@@ -287,6 +295,25 @@ fn bundle_evidence_inner(
         let mut archive = tar::Builder::new(&mut encoder);
         for (name, bytes) in entries {
             append_tar_entry(&mut archive, &format!("evidence/{name}"), &bytes)?;
+        }
+        if let Some(source_bundle) = source_bundle {
+            let name = source_bundle
+                .file_name()
+                .and_then(|value| value.to_str())
+                .ok_or_else(|| "source bundle requires a UTF-8 file name".to_owned())?;
+            let bytes = fs::read(source_bundle).map_err(|error| {
+                format!(
+                    "could not read source bundle {}: {error}",
+                    source_bundle.display()
+                )
+            })?;
+            let digest = format!("{}  {name}\n", hex_digest(&bytes));
+            append_tar_entry(&mut archive, &format!("release/{name}"), &bytes)?;
+            append_tar_entry(
+                &mut archive,
+                &format!("release/{name}.sha256"),
+                digest.as_bytes(),
+            )?;
         }
         archive
             .finish()

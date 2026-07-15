@@ -1,4 +1,7 @@
+use sha2::{Digest, Sha256};
 use std::path::Path;
+use std::process::Command;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 const VERSION: &str = "0.2.0-alpha.1";
 const REPOSITORY: &str = "https://github.com/Celemony/ARA_API";
@@ -52,6 +55,59 @@ fn generated_derivative_requires_every_provenance_field() {
         let error = xtask::release::validate_generated_derivative(&invalid).unwrap_err();
         assert!(error.contains(missing), "{missing}: {error}");
     }
+    for (expected, wrong) in [
+        (REPOSITORY, "https://example.invalid/ARA_API"),
+        ("releases/2.3.0", "releases/2.2.0"),
+        (COMMIT, "0000000000000000000000000000000000000000"),
+        (
+            "Generator: ara2-bridge xtask 0.2.0-alpha.1",
+            "Generator: unknown 9.9.9",
+        ),
+        (
+            "SPDX-License-Identifier: Apache-2.0",
+            "SPDX-License-Identifier: NONE",
+        ),
+    ] {
+        let invalid = valid.replace(expected, wrong);
+        assert!(
+            xtask::release::validate_generated_derivative(&invalid).is_err(),
+            "accepted mismatched provenance {wrong}"
+        );
+    }
+}
+
+#[test]
+fn packaged_manifest_requires_exact_release_identity_and_sibling_versions() {
+    let valid = r#"
+[package]
+name = "ara2-bridge-plugin"
+version = "0.2.0-alpha.1"
+edition = "2021"
+rust-version = "1.82"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
+
+[dependencies.ara2-bridge-core]
+version = "=0.2.0-alpha.1"
+"#;
+    xtask::release::validate_packaged_manifest(valid, "ara2-bridge-plugin").unwrap();
+    for (expected, wrong) in [
+        ("name = \"ara2-bridge-plugin\"", "name = \"wrong\""),
+        ("version = \"0.2.0-alpha.1\"", "version = \"0.1.0\""),
+        ("rust-version = \"1.82\"", "rust-version = \"1.90\""),
+        ("license = \"MIT OR Apache-2.0\"", "license = \"NONE\""),
+        (
+            "repository = \"https://github.com/entrepeneur4lyf/ara2-bridge\"",
+            "repository = \"https://example.invalid\"",
+        ),
+        ("version = \"=0.2.0-alpha.1\"", "version = \"0.2\""),
+    ] {
+        let invalid = valid.replacen(expected, wrong, 1);
+        assert!(
+            xtask::release::validate_packaged_manifest(&invalid, "ara2-bridge-plugin").is_err(),
+            "accepted invalid package metadata: {wrong}"
+        );
+    }
 }
 
 #[test]
@@ -96,4 +152,242 @@ fn evidence_receipt_rejects_each_identity_mismatch() {
             .unwrap_err();
         assert!(error.contains(field), "{field}: {error}");
     }
+}
+
+#[test]
+fn source_bundle_is_deterministic_and_builds_offline() {
+    let temp = tempfile::tempdir().unwrap();
+    let first = temp.path().join("first.tar.zst");
+    let second = temp.path().join("second.tar.zst");
+
+    xtask::release::create_source_bundle(root(), &first, true).unwrap();
+    xtask::release::create_source_bundle(root(), &second, true).unwrap();
+    assert_eq!(
+        std::fs::read(&first).unwrap(),
+        std::fs::read(&second).unwrap()
+    );
+    xtask::release::verify_source_bundle(&first).unwrap();
+}
+
+#[test]
+fn source_bundle_command_rejects_a_dirty_candidate() {
+    let output = tempfile::tempdir()
+        .unwrap()
+        .path()
+        .join("candidate.tar.zst");
+    let error = xtask::run([
+        "release".to_owned(),
+        "source-bundle".to_owned(),
+        "--version".to_owned(),
+        VERSION.to_owned(),
+        "--output".to_owned(),
+        output.display().to_string(),
+    ])
+    .unwrap_err();
+    assert!(error.contains("clean tracked candidate tree"), "{error}");
+}
+
+#[test]
+fn verify_source_bundle_command_rejects_a_missing_archive() {
+    let missing = tempfile::tempdir().unwrap().path().join("missing.tar.zst");
+    let error = xtask::run([
+        "release".to_owned(),
+        "verify-source-bundle".to_owned(),
+        "--bundle".to_owned(),
+        missing.display().to_string(),
+    ])
+    .unwrap_err();
+    assert!(error.contains("cannot open"), "{error}");
+}
+
+#[test]
+fn evidence_import_requires_the_internal_verifier_and_binds_the_receipt() {
+    let temp = tempfile::tempdir().unwrap();
+    let bundle = temp.path().join("evidence.tar.zst");
+    std::fs::write(&bundle, b"signed evidence subject").unwrap();
+    let invoked = AtomicBool::new(false);
+    let receipt = xtask::release::import_evidence_with_verifier(
+        temp.path(),
+        &bundle,
+        "entrepeneur4lyf/ara2-bridge",
+        COMMIT,
+        |path, repository, commit| {
+            invoked.store(true, Ordering::SeqCst);
+            assert_eq!(path, bundle);
+            assert_eq!(repository, "entrepeneur4lyf/ara2-bridge");
+            assert_eq!(commit, COMMIT);
+            Ok(serde_json::json!([{"verificationResult": {}}]))
+        },
+    )
+    .unwrap();
+    assert!(invoked.load(Ordering::SeqCst));
+    let value: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(receipt).unwrap()).unwrap();
+    assert_eq!(value["repository"], "entrepeneur4lyf/ara2-bridge");
+    assert_eq!(value["commit"], COMMIT);
+    assert_eq!(
+        value["issuer"],
+        "https://token.actions.githubusercontent.com"
+    );
+    assert_eq!(value["workflow"], ".github/workflows/release.yml");
+    assert_eq!(value["verified_by"], "gh attestation verify");
+    assert_eq!(value["subject_sha256"].as_str().unwrap().len(), 64);
+
+    let rejected = xtask::release::import_evidence_with_verifier(
+        temp.path(),
+        &bundle,
+        "entrepeneur4lyf/ara2-bridge",
+        COMMIT,
+        |_, _, _| Err("attestation rejected".to_owned()),
+    )
+    .unwrap_err();
+    assert!(rejected.contains("attestation rejected"), "{rejected}");
+}
+
+#[test]
+fn evidence_import_command_rejects_a_missing_subject_before_verification() {
+    let missing = tempfile::tempdir().unwrap().path().join("missing.tar.zst");
+    let error = xtask::run([
+        "release".to_owned(),
+        "import-evidence".to_owned(),
+        "--bundle".to_owned(),
+        missing.display().to_string(),
+        "--repository".to_owned(),
+        "entrepeneur4lyf/ara2-bridge".to_owned(),
+        "--commit".to_owned(),
+        COMMIT.to_owned(),
+    ])
+    .unwrap_err();
+    assert!(error.contains("cannot open"), "{error}");
+}
+
+#[test]
+fn release_verification_requires_all_forty_same_sha_fragments() {
+    let temp = tempfile::tempdir().unwrap();
+    let source = temp.path().join("source.tar.zst");
+    xtask::release::create_source_bundle(root(), &source, true).unwrap();
+    let head = String::from_utf8(
+        Command::new("git")
+            .current_dir(root())
+            .args(["rev-parse", "HEAD"])
+            .output()
+            .unwrap()
+            .stdout,
+    )
+    .unwrap();
+    let head = head.trim();
+    let evidence_dir = temp.path().join("target/release-evidence");
+    std::fs::create_dir_all(&evidence_dir).unwrap();
+    write_release_matrix(temp.path(), "expected");
+    let evidence = evidence_dir.join(format!("ara2-evidence-{head}.tar.zst"));
+    write_evidence_archive(&evidence, &source, head, 40, "expected");
+    xtask::release::import_evidence_with_verifier(
+        temp.path(),
+        &evidence,
+        "entrepeneur4lyf/ara2-bridge",
+        head,
+        |_, _, _| Ok(serde_json::json!([{"verificationResult": {}}])),
+    )
+    .unwrap();
+    xtask::release::verify_release_at(temp.path(), VERSION, head, false).unwrap();
+
+    write_evidence_archive(&evidence, &source, head, 39, "expected");
+    xtask::release::import_evidence_with_verifier(
+        temp.path(),
+        &evidence,
+        "entrepeneur4lyf/ara2-bridge",
+        head,
+        |_, _, _| Ok(serde_json::json!([{"verificationResult": {}}])),
+    )
+    .unwrap();
+    let error = xtask::release::verify_release_at(temp.path(), VERSION, head, false).unwrap_err();
+    assert!(error.contains("40 evidence fragments"), "{error}");
+
+    write_evidence_archive(&evidence, &source, head, 40, "wrong");
+    xtask::release::import_evidence_with_verifier(
+        temp.path(),
+        &evidence,
+        "entrepeneur4lyf/ara2-bridge",
+        head,
+        |_, _, _| Ok(serde_json::json!([{"verificationResult": {}}])),
+    )
+    .unwrap();
+    let error = xtask::release::verify_release_at(temp.path(), VERSION, head, false).unwrap_err();
+    assert!(error.contains("canonical matrix"), "{error}");
+}
+
+fn write_release_matrix(root: &Path, prefix: &str) {
+    let mut matrix = String::from("# Test matrix\n\n<!-- ci-matrix\n");
+    for index in 0..40 {
+        matrix.push_str(&format!(
+            "[[job]]\nworkflow = \"ci.yml\"\nid = \"{prefix}-{index}\"\nevidence_count = 1\n\n"
+        ));
+    }
+    matrix.push_str("-->\n");
+    let path = root.join("docs/conformance/ci-matrix.md");
+    std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+    std::fs::write(path, matrix).unwrap();
+}
+
+fn write_evidence_archive(
+    output: &Path,
+    source_bundle: &Path,
+    head: &str,
+    count: usize,
+    job_prefix: &str,
+) {
+    let file = std::fs::File::create(output).unwrap();
+    let mut encoder = zstd::stream::write::Encoder::new(file, 1).unwrap();
+    encoder.include_checksum(true).unwrap();
+    {
+        let mut archive = tar::Builder::new(&mut encoder);
+        for index in 0..count {
+            let fragment = serde_json::to_vec_pretty(&serde_json::json!({
+                "schema": 1,
+                "repository": "entrepeneur4lyf/ara2-bridge",
+                "head_sha": head,
+                "workflow": format!("workflow-{}", index / 10),
+                "workflow_run_id": "42",
+                "job_id": format!("{job_prefix}-{index}"),
+                "target": "x86_64-unknown-linux-gnu",
+                "toolchain": "stable",
+                "command": "cargo test",
+                "conclusion": "success",
+                "input_hashes": {"Cargo.lock": "0".repeat(64)},
+                "output_hashes": {}
+            }))
+            .unwrap();
+            append_test_entry(
+                &mut archive,
+                &format!("evidence/fragment-{index:02}.json"),
+                &fragment,
+            );
+        }
+        let source_bytes = std::fs::read(source_bundle).unwrap();
+        let source_name = format!("ara2-bridge-{VERSION}-source.tar.zst");
+        append_test_entry(
+            &mut archive,
+            &format!("release/{source_name}"),
+            &source_bytes,
+        );
+        let digest = format!("{:x}  {source_name}\n", Sha256::digest(&source_bytes));
+        append_test_entry(
+            &mut archive,
+            &format!("release/{source_name}.sha256"),
+            digest.as_bytes(),
+        );
+        archive.finish().unwrap();
+    }
+    encoder.finish().unwrap();
+}
+
+fn append_test_entry<W: std::io::Write>(archive: &mut tar::Builder<W>, path: &str, bytes: &[u8]) {
+    let mut header = tar::Header::new_gnu();
+    header.set_size(bytes.len() as u64);
+    header.set_mode(0o644);
+    header.set_uid(0);
+    header.set_gid(0);
+    header.set_mtime(0);
+    header.set_cksum();
+    archive.append_data(&mut header, path, bytes).unwrap();
 }

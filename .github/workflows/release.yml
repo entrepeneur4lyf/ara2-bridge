@@ -65,10 +65,15 @@ jobs:
           path: target/release-evidence/safety
       - name: Verify candidate identity
         run: test "$(git rev-parse HEAD)" = "${{ inputs.head_sha }}"
-      - name: Build deterministic same-SHA archive
+      - name: Build and verify deterministic source bundle
         run: |
           mkdir -p target/release
-          cargo xtask ci bundle-evidence --input target/release-evidence --output target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst --head-sha ${{ inputs.head_sha }} --matrix docs/conformance/ci-matrix.md
+          cargo xtask release source-bundle --version 0.2.0-alpha.1 --output target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst
+          cargo xtask release verify-source-bundle --bundle target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst
+          sha256sum target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst > target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256
+      - name: Build deterministic same-SHA evidence archive
+        run: |
+          cargo xtask ci bundle-evidence --input target/release-evidence --output target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst --head-sha ${{ inputs.head_sha }} --matrix docs/conformance/ci-matrix.md --source-bundle target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst
           sha256sum target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst > target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst.sha256
       - name: Write release-gate evidence
         if: always()
@@ -76,12 +81,14 @@ jobs:
           GITHUB_SHA: ${{ inputs.head_sha }}
           EVIDENCE_TARGET: release-evidence
           EVIDENCE_TOOLCHAIN: stable
-          EVIDENCE_COMMAND: cargo xtask ci bundle-evidence; SHA-256 digest; archive attestation
+          EVIDENCE_COMMAND: cargo xtask release source-bundle and verify-source-bundle; cargo xtask ci bundle-evidence; SHA-256 digest; archive attestation
           EVIDENCE_CONCLUSION: ${{ job.status }}
           EVIDENCE_INPUTS: |
             Cargo.lock
             docs/conformance/evidence-schema.json
           EVIDENCE_OUTPUTS: |
+            target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst
+            target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256
             target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst
             target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst.sha256
         run: ci/write-evidence.sh target/release/release-gate.json
@@ -90,6 +97,8 @@ jobs:
         with:
           name: ara2-evidence-${{ inputs.head_sha }}
           path: |
+            target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst
+            target/release/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256
             target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst
             target/release/ara2-evidence-${{ inputs.head_sha }}.tar.zst.sha256
             target/release/release-gate.json

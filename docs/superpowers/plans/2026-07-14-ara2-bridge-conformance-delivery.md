@@ -64,7 +64,7 @@ Join `ara2-bridge-sys/generated/symbol-coverage.json`, the CLAP/VST3/AUv2 compan
 Run: `cargo xtask ara coverage --write && cargo xtask ara coverage --check && cargo test -p xtask --test coverage && cargo test -p ara2-bridge-testkit --test coverage_join`  
 Expected: PASS with zero unclassified public slots and a clean regenerated report.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -- ara2-bridge-testkit/src/lib.rs ara2-bridge-testkit/src/coverage.rs ara2-bridge-testkit/tests/coverage_join.rs docs/conformance/interface-coverage.md docs/conformance/interface-coverage.json xtask/src/coverage.rs xtask/tests/coverage.rs xtask/src/lib.rs xtask/src/ara.rs
@@ -118,7 +118,7 @@ Expected: PASS with deterministic bytes and complete provenance before scenario 
 Run: `cargo test -p ara2-bridge-testkit --test upstream_scenarios -- --nocapture`  
 Expected: PASS with every named scenario executed, zero capability skips, and all allocation/reference counters at zero.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -- ara2-bridge-testkit/src/scenarios/mod.rs ara2-bridge-testkit/src/scenarios/properties.rs ara2-bridge-testkit/src/scenarios/content.rs ara2-bridge-testkit/src/scenarios/persistence.rs ara2-bridge-testkit/src/scenarios/rendering.rs ara2-bridge-testkit/src/scenarios/extensions.rs ara2-bridge-testkit/src/scenarios/processing.rs ara2-bridge-testkit/tests/upstream_scenarios.rs ara2-bridge-testkit/fixtures/scenarios/ara1-full.archive ara2-bridge-testkit/fixtures/scenarios/ara2-full.archive ara2-bridge-testkit/fixtures/scenarios/ara2-partial-a.archive ara2-bridge-testkit/fixtures/scenarios/ara2-partial-b.archive ara2-bridge-testkit/fixtures/scenarios/chunk-wave.wav ara2-bridge-testkit/fixtures/scenarios/chunk-aiff.aiff docs/conformance/upstream-scenarios.toml sdk-provenance.toml xtask/src/fixtures.rs xtask/tests/fixtures.rs
@@ -156,7 +156,7 @@ Replace the placeholder with shims compiled against the pinned local SDK provena
 Run: `ARA_SDK_DIR=$PWD/reference/ARA_SDK cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture`  
 Expected: PASS on Linux, Windows, and macOS; each unavailable upstream platform scenario has an explicit manifest reason, never a silent skip.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -- Cargo.lock ara2-bridge-testkit/Cargo.toml ara2-bridge-testkit/native/test_host_bridge.cpp ara2-bridge-testkit/native/test_plugin_bridge.cpp ara2-bridge-testkit/src/lib.rs ara2-bridge-testkit/src/native.rs ara2-bridge-testkit/tests/cpp_interop.rs ara2-bridge-testkit/build.rs docs/conformance/cpp-interoperability.md
@@ -249,7 +249,7 @@ Run the explicit Miri-compatible suites: `cargo miri test -p ara2-bridge-core --
 Run the remaining gates: `cargo xtask ara fuzz-corpus --check && ci/run-sanitizers.sh asan-invalid-pointer && ci/run-sanitizers.sh ubsan-invalid-pointer && ci/run-sanitizers.sh tsan-state-models && ci/run-sanitizers.sh tsan-production && cargo +nightly fuzz run versioned_structs -- -max_total_time=30 && cargo +nightly fuzz run references -- -max_total_time=30 && cargo +nightly fuzz run content_events -- -max_total_time=30 && cargo +nightly fuzz run archive_filters -- -max_total_time=30 && cargo +nightly fuzz run audio_file_chunks -- -max_total_time=30 && cargo +nightly fuzz run audio_file_xml -- -max_total_time=30 && cargo +nightly fuzz run audio_file_container -- -max_total_time=30 && cargo +nightly fuzz run dispatch -- -max_total_time=30`  
 Expected: PASS with no Miri findings or fuzz crashes; corpus freshness is included in CI evidence, ASan/UBSan child reports and exit codes match every deliberate invalid-pointer classification, and TSan reports no race in state models.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -- .gitignore Cargo.toml Cargo.lock fuzz/Cargo.toml fuzz/Cargo.lock fuzz/fuzz_targets/versioned_structs.rs fuzz/fuzz_targets/references.rs fuzz/fuzz_targets/content_events.rs fuzz/fuzz_targets/archive_filters.rs fuzz/fuzz_targets/audio_file_chunks.rs fuzz/fuzz_targets/dispatch.rs fuzz/corpus-manifest.toml fuzz/corpus/versioned_structs/generation-1.bin fuzz/corpus/versioned_structs/generation-2.bin fuzz/corpus/versioned_structs/generation-3.bin fuzz/corpus/versioned_structs/generation-4.bin fuzz/corpus/versioned_structs/generation-5.bin fuzz/corpus/versioned_structs/generation-6.bin fuzz/corpus/versioned_structs/boundary-prefix.bin fuzz/corpus/references/null.bin fuzz/corpus/references/stale.bin fuzz/corpus/references/foreign-session.bin fuzz/corpus/content_events/upstream-all-kinds.bin fuzz/corpus/content_events/boundary-invalid.bin fuzz/corpus/archive_filters/split-restore.bin fuzz/corpus/archive_filters/range-overflow.bin fuzz/corpus/audio_file_chunks/legacy.bin fuzz/corpus/audio_file_chunks/full-2.3.bin fuzz/corpus/audio_file_chunks/malformed.bin fuzz/corpus/dispatch/generation-1.bin fuzz/corpus/dispatch/generation-6.bin fuzz/corpus/dispatch/truncated-prefix.bin fuzz/corpus/dispatch/null-slot.bin fuzz/corpus/audio_file_xml/namespace-qualified.xml fuzz/corpus/audio_file_xml/unrelated-ordering.xml fuzz/corpus/audio_file_xml/multi-entry-order.xml fuzz/corpus/audio_file_container/wave.bin fuzz/corpus/audio_file_container/rf64.bin fuzz/corpus/audio_file_container/bw64.bin fuzz/corpus/audio_file_container/aiff.bin fuzz/corpus/audio_file_container/aifc.bin xtask/src/fuzz_corpus.rs xtask/tests/fuzz_corpus.rs xtask/src/lib.rs xtask/src/ara.rs ara2-bridge-testkit/Cargo.toml ara2-bridge-testkit/tests/realtime.rs ara2-bridge-testkit/tests/analysis_concurrency.rs ara2-bridge-testkit/tests/sample_access_concurrency.rs ara2-bridge-testkit/tests/editor_renderer_concurrency.rs ara2-bridge-testkit/tests/invalid_pointer_subprocess.rs ara2-bridge-testkit/src/bin/invalid_pointer_case.rs ara2-bridge-core/tests/state_models.rs ci/invalid-pointer-ubsan.c ci/run-sanitizers.sh docs/conformance/safety.md
@@ -306,7 +306,7 @@ Run: `cargo test -p xtask --test ci && cargo xtask ci validate && cargo xtask ci
 Run the pinned workflow semantic check: `go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 .github/workflows/ci.yml .github/workflows/native-conformance.yml .github/workflows/safety.yml .github/workflows/release.yml`.  
 Expected: PASS; the 14 emitted jobs match `docs/conformance/ci-matrix.md`, include Linux AArch64 and i686 runtime tests, preserve phase-0 ABI jobs, require all 40 successful pre-release evidence fragments for one head SHA, emit/attest the release archive, and contain no unpinned Action/download or implicit SDK license acceptance. Advisory and license/source policy must be clean; findings are fixed rather than suppressed.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add -- Cargo.toml Cargo.lock ara2-bridge-core/src/audio_file/xml.rs ara2-bridge-host/src/plugin/mod.rs deny.toml .github/workflows/ci.yml .github/workflows/native-conformance.yml .github/workflows/safety.yml .github/workflows/release.yml ci/bootstrap-reference-sdks.sh ci/write-evidence.sh docs/conformance/ci-matrix.md docs/conformance/evidence-schema.json xtask/Cargo.toml xtask/src/ci.rs xtask/tests/ci.rs xtask/tests/workspace.rs xtask/src/lib.rs xtask/src/main.rs
@@ -344,7 +344,7 @@ Run on Linux/Windows/macOS with the pinned VST3 SDK: `ARA_VST3_SDK_DIR=$PWD/.thi
 Run on macOS: `ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo check -p ara2-bridge --no-default-features --features audio-unit-v2 && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo check -p ara2-bridge --features full-apple`  
 Expected: PASS; a separate non-Apple compile-fail test enables only `audio-unit-v2` and matches the documented Apple-only error. The implementation gate is complete when portable checks, a configured native VST3 runner, and the unsupported-platform diagnostics pass; macOS AUv2 and the remaining native VST3 runners retain ownership of their positive release-evidence fragments. Do not infer those platform results from Linux.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -- Cargo.toml ara2-bridge/Cargo.toml ara2-bridge/src/lib.rs ara2-bridge/tests/features.rs docs/migration-0.1-to-0.2.md ara2-bridge-companion/provenance/vst3.toml ara2-bridge-companion/probes/vst3-linux-x86_64.json
@@ -409,7 +409,7 @@ Run with VST3: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk RUSTDOCFLAGS="-D warn
 Run on macOS: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK RUSTDOCFLAGS="-D warnings" cargo doc -p ara2-bridge --features full-apple --no-deps && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo test -p ara2-bridge --all-targets --features full-apple`  
 Expected: PASS with no undocumented public items, broken links, noncompiling/package-excluded examples, or unmapped manual chapters. The implementation gate closes after portable and configured VST3 evidence passes; the positive `full-apple` build remains owned by the macOS native runner and must be present in release evidence before conformance is claimed.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -- README.md ara2-bridge/Cargo.toml ara2-bridge/src/lib.rs ara2-bridge/examples/minimal-plugin.rs ara2-bridge/examples/minimal-host.rs ara2-bridge/examples/content-reader.rs ara2-bridge/examples/archive-roundtrip.rs ara2-bridge/examples/audio-file-chunk.rs ara2-bridge/examples/clap-binding.rs ara2-bridge/examples/vst3-binding.rs ara2-bridge/examples/audio-unit-v2-binding.rs docs/manual-source-map.md docs/troubleshooting.md docs/specs/ara2-bridge/08-packaging-versioning-and-manual.md ara2-bridge-sys/src/lib.rs ara2-bridge-core/src/lib.rs ara2-bridge-plugin/src/lib.rs ara2-bridge-host/src/lib.rs ara2-bridge-companion/src/lib.rs ara2-bridge-testkit/src/lib.rs xtask/src/docs.rs xtask/tests/docs.rs xtask/src/lib.rs xtask/src/main.rs
@@ -443,14 +443,14 @@ git commit -m "docs: add executable ara manual sources"
 - Modify: `.github/workflows/release.yml`
 - Create: `docs/superpowers/handoffs/phase-6-delivery.md`
 
-- [ ] **Step 1: Register and red-test release commands**
+- [x] **Step 1: Register and red-test release commands**
 
 Export `xtask::release`, register the command shell, and add integration tests for `--help`, invalid versions, missing/unattested/wrong-SHA evidence, direct-import attestation bypass attempts, wrong subject digest/repository/issuer/workflow identity, package contamination, unsafe-review gaps, license gaps, and missing/extra/stale source-bundle entries. Add negative package fixtures that independently remove or mismatch every generated-derivative provenance field: source repository, tag, commit, generator crate/version, SPDX license, and `DO NOT EDIT`. Leave the clean-room and source-bundle verifiers deliberately unimplemented.
 
 Run: `cargo test -p xtask --test release`  
 Expected: FAIL on the deliberate unimplemented clean-room verifier, not on an unresolved module or command.
 
-- [ ] **Step 2: Implement release commands and clean-room smoke tests**
+- [x] **Step 2: Implement release commands and clean-room smoke tests**
 
 Add workspace-pinned `tar = "0.4"` and `zstd = "0.13"`, opt `xtask` into them, and update `Cargo.lock`. Implement `import-evidence`, `verify`, `audit-api`, `audit-unsafe`, `audit-licenses`, `verify-source-inputs`, `source-bundle`, and `verify-source-bundle` in `xtask/src/release.rs`. `import-evidence` itself invokes the configured GitHub/Sigstore verifier, validates and writes a machine-readable receipt under ignored `target/release-evidence/` binding the archive digest to the expected repository, GitHub Actions issuer/workflow identity, and release commit; no prior shell command can substitute for this internal check. Because sibling `0.2.0-alpha.1` crates are not yet in crates.io, the precommit input check vendors the locked registry graph, then packages and inserts each sibling into a Cargo directory source in dependency order before packaging its consumers with `cargo package --allow-dirty --no-verify --locked`. The clean post-commit source-bundle workflow repeats that staged-directory-source process with `cargo package --no-verify --locked` and rejects a dirty tree. The defined vendored clean-room workspace is the mandatory replacement for Cargo's skipped registry-based package verification. Unpack and build there with no `reference/`, clang, network, or undeclared SDK. Check Cargo metadata, README, licenses, dependency versions, and every generated Rust/C/C++/JSON/TOML/Markdown derivative for exact source repository/tag/commit, generator crate/version, SPDX license, and `DO NOT EDIT` metadata.
 
@@ -463,14 +463,14 @@ Update `.github/workflows/release.yml` to run both source-bundle commands for th
 Run: `cargo test -p xtask --test release`  
 Expected: PASS for all synthetic valid/invalid attestation, evidence, audit, package, clean-room lock, and deterministic source-bundle fixtures. Do not run the real release bundle yet because its tracked candidate inputs are created in Step 3.
 
-- [ ] **Step 3: Produce and audit the tracked release candidate**
+- [x] **Step 3: Produce and audit the tracked release candidate**
 
 Generate the changelog, licenses, package metadata, release checklist, and a conformance document that names the immutable candidate inputs, required evidence schema, exact commands, known AAX/AUv3 boundaries, and the external attested-artifact location. Run-specific workflow/run/job IDs, sanitizer/fuzz durations, package hashes, receipts, and conclusions remain in the signed evidence artifact under ignored `target/release-evidence/`; the tracked document must not claim a gate ran before the candidate commit exists.
 
 Run after all listed tracked candidate inputs have their final bytes: `cargo xtask release audit-api && cargo xtask release audit-unsafe && cargo xtask release audit-licenses && cargo xtask release verify-source-inputs --version 0.2.0-alpha.1`  
 `verify-source-inputs` deliberately invokes `cargo package --allow-dirty --no-verify --locked` for all seven crates into a temporary preflight directory, records that these are non-release test packages, validates the recipe's complete input set and vendorable lock graph, and runs the same custom vendored clean-room verification used after commit without emitting a release artifact or claiming a candidate commit. The post-commit workflow reruns `cargo package --no-verify --locked` from a clean tree and then performs that custom verification again. Expected: PASS with reviewed diffs, every unsafe block linked to a tested invariant, complete redistributable notices, and all final tracked inputs ready for the post-commit workflow.
 
-- [ ] **Step 4: Write the final compact handoff**
+- [x] **Step 4: Write the final compact handoff**
 
 Record candidate crates/features, evidence requirements, known AAX/AUv3 boundaries, manual source-map location, and every normative revision. State that run-specific package hashes and exact conformance results are published only in the signed evidence artifact for the candidate SHA. This is the starting point for manual authoring and maintenance.
 

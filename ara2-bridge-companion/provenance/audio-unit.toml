@@ -87,11 +87,11 @@ role = "generated-declaration"
 sha256 = "e2ba8b24478928a811d56670e1fea9302c3d47ecc5b9c5c829997f76074c8725"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAAudioUnit.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"
 role = "generated-declaration"
 sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
 role = "ara-header"
 sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

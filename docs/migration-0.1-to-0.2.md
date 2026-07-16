@@ -71,4 +71,4 @@ When migrating, replace stored raw ARA references with the matching host handle.
 
 ## Companion SDK Configuration
 
-User builds never download SDKs. CLAP declarations are checked in from the pinned source. VST3 and Audio Unit builds require verified local SDK checkouts at the environment variables above. Repository CI provisions exact commits through `ci/bootstrap-reference-sdks.sh` only after an explicit license-policy identifier is supplied.
+Cargo builds never download SDKs. Run `scripts/install-ara-sdk.sh` from the consuming project to clone the official recursive ARA SDK, install the locked companion SDKs, build the upstream examples, and write relocatable SDK paths to `.cargo/config.toml`.

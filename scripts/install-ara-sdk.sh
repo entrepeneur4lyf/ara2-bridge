@@ -153,7 +153,9 @@ write_cargo_config() {
         fi
     done
 
-    [[ -n "$missing" ]] || return
+    if [[ -z "$missing" ]]; then
+        return 0
+    fi
     temporary="$(mktemp "$cargo_dir/config.toml.install.XXXXXX")"
     awk -v entries="$missing" '
         BEGIN { inserted = 0 }

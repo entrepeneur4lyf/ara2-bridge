@@ -393,7 +393,7 @@ fn family_is_native(family: &str) -> bool {
 }
 
 fn compile_probe(root: &Path, work: &Path, family: &str) -> Result<PathBuf, DynError> {
-    let api = root.join("reference/ARA_SDK/ARA_API");
+    let api = root.join(".third-party/ARA_SDK/ARA_API");
     let probe = root.join("ara2-bridge-sys/tests/probe");
     let c_object = work.join("ara_layout.o");
     let cpp_object = work.join("ara_core.o");

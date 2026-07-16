@@ -30,6 +30,10 @@ resolved="$(discover_project_root "$consumer/subdir")"
     fail "unexpected ARA commit"
 [[ "$VST3_COMMIT" == "9fad9770f2ae8542ab1a548a68c1ad1ac690abe0" ]] ||
     fail "unexpected VST3 commit"
+grep -Fq "commit = \"$ARA_COMMIT\"" "$repo_root/ci/reference-sdks.lock.toml" ||
+    fail "ARA installer commit drifted from the repository lock"
+grep -Fq "commit = \"$VST3_COMMIT\"" "$repo_root/ci/reference-sdks.lock.toml" ||
+    fail "VST3 installer commit drifted from the repository lock"
 [[ "$(submodule_update_arguments)" == "submodule update --init --recursive" ]] ||
     fail "recursive submodule arguments changed"
 

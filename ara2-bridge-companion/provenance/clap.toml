@@ -287,11 +287,11 @@ role = "abi-probe"
 sha256 = "52909a3117f294dee0788c59a1ef22a7fb175534f8d2235685a0493e93a53feb"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARACLAP.h"
+path = ".third-party/ARA_SDK/ARA_API/ARACLAP.h"
 role = "ara-header"
 sha256 = "40cf55e206034087e47be32ed243b33d6748348cecce3eac063e662ae4cf2217"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
 role = "ara-header"
 sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

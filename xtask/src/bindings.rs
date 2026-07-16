@@ -129,7 +129,7 @@ pub fn validate_generated_metadata(text: &str) -> Result<(), DynError> {
 /// Generates or verifies the checked-in raw bindings.
 pub fn generate(mode: Mode) -> Result<(), DynError> {
     provenance::verify(root(), root().join("sdk-provenance.toml"))?;
-    let api = root().join("reference/ARA_SDK/ARA_API");
+    let api = root().join(".third-party/ARA_SDK/ARA_API");
     let generated = root().join("ara2-bridge-sys/src/generated");
     let mut coverage_bindings = None;
 

@@ -77,17 +77,17 @@ fn component_checkout(root: &Path, component: &str) -> Result<PathBuf, DynError>
 fn source_hash(root: &Path, component: &str) -> Result<String, DynError> {
     let files = match component {
         "clap" => vec![
-            root.join("reference/ARA_SDK/ARA_API/ARACLAP.h"),
+            root.join(".third-party/ARA_SDK/ARA_API/ARACLAP.h"),
             root.join("ara2-bridge-companion/src/clap/sys.rs"),
         ],
         "vst3" => vec![
-            root.join("reference/ARA_SDK/ARA_API/ARAVST3.h"),
+            root.join(".third-party/ARA_SDK/ARA_API/ARAVST3.h"),
             root.join("ara2-bridge-companion/native/vst3/ara_vst3_shim.hpp"),
             root.join("ara2-bridge-companion/native/vst3/ara_vst3_shim.cpp"),
             root.join("ara2-bridge-companion/src/vst3/ffi.rs"),
         ],
         "audio-unit-v2" => vec![
-            root.join("reference/ARA_SDK/ARA_API/ARAAudioUnit.h"),
+            root.join(".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"),
             root.join("ara2-bridge-companion/native/audio_unit/ara_au_shim.h"),
             root.join("ara2-bridge-companion/native/audio_unit/ara_au_shim.mm"),
             root.join("ara2-bridge-companion/src/audio_unit/ffi.rs"),
@@ -143,7 +143,7 @@ fn clap_payload(root: &Path) -> Result<Value, DynError> {
         ))
         .arg(format!(
             "-I{}",
-            root.join("reference/ARA_SDK/ARA_API").display()
+            root.join(".third-party/ARA_SDK/ARA_API").display()
         ))
         .arg(root.join("ara2-bridge-testkit/native/clap_probe.c"))
         .arg("-o")
@@ -195,7 +195,7 @@ fn cross_clap_payload(root: &Path, target: &str) -> Result<Value, DynError> {
             "-fdump-record-layouts-complete",
             "-fsyntax-only",
             "-I.third-party/clap/include",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "ara2-bridge-testkit/native/clap_layout_probe.c",
         ])
         .output()?;
@@ -325,7 +325,7 @@ fn vst3_payload(root: &Path) -> Result<Value, DynError> {
         [
             "-std=c++17",
             "-I.third-party/vst3sdk",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "-Iara2-bridge-companion/native/vst3",
             "ara2-bridge-companion/native/vst3/ara_vst3_shim.cpp",
             "ara2-bridge-testkit/native/vst3_probe.cpp",
@@ -346,7 +346,7 @@ fn audio_unit_payload(root: &Path) -> Result<Value, DynError> {
             "-x",
             "objective-c++",
             "-I.third-party/AudioUnitSDK/Source",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "-Iara2-bridge-companion/native/audio_unit",
             "ara2-bridge-testkit/native/audio_unit_probe.mm",
             "-framework",

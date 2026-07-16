@@ -2,7 +2,7 @@ schema = 1
 
 [[component]]
 name = "ara"
-path = "reference/ARA_SDK"
+path = ".third-party/ARA_SDK"
 repository = "https://github.com/Celemony/ARA_SDK.git"
 tag = "releases/2.3.0"
 commit = "a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c"
@@ -60,53 +60,53 @@ accepted_licenses = ["MIT"]
 name = "vst3"
 path = ".third-party/vst3sdk"
 repository = "https://github.com/steinbergmedia/vst3sdk.git"
-tag = "v3.7.11_build_10"
-commit = "7d92338ae922db2d559ac458824a4df40f37e82e"
-tree = "1509aeb4426b5e51ff7586b8096f2ab8ccbbd2a4"
-license_url = "https://github.com/steinbergmedia/vst3sdk/blob/7d92338ae922db2d559ac458824a4df40f37e82e/LICENSE.txt"
-accepted_licenses = ["GPL-3.0-only", "LicenseRef-Steinberg-VST3"]
+tag = "v3.8.0_build_66"
+commit = "9fad9770f2ae8542ab1a548a68c1ad1ac690abe0"
+tree = "2b7fc6abf314f6a16e57cc8ef71529d74a4ecce9"
+license_url = "https://github.com/steinbergmedia/vst3sdk/blob/9fad9770f2ae8542ab1a548a68c1ad1ac690abe0/LICENSE.txt"
+accepted_licenses = ["MIT"]
 
 [[component.submodule]]
 path = "base"
 repository = "https://github.com/steinbergmedia/vst3_base.git"
-commit = "4aa851d4e54993b19717539aa520deadc945148d"
-tree = "55906b52e2c406eac4107569827ba17e0be88b61"
+commit = "3d2e82f8e6bff59c1d8b7a27491a29c2286b5206"
+tree = "00aa4ec79a297ab4aa7b03fa54b3203f7c21248d"
 
 [[component.submodule]]
 path = "cmake"
 repository = "https://github.com/steinbergmedia/vst3_cmake.git"
-commit = "970594cd6d82f866e5115553e5171e96d4bbf449"
-tree = "0b5ee7a1a732895393a5a3588f6c0379f14c9fe5"
+commit = "de6e54eeaaab35b7145f5c32c279b5e892146e04"
+tree = "4470d2ec58d9e46d950158c0ed3dc53c32f042f0"
 
 [[component.submodule]]
 path = "doc"
 repository = "https://github.com/steinbergmedia/vst3_doc.git"
-commit = "f066e175c07659b98d77792a0637fb1c05525470"
-tree = "2ea43b88f75a62accd12f6a723ab56e37d06072a"
+commit = "6d4737c9e70750056e731d88d49aa06eefc8a1a4"
+tree = "38a8a580d193985822b8a45e735ee2a6e0af7522"
 
 [[component.submodule]]
 path = "pluginterfaces"
 repository = "https://github.com/steinbergmedia/vst3_pluginterfaces.git"
-commit = "cf187058ae79fe557fd854f2cc66a2b587d8cbe9"
-tree = "f4aebd86e7bff7b0d6d653715ddc1cce202adbf4"
+commit = "31d6eeba6daaa3e2a8bfbe3e7a90ca0b7fbfbc1c"
+tree = "ebffbe4eb40bbf1f6fec030feeed30da47e6c719"
 
 [[component.submodule]]
 path = "public.sdk"
 repository = "https://github.com/steinbergmedia/vst3_public_sdk.git"
-commit = "3f20bcbf36283b1e5c450e088571be6226cd4e64"
-tree = "1393e44c324f9ceffd9c8f2d36a360f60ab9e108"
+commit = "a3911a4615dabbfdfd9d181ee26b05c70c289a95"
+tree = "6d7605948f4b12f1cbe664498d41fa8cb695b8f4"
 
 [[component.submodule]]
 path = "tutorials"
 repository = "https://github.com/steinbergmedia/vst3_tutorials.git"
-commit = "4e327f1f11756ab88833874175ae950708c778f2"
-tree = "30dbc7f78bd6142dbcfedd4a64edd9dd60ab34fd"
+commit = "33b73dfbb87f3fde3bce8c0a10cae934dc66ad34"
+tree = "fea0caf5b74e553b3991c94c759376574070f82d"
 
 [[component.submodule]]
 path = "vstgui4"
 repository = "https://github.com/steinbergmedia/vstgui.git"
-commit = "480b0c8d71a35e4280acf49b505ad64d3ee5bb79"
-tree = "eb70954069321ec96c6d4031b3e2de1cfefcd32e"
+commit = "76823bdbe286e4bdb9f79ab8986af5ce7202336c"
+tree = "11437d24d85e1fef819f9c66ed86aa1b0eaadc43"
 
 [[component]]
 name = "audio-unit"

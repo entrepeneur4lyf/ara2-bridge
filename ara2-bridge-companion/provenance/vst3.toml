@@ -72,11 +72,11 @@ role = "generated-declaration"
 sha256 = "ee54ffcbe494d8019f82725f72e49fad894adabdd4a0697c460a6a0dc1690e51"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
 role = "ara-header"
 sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAVST3.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAVST3.h"
 role = "generated-declaration"
 sha256 = "ff2a166975852c177e68baa26d1ebe1bc7d03a3dbfd16bf79e98976c62f68e90"

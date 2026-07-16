@@ -38,7 +38,7 @@ jobs:
             cxx: clang++
     runs-on: ${{ matrix.os }}
     env:
-      ARA_SDK_DIR: ${{ github.workspace }}/reference/ARA_SDK
+      ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       CXX: ${{ matrix.cxx }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4

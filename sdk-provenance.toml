@@ -85,67 +85,67 @@ role = "generated-fixture;set=upstream-scenarios;source=reviewed-recipe;license=
 sha256 = "88dbe314538135405b47393dfac1d0bee801ffb463e658031f6d17fefecdbe53"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAAudioFileChunks.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAAudioFileChunks.h"
 role = "core-abi-and-cpp-behavior-header"
 sha256 = "88b1756c733881868f50f0e8f5b8092a4937d4af0e642e9a99c123fa5922df41"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAAudioUnit.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"
 role = "companion-declaration-header"
 sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARACLAP.h"
+path = ".third-party/ARA_SDK/ARA_API/ARACLAP.h"
 role = "companion-declaration-header"
 sha256 = "40cf55e206034087e47be32ed243b33d6748348cecce3eac063e662ae4cf2217"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
 role = "core-abi-header"
 sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAVST3.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAVST3.h"
 role = "companion-declaration-header"
 sha256 = "ff2a166975852c177e68baa26d1ebe1bc7d03a3dbfd16bf79e98976c62f68e90"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/LICENSE.txt"
+path = ".third-party/ARA_SDK/ARA_API/LICENSE.txt"
 role = "api-license"
 sha256 = "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_Library/Utilities/ARAChannelFormat.cpp"
+path = ".third-party/ARA_SDK/ARA_Library/Utilities/ARAChannelFormat.cpp"
 role = "ported-utility-source;license=Apache-2.0"
 sha256 = "dd276e184c0780c6655fec4baf843a41cd3b3909551458aa3cebc693274fb40b"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_Library/Utilities/ARAChannelFormat.h"
+path = ".third-party/ARA_SDK/ARA_Library/Utilities/ARAChannelFormat.h"
 role = "ported-utility-source;license=Apache-2.0"
 sha256 = "26f23aa88e5d5186b8b9ec3d23e85e3d65f185b8fae399a15cdc93cf64eb372f"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_Library/Utilities/ARAPitchInterpretation.cpp"
+path = ".third-party/ARA_SDK/ARA_Library/Utilities/ARAPitchInterpretation.cpp"
 role = "ported-utility-source;license=Apache-2.0"
 sha256 = "a0af238c119ecdbb279a8ff8ec17e2863eb9c3adcfd079ed464d8b83e478758e"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_Library/Utilities/ARAPitchInterpretation.h"
+path = ".third-party/ARA_SDK/ARA_Library/Utilities/ARAPitchInterpretation.h"
 role = "ported-utility-source;license=Apache-2.0"
 sha256 = "e598ab20c2e38908f5d39678d802143ccd2c1e37dba640784c2d7c331a93cc27"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_Library/Utilities/ARASamplePositionConversion.h"
+path = ".third-party/ARA_SDK/ARA_Library/Utilities/ARASamplePositionConversion.h"
 role = "ported-utility-source;license=Apache-2.0"
 sha256 = "b2b9af8029785505aeea19ed5e3fb19decad214c17104b427ed09c8d0a0390b9"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_Library/Utilities/ARATimelineConversion.h"
+path = ".third-party/ARA_SDK/ARA_Library/Utilities/ARATimelineConversion.h"
 role = "ported-utility-source;license=Apache-2.0"
 sha256 = "93b92b8c3ec162d8177f041134d43232485d369e8b4bbc94dcac423c838cb343"
 
 [[file]]
-path = "reference/ARA_SDK/NOTICE.txt"
+path = ".third-party/ARA_SDK/NOTICE.txt"
 role = "upstream-notice"
 sha256 = "c2cb0f6d2e7142c4eaa437c658e2fef1aa6d304b9eb75e5de8a9be09f317cdd3"
 

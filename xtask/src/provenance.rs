@@ -85,7 +85,7 @@ fn verify_git(root: &Path, manifest: &Manifest) -> Result<(), DynError> {
         )));
     }
 
-    let sdk = root.join("reference/ARA_SDK");
+    let sdk = root.join(".third-party/ARA_SDK");
     let dirty = git_output(&sdk, &["status", "--porcelain", "--ignore-submodules=none"])?;
     if !dirty.is_empty() {
         return Err(message(format!(
@@ -304,7 +304,7 @@ fn clap_dependencies(root: &Path) -> Result<Vec<PathBuf>, DynError> {
             "-std=c11",
             "-MM",
             "-I.third-party/clap/include",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "ara2-bridge-testkit/native/clap_probe.c",
         ])
         .output()?;
@@ -373,8 +373,8 @@ fn audio_unit_dependencies(root: &Path) -> Result<Vec<PathBuf>, DynError> {
     let source = Path::new(".third-party/AudioUnitSDK/Source");
     let mut files = local_include_closure(root, source, [source.join("AUBase.h")])?;
     files.extend([
-        PathBuf::from("reference/ARA_SDK/ARA_API/ARAInterface.h"),
-        PathBuf::from("reference/ARA_SDK/ARA_API/ARAAudioUnit.h"),
+        PathBuf::from(".third-party/ARA_SDK/ARA_API/ARAInterface.h"),
+        PathBuf::from(".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"),
         PathBuf::from("ara2-bridge-companion/build.rs"),
         PathBuf::from("ara2-bridge-companion/native/audio_unit/ara_au_shim.h"),
         PathBuf::from("ara2-bridge-companion/native/audio_unit/ara_au_shim.mm"),
@@ -396,7 +396,7 @@ fn vst3_dependencies(root: &Path) -> Result<Vec<PathBuf>, DynError> {
             "-std=c++17",
             "-MM",
             "-I.third-party/vst3sdk",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "-Iara2-bridge-companion/native/vst3",
             "ara2-bridge-companion/native/vst3/ara_vst3_shim.cpp",
         ])

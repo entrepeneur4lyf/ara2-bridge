@@ -10,7 +10,7 @@ This spec owns the exact Rust representation of the released ARA 2.3 C ABI. It d
 
 ## Source provenance
 
-The ignored `reference/ARA_SDK/` checkout is a reproducibly provisioned external input, not a root-repository submodule. The tracked SDK lock/bootstrap files clone `https://github.com/Celemony/ARA_SDK.git` at top-level commit `a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c` and initialize its pinned recursive submodules. `reference/ARA_SDK/ARA_API/` commit `65ec5c43b943a48cb5446f448a0492db6af8534b` (`releases/2.3.0`) is the canonical ABI input. The top-level commit is one README-only commit after the release tag; it is recorded but does not alter normative code. The repository records every top-level/submodule commit, Git tree identity, license decision, and SHA-256 of every consumed or behavior-derived source. Regeneration fails if the reference is absent, dirty, at the wrong identity, or hashes differ unless the explicit SDK-update workflow is invoked.
+The canonical input is `https://github.com/Celemony/ARA_SDK.git`, installed inside the consuming project by `scripts/install-ara-sdk.sh`. The script checks out top-level commit `a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c`, runs `git submodule update --init --recursive`, and records relocatable project-local SDK paths. `.third-party/ARA_SDK/ARA_API/` commit `65ec5c43b943a48cb5446f448a0492db6af8534b` (`releases/2.3.0`) is the canonical ABI input. The top-level commit is one README-only commit after the release tag; it does not alter normative code. Regeneration fails if the GitHub checkout is absent, dirty, at the wrong identity, or hashes differ unless the explicit SDK-update workflow is invoked.
 
 Consumed headers are `ARAInterface.h`, `ARAAudioFileChunks.h`, `ARACLAP.h`, `ARAVST3.h`, and `ARAAudioUnit.h`. License and NOTICE files must accompany distributed source and generated artifacts.
 
@@ -75,3 +75,4 @@ Downstream `cargo build` works without libclang. Regeneration from the pinned SD
 - 2026-07-15: Audit made external SDK bootstrap, exhaustive all-symbol coverage, and the synthetic chunk constant explicit release artifacts.
 - 2026-07-15: Implementation evidence requires generator normalization and compile-time type tests for bindgen-omitted or widened scalar macros.
 - 2026-07-15: Coverage discovery uses one canonical preprocessing target so regeneration is byte-identical on Linux and macOS; target ABI evidence remains per-family.
+- 2026-07-16: Install the official recursive ARA SDK checkout inside each consuming project and discover it through project-local Cargo configuration.

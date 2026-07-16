@@ -414,7 +414,9 @@ fn validate_command(root: &Path, label: &str, command: &str) -> Result<(), Strin
     match executable {
         "cargo" => validate_cargo_target(root, label, &words, command),
         "go" => Ok(()),
-        path if path.starts_with("ci/") => require_file(root, path, label, "command executable"),
+        path if path.starts_with("ci/") || path.starts_with("scripts/") => {
+            require_file(root, path, label, "command executable")
+        }
         _ => Err(format!("{label} invalid conformance command: {command}")),
     }
 }

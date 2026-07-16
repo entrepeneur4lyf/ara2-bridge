@@ -7,8 +7,8 @@ The `cpp-interop` testkit feature builds directly against the pinned Celemony AR
 Run the gate with:
 
 ```bash
-ARA_SDK_DIR=$PWD/reference/ARA_SDK \
-  cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture
+bash scripts/install-ara-sdk.sh
+cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture
 ```
 
 ## Pairings and scenarios

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 - Unreleased
+## 0.3.0 - 2026-07-16
 
 - Replaced the partial 0.1 raw callback facade with focused safe plug-in, host,
   core, companion, testkit, raw ABI, and facade crates.

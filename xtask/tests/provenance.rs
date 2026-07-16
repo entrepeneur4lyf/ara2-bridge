@@ -3,6 +3,14 @@ fn pinned_ara_api_matches_manifest() {
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap();
+    if !root
+        .join(".third-party/ARA_SDK/ARA_API/ARAInterface.h")
+        .is_file()
+        || !root.join(".third-party/ARA_SDK/.git").exists()
+    {
+        eprintln!("skipping provenance verification without the maintainer ARA SDK checkout");
+        return;
+    }
     xtask::provenance::verify(root, root.join("sdk-provenance.toml")).unwrap();
 }
 

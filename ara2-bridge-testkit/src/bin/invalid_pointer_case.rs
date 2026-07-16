@@ -1,7 +1,12 @@
-use ara2_bridge_core::{SizedInput, SizedRecord};
+use ara2_bridge_core::SizedInput;
+#[cfg(unix)]
+use ara2_bridge_core::SizedRecord;
 use ara2_bridge_sys::ARADocumentProperties;
+#[cfg(unix)]
 use std::ffi::c_char;
-use std::mem::{offset_of, size_of};
+#[cfg(unix)]
+use std::mem::offset_of;
+use std::mem::size_of;
 
 fn main() {
     let case = std::env::args().nth(1).unwrap_or_default();

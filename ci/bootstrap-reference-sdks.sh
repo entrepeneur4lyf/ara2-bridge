@@ -176,9 +176,13 @@ temporary="$checkout.bootstrap-$$"
 trap 'rm -rf "$temporary"' EXIT
 [[ ! -e "$temporary" ]] || fail "temporary checkout already exists: $temporary"
 
-git clone --no-checkout "$repository" "$temporary"
+git -c core.autocrlf=false -c core.filemode=false clone --no-checkout "$repository" "$temporary"
+git -C "$temporary" config core.autocrlf false
+git -C "$temporary" config core.filemode false
 git -C "$temporary" checkout --detach "$commit"
-git -C "$temporary" submodule update --init --recursive
+git -c core.autocrlf=false -c core.filemode=false -C "$temporary" submodule update --init --recursive
+git -C "$temporary" submodule foreach --recursive \
+    'git config core.autocrlf false && git config core.filemode false'
 mv "$temporary" "$checkout"
 trap - EXIT
 verify_checkout

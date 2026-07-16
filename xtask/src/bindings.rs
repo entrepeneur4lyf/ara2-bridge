@@ -128,8 +128,13 @@ pub fn validate_generated_metadata(text: &str) -> Result<(), DynError> {
 
 /// Generates or verifies the checked-in raw bindings.
 pub fn generate(mode: Mode) -> Result<(), DynError> {
+    if cfg!(windows) {
+        return Err(message(
+            "binding generation is not supported on Windows because Windows libclang emits the packed ARAFactory as opaque; run canonical generation on Linux or macOS",
+        ));
+    }
     provenance::verify(root(), root().join("sdk-provenance.toml"))?;
-    let api = root().join("reference/ARA_SDK/ARA_API");
+    let api = root().join(".third-party/ARA_SDK/ARA_API");
     let generated = root().join("ara2-bridge-sys/src/generated");
     let mut coverage_bindings = None;
 

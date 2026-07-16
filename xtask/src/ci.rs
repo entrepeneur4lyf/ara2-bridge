@@ -105,6 +105,14 @@ pub fn run(args: impl IntoIterator<Item = String>) -> Result<(), String> {
 
 /// Validates all checked-in workflows against the canonical matrix document.
 pub fn validate_paths(workflow_dir: &Path, matrix_path: &Path) -> Result<(), String> {
+    let release_workflow = workflow_dir.join("release.yml");
+    if release_workflow.exists() {
+        return Err(format!(
+            "{}: CI release workflows are forbidden; releases are manual",
+            release_workflow.display()
+        ));
+    }
+    validate_no_release_operations(workflow_dir)?;
     let matrix = read_matrix(matrix_path)?;
     let mut expected_by_workflow: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
     let mut parsed = BTreeMap::new();
@@ -129,6 +137,13 @@ pub fn validate_paths(workflow_dir: &Path, matrix_path: &Path) -> Result<(), Str
             .ok_or_else(|| format!("{}: missing required job {}", path.display(), expected.id))?;
         let rendered = serde_yaml::to_string(job)
             .map_err(|error| format!("{}:{}: {error}", path.display(), expected.id))?;
+        if rendered.contains("cargo publish") {
+            return Err(format!(
+                "{}:{}: cargo publish is forbidden in validation workflows; releases are manual",
+                path.display(),
+                expected.id
+            ));
+        }
         for token in &expected.required {
             if !rendered.contains(token) {
                 return Err(format!(
@@ -175,6 +190,46 @@ pub fn validate_paths(workflow_dir: &Path, matrix_path: &Path) -> Result<(), Str
     validate_schema_document(&schema_path)
 }
 
+fn validate_no_release_operations(workflow_dir: &Path) -> Result<(), String> {
+    let mut paths = fs::read_dir(workflow_dir)
+        .map_err(|error| format!("cannot read {}: {error}", workflow_dir.display()))?
+        .map(|entry| {
+            entry
+                .map(|entry| entry.path())
+                .map_err(|error| format!("cannot read {} entry: {error}", workflow_dir.display()))
+        })
+        .collect::<Result<Vec<_>, _>>()?;
+    paths.sort();
+    for path in paths {
+        if !matches!(
+            path.extension().and_then(|extension| extension.to_str()),
+            Some("yml" | "yaml")
+        ) {
+            continue;
+        }
+        let workflow = read_workflow(&path)?;
+        let rendered = serde_yaml::to_string(&workflow)
+            .map_err(|error| format!("{}: {error}", path.display()))?;
+        for forbidden in [
+            "cargo publish",
+            "cargo release",
+            "release source-bundle",
+            "git tag",
+            "gh release",
+            "cosign attest",
+            "attest-build-provenance",
+        ] {
+            if rendered.contains(forbidden) {
+                return Err(format!(
+                    "{}: `{forbidden}` is forbidden in CI; releases are manual",
+                    path.display()
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Lists canonical workflow/job pairs in stable lexical order.
 pub fn list_jobs_paths(workflow_dir: &Path, matrix_path: &Path) -> Result<Vec<String>, String> {
     let matrix = read_matrix(matrix_path)?;
@@ -212,12 +267,11 @@ pub fn bundle_evidence(input: &Path, output: &Path, head_sha: &str) -> Result<()
     bundle_evidence_inner(input, output, head_sha, None, None)
 }
 
-/// Returns the exact non-release evidence multiplicities from the canonical matrix.
+/// Returns the exact validation-evidence multiplicities from the canonical matrix.
 pub fn expected_evidence_counts(matrix_path: &Path) -> Result<BTreeMap<String, usize>, String> {
     Ok(read_matrix(matrix_path)?
         .job
         .into_iter()
-        .filter(|job| job.workflow != "release.yml")
         .map(|job| (job.id, job.evidence_count))
         .collect())
 }
@@ -301,6 +355,13 @@ fn bundle_evidence_inner(
                 .file_name()
                 .and_then(|value| value.to_str())
                 .ok_or_else(|| "source bundle requires a UTF-8 file name".to_owned())?;
+            let expected_name = format!("ara2-bridge-{}-source.tar.zst", crate::release::VERSION);
+            if name != expected_name {
+                return Err(format!(
+                    "source bundle requires canonical source bundle filename {expected_name}"
+                ));
+            }
+            crate::release::bundle::verify_for_commit(source_bundle, head_sha)?;
             let bytes = fs::read(source_bundle).map_err(|error| {
                 format!(
                     "could not read source bundle {}: {error}",

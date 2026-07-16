@@ -11,7 +11,7 @@ type DynError = Box<dyn std::error::Error>;
 
 const SCHEMA: u32 = 1;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, PartialEq, Serialize)]
 struct Envelope {
     schema: u32,
     component: String,
@@ -54,15 +54,32 @@ fn git(checkout: &Path, args: &[&str]) -> Result<String, DynError> {
 }
 
 fn host_target() -> Result<String, DynError> {
-    let output = Command::new("rustc").arg("-vV").output()?;
-    if !output.status.success() {
-        return Err(error("rustc -vV failed while resolving the runner target"));
+    let environment = if cfg!(target_env = "msvc") {
+        "msvc"
+    } else if cfg!(target_env = "gnu") {
+        "gnu"
+    } else {
+        ""
+    };
+    target_triple(std::env::consts::OS, std::env::consts::ARCH, environment).map(str::to_owned)
+}
+
+fn target_triple(
+    operating_system: &str,
+    architecture: &str,
+    environment: &str,
+) -> Result<&'static str, DynError> {
+    match (operating_system, architecture, environment) {
+        ("linux", "x86_64", "gnu") => Ok("x86_64-unknown-linux-gnu"),
+        ("linux", "aarch64", "gnu") => Ok("aarch64-unknown-linux-gnu"),
+        ("windows", "x86_64", "msvc") => Ok("x86_64-pc-windows-msvc"),
+        ("windows", "x86", "msvc") => Ok("i686-pc-windows-msvc"),
+        ("macos", "x86_64", "") => Ok("x86_64-apple-darwin"),
+        ("macos", "aarch64", "") => Ok("aarch64-apple-darwin"),
+        _ => Err(error(format!(
+            "unsupported companion probe runner {architecture}-{operating_system}-{environment}"
+        ))),
     }
-    String::from_utf8(output.stdout)?
-        .lines()
-        .find_map(|line| line.strip_prefix("host: "))
-        .map(str::to_owned)
-        .ok_or_else(|| error("rustc -vV did not report a host target"))
 }
 
 fn component_checkout(root: &Path, component: &str) -> Result<PathBuf, DynError> {
@@ -77,17 +94,17 @@ fn component_checkout(root: &Path, component: &str) -> Result<PathBuf, DynError>
 fn source_hash(root: &Path, component: &str) -> Result<String, DynError> {
     let files = match component {
         "clap" => vec![
-            root.join("reference/ARA_SDK/ARA_API/ARACLAP.h"),
+            root.join(".third-party/ARA_SDK/ARA_API/ARACLAP.h"),
             root.join("ara2-bridge-companion/src/clap/sys.rs"),
         ],
         "vst3" => vec![
-            root.join("reference/ARA_SDK/ARA_API/ARAVST3.h"),
+            root.join(".third-party/ARA_SDK/ARA_API/ARAVST3.h"),
             root.join("ara2-bridge-companion/native/vst3/ara_vst3_shim.hpp"),
             root.join("ara2-bridge-companion/native/vst3/ara_vst3_shim.cpp"),
             root.join("ara2-bridge-companion/src/vst3/ffi.rs"),
         ],
         "audio-unit-v2" => vec![
-            root.join("reference/ARA_SDK/ARA_API/ARAAudioUnit.h"),
+            root.join(".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"),
             root.join("ara2-bridge-companion/native/audio_unit/ara_au_shim.h"),
             root.join("ara2-bridge-companion/native/audio_unit/ara_au_shim.mm"),
             root.join("ara2-bridge-companion/src/audio_unit/ffi.rs"),
@@ -143,7 +160,7 @@ fn clap_payload(root: &Path) -> Result<Value, DynError> {
         ))
         .arg(format!(
             "-I{}",
-            root.join("reference/ARA_SDK/ARA_API").display()
+            root.join(".third-party/ARA_SDK/ARA_API").display()
         ))
         .arg(root.join("ara2-bridge-testkit/native/clap_probe.c"))
         .arg("-o")
@@ -195,7 +212,7 @@ fn cross_clap_payload(root: &Path, target: &str) -> Result<Value, DynError> {
             "-fdump-record-layouts-complete",
             "-fsyntax-only",
             "-I.third-party/clap/include",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "ara2-bridge-testkit/native/clap_layout_probe.c",
         ])
         .output()?;
@@ -317,23 +334,28 @@ fn compile_and_run(
     serde_json::from_slice(&output.stdout).map_err(Into::into)
 }
 
-fn vst3_payload(root: &Path) -> Result<Value, DynError> {
+fn vst3_language_flags(target: &str) -> &'static [&'static str] {
+    if target.ends_with("-msvc") {
+        &["/std:c++17", "/EHsc"]
+    } else {
+        &["-std=c++17"]
+    }
+}
+
+fn vst3_payload(root: &Path, target: &str) -> Result<Value, DynError> {
     let compiler = std::env::var_os("CXX").unwrap_or_else(|| "c++".into());
-    compile_and_run(
-        root,
-        compiler,
-        [
-            "-std=c++17",
+    let arguments = vst3_language_flags(target)
+        .iter()
+        .copied()
+        .chain([
             "-I.third-party/vst3sdk",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "-Iara2-bridge-companion/native/vst3",
             "ara2-bridge-companion/native/vst3/ara_vst3_shim.cpp",
             "ara2-bridge-testkit/native/vst3_probe.cpp",
-        ]
-        .into_iter()
-        .map(Into::into),
-        "vst3-probe",
-    )
+        ])
+        .map(Into::into);
+    compile_and_run(root, compiler, arguments, "vst3-probe")
 }
 
 fn audio_unit_payload(root: &Path) -> Result<Value, DynError> {
@@ -346,7 +368,7 @@ fn audio_unit_payload(root: &Path) -> Result<Value, DynError> {
             "-x",
             "objective-c++",
             "-I.third-party/AudioUnitSDK/Source",
-            "-Ireference/ARA_SDK/ARA_API",
+            "-I.third-party/ARA_SDK/ARA_API",
             "-Iara2-bridge-companion/native/audio_unit",
             "ara2-bridge-testkit/native/audio_unit_probe.mm",
             "-framework",
@@ -383,7 +405,7 @@ pub fn emit(root: &Path, component: &str, output: &Path, target: &str) -> Result
     let (probe_method, payload) = match (component, target == actual_target) {
         ("clap", true) => ("native-execution", clap_payload(root)?),
         ("clap", false) => ("clang-target-layout", cross_clap_payload(root, target)?),
-        ("vst3", true) => ("native-execution", vst3_payload(root)?),
+        ("vst3", true) => ("native-execution", vst3_payload(root, target)?),
         ("audio-unit-v2", true) => ("native-execution", audio_unit_payload(root)?),
         ("vst3" | "audio-unit-v2", false) => {
             return Err(error(format!(
@@ -480,6 +502,25 @@ fn canonical_name(component: &str, target: &str) -> Result<&'static str, DynErro
             "unsupported {component} companion probe target {target}"
         ))),
     }
+}
+
+/// Re-runs one probe on its declared runner and compares it with the canonical envelope.
+pub fn check_target(root: &Path, component: &str, target: &str) -> Result<(), DynError> {
+    let canonical = root
+        .join("ara2-bridge-companion/probes")
+        .join(canonical_name(component, target)?);
+    validate_envelope(root, component, &canonical)?;
+    let temporary = tempfile::tempdir()?;
+    let emitted = temporary.path().join("runner-envelope.json");
+    emit(root, component, &emitted, target)?;
+    validate_envelope(root, component, &emitted)?;
+    if read_envelope(&emitted)? != read_envelope(&canonical)? {
+        return Err(error(format!(
+            "fresh {component} probe for {target} differs from canonical {}",
+            canonical.display()
+        )));
+    }
+    Ok(())
 }
 
 /// Imports a directory of validated, uniquely targeted probe envelopes atomically.
@@ -591,7 +632,7 @@ fn validate_symbol_manifest(root: &Path, component: &str) -> Result<(), DynError
 
 #[cfg(test)]
 mod source_hash_tests {
-    use super::hash_source_files;
+    use super::{hash_source_files, target_triple, vst3_language_flags};
     use std::fs;
 
     #[test]
@@ -609,6 +650,48 @@ mod source_hash_tests {
             hash_source_files(second.path(), &[second.path().join("nested/input.h")]).unwrap();
 
         assert_eq!(first_hash, second_hash);
+    }
+
+    #[test]
+    fn compile_target_mapping_covers_every_runtime_probe_runner() {
+        assert_eq!(
+            target_triple("linux", "x86_64", "gnu").unwrap(),
+            "x86_64-unknown-linux-gnu"
+        );
+        assert_eq!(
+            target_triple("linux", "aarch64", "gnu").unwrap(),
+            "aarch64-unknown-linux-gnu"
+        );
+        assert_eq!(
+            target_triple("windows", "x86_64", "msvc").unwrap(),
+            "x86_64-pc-windows-msvc"
+        );
+        assert_eq!(
+            target_triple("windows", "x86", "msvc").unwrap(),
+            "i686-pc-windows-msvc"
+        );
+        assert_eq!(
+            target_triple("macos", "x86_64", "").unwrap(),
+            "x86_64-apple-darwin"
+        );
+        assert_eq!(
+            target_triple("macos", "aarch64", "").unwrap(),
+            "aarch64-apple-darwin"
+        );
+        assert!(target_triple("linux", "riscv64", "gnu").is_err());
+    }
+
+    #[test]
+    fn vst3_probe_uses_the_target_compiler_dialect() {
+        assert_eq!(
+            vst3_language_flags("x86_64-pc-windows-msvc"),
+            ["/std:c++17", "/EHsc"]
+        );
+        assert_eq!(
+            vst3_language_flags("x86_64-unknown-linux-gnu"),
+            ["-std=c++17"]
+        );
+        assert_eq!(vst3_language_flags("aarch64-apple-darwin"), ["-std=c++17"]);
     }
 
     #[test]

@@ -1,6 +1,27 @@
+#[cfg(not(windows))]
 #[test]
 fn generated_bindings_are_current() {
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap();
+    if !root
+        .join(".third-party/ARA_SDK/ARA_API/ARAInterface.h")
+        .is_file()
+    {
+        eprintln!("skipping binding freshness without the maintainer ARA SDK checkout");
+        return;
+    }
     xtask::bindings::generate(xtask::Mode::Check).unwrap();
+}
+
+#[cfg(windows)]
+#[test]
+fn generated_bindings_reject_the_unsupported_windows_host() {
+    let error = xtask::bindings::generate(xtask::Mode::Check).unwrap_err();
+    assert!(
+        error.to_string().contains("not supported on Windows"),
+        "{error}"
+    );
 }
 
 #[test]

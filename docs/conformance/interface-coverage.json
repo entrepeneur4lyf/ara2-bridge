@@ -12,9 +12,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAArchivingControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "getDocumentArchiveID",
@@ -27,9 +38,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAArchivingControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "notifyDocumentArchivingProgress",
@@ -42,9 +64,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAArchivingControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "notifyDocumentUnarchivingProgress",
@@ -57,9 +90,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAArchivingControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "readBytesFromArchive",
@@ -72,9 +116,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAArchivingControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "writeBytesToArchive",
@@ -87,9 +142,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAArchivingControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "createAudioReaderForSource",
@@ -102,9 +168,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAAudioAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "destroyAudioReader",
@@ -117,9 +194,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAAudioAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "readAudioSamples",
@@ -132,9 +220,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAAudioAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "createAudioSourceContentReader",
@@ -147,9 +246,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "createMusicalContextContentReader",
@@ -162,9 +272,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "destroyContentReader",
@@ -177,9 +298,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "getAudioSourceContentGrade",
@@ -192,9 +324,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "getContentReaderDataForEvent",
@@ -207,9 +350,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "getContentReaderEventCount",
@@ -222,9 +376,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "getMusicalContextContentGrade",
@@ -237,9 +402,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "isAudioSourceContentAvailable",
@@ -252,9 +428,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "isMusicalContextContentAvailable",
@@ -267,9 +454,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAContentAccessControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "beginEditing",
@@ -282,9 +480,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "beginRestoringDocumentFromArchive",
@@ -297,9 +506,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "cloneAudioModification",
@@ -312,9 +532,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createAudioModification",
@@ -327,9 +558,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createAudioModificationContentReader",
@@ -342,9 +584,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createAudioSource",
@@ -357,9 +610,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createAudioSourceContentReader",
@@ -372,9 +636,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createMusicalContext",
@@ -387,9 +662,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createPlaybackRegion",
@@ -402,9 +688,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createPlaybackRegionContentReader",
@@ -417,9 +714,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "createRegionSequence",
@@ -432,9 +740,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "deactivateAudioModificationForUndoHistory",
@@ -447,9 +766,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "deactivateAudioSourceForUndoHistory",
@@ -462,9 +792,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyAudioModification",
@@ -477,9 +818,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyAudioSource",
@@ -492,9 +844,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyContentReader",
@@ -507,9 +870,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyDocumentController",
@@ -522,9 +896,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyMusicalContext",
@@ -537,9 +922,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyPlaybackRegion",
@@ -552,9 +948,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "destroyRegionSequence",
@@ -567,9 +974,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "enableAudioSourceSamplesAccess",
@@ -582,9 +1000,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "endEditing",
@@ -597,9 +1026,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "endRestoringDocumentFromArchive",
@@ -612,9 +1052,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getAudioModificationContentGrade",
@@ -627,9 +1078,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getAudioSourceContentGrade",
@@ -642,9 +1104,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getContentReaderDataForEvent",
@@ -657,9 +1130,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getContentReaderEventCount",
@@ -672,9 +1156,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getFactory",
@@ -687,9 +1182,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getPlaybackRegionContentGrade",
@@ -702,9 +1208,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getPlaybackRegionHeadAndTailTime",
@@ -717,9 +1234,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getProcessingAlgorithmForAudioSource",
@@ -732,9 +1260,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getProcessingAlgorithmProperties",
@@ -747,9 +1286,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "getProcessingAlgorithmsCount",
@@ -762,9 +1312,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "isAudioModificationContentAvailable",
@@ -777,9 +1338,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "isAudioModificationPreservingAudioSourceSignal",
@@ -792,9 +1364,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "isAudioSourceContentAnalysisIncomplete",
@@ -807,9 +1390,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "isAudioSourceContentAvailable",
@@ -822,9 +1416,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "isLicensedForCapabilities",
@@ -837,9 +1442,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "isPlaybackRegionContentAvailable",
@@ -852,9 +1468,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "notifyModelUpdates",
@@ -867,9 +1494,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "requestAudioSourceContentAnalysis",
@@ -882,9 +1520,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "requestProcessingAlgorithmForAudioSource",
@@ -897,9 +1546,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "restoreObjectsFromArchive",
@@ -912,9 +1572,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "storeAudioSourceToAudioFileChunk",
@@ -927,9 +1598,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "storeDocumentToArchive",
@@ -942,9 +1624,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "storeObjectsToArchive",
@@ -957,9 +1650,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateAudioModificationProperties",
@@ -972,9 +1676,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateAudioSourceContent",
@@ -987,9 +1702,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateAudioSourceProperties",
@@ -1002,9 +1728,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateDocumentProperties",
@@ -1017,9 +1754,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateMusicalContextContent",
@@ -1032,9 +1780,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateMusicalContextProperties",
@@ -1047,9 +1806,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updatePlaybackRegionProperties",
@@ -1062,9 +1832,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "updateRegionSequenceProperties",
@@ -1077,9 +1858,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ControllerInterface",
+        "mechanism": "ara2_bridge_plugin::ffi::callbacks::dispatch + ara2_bridge_host::plugin::generated_dispatch",
         "surface": "ARADocumentControllerInterface",
-        "test_target": "ara2-bridge-testkit/tests/plugin_contract.rs + ara2-bridge-host/tests/plugin_dispatch.rs"
+        "test_ids": [
+          "ara2-bridge-testkit/tests/plugin_contract.rs#raw_fixture_drives_all_54_document_controller_callbacks",
+          "ara2-bridge-testkit/tests/plugin_contract.rs#every_callback_rejects_a_null_controller_with_its_abi_fallback",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#minimal_controller_loads_every_supported_generation_prefix",
+          "ara2-bridge-plugin/src/ffi/callbacks.rs#generated_shells_call_named_delegate_and_contain_panics",
+          "ara2-bridge-core/tests/dispatch.rs#expected_errors_map_to_method_sentinels_without_poisoning",
+          "ara2-bridge-core/tests/lifecycle.rs#model_operations_reject_the_wrong_thread",
+          "ara2-bridge-host/tests/plugin_dispatch.rs#factory_creates_identity_checked_controller_and_drop_balances_destruction"
+        ],
+        "test_target": "generated document-controller dispatch"
       },
       {
         "c_name": "addPlaybackRegion",
@@ -1092,9 +1884,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAEditorRendererInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "addRegionSequence",
@@ -1107,9 +1910,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAEditorRendererInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "removePlaybackRegion",
@@ -1122,9 +1936,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAEditorRendererInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "removeRegionSequence",
@@ -1137,9 +1962,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAEditorRendererInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "notifyHideRegionSequences",
@@ -1152,9 +1988,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAEditorViewInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "notifySelection",
@@ -1167,9 +2014,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAEditorViewInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "createDocumentControllerWithDocument",
@@ -1181,9 +2039,16 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::Factory",
+        "mechanism": "ara2_bridge_plugin::factory::{initialize,uninitialize,create_document_controller}",
         "surface": "ARAFactory",
-        "test_target": "ara2-bridge-plugin/tests/factory.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/factory.rs#each_factory_entry_has_independent_generation_state",
+          "ara2-bridge-plugin/tests/factory.rs#raw_factory_pointer_and_callbacks_are_stable_across_balanced_reinitialization",
+          "ara2-bridge-plugin/tests/factory.rs#invalid_ranges_capabilities_duplicates_and_assert_addresses_are_rejected"
+        ],
+        "test_target": "ARA factory callbacks"
       },
       {
         "c_name": "initializeARAWithConfiguration",
@@ -1195,9 +2060,16 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::Factory",
+        "mechanism": "ara2_bridge_plugin::factory::{initialize,uninitialize,create_document_controller}",
         "surface": "ARAFactory",
-        "test_target": "ara2-bridge-plugin/tests/factory.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/factory.rs#each_factory_entry_has_independent_generation_state",
+          "ara2-bridge-plugin/tests/factory.rs#raw_factory_pointer_and_callbacks_are_stable_across_balanced_reinitialization",
+          "ara2-bridge-plugin/tests/factory.rs#invalid_ranges_capabilities_duplicates_and_assert_addresses_are_rejected"
+        ],
+        "test_target": "ARA factory callbacks"
       },
       {
         "c_name": "uninitializeARA",
@@ -1209,9 +2081,16 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::Factory",
+        "mechanism": "ara2_bridge_plugin::factory::{initialize,uninitialize,create_document_controller}",
         "surface": "ARAFactory",
-        "test_target": "ara2-bridge-plugin/tests/factory.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/factory.rs#each_factory_entry_has_independent_generation_state",
+          "ara2-bridge-plugin/tests/factory.rs#raw_factory_pointer_and_callbacks_are_stable_across_balanced_reinitialization",
+          "ara2-bridge-plugin/tests/factory.rs#invalid_ranges_capabilities_duplicates_and_assert_addresses_are_rejected"
+        ],
+        "test_target": "ARA factory callbacks"
       },
       {
         "c_name": "notifyAudioModificationContentChanged",
@@ -1224,9 +2103,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAModelUpdateControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "notifyAudioSourceAnalysisProgress",
@@ -1239,9 +2129,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAModelUpdateControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "notifyAudioSourceContentChanged",
@@ -1254,9 +2155,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAModelUpdateControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "notifyDocumentDataChanged",
@@ -1269,9 +2181,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAModelUpdateControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "notifyPlaybackRegionContentChanged",
@@ -1284,9 +2207,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAModelUpdateControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "requestEnableCycle",
@@ -1299,9 +2233,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAPlaybackControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "requestSetCycleRange",
@@ -1314,9 +2259,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAPlaybackControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "requestSetPlaybackPosition",
@@ -1329,9 +2285,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAPlaybackControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "requestStartPlayback",
@@ -1344,9 +2311,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAPlaybackControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "requestStopPlayback",
@@ -1359,9 +2337,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_host::HostServices",
+        "mechanism": "ara2_bridge_host::services::dispatch::with_state",
         "surface": "ARAPlaybackControllerInterface",
-        "test_target": "ara2-bridge-host/tests/host_callbacks.rs + ara2-bridge-testkit/tests/plugin_contract.rs"
+        "test_ids": [
+          "ara2-bridge-host/tests/host_callbacks.rs#every_host_slot_has_a_dispatcher_and_contract_class",
+          "ara2-bridge-host/tests/host_callback_fallbacks.rs#every_host_callback_has_a_null_host_fallback",
+          "ara2-bridge-host/tests/services_builder.rs#required_services_are_stable_and_optional_services_are_absent",
+          "ara2-bridge-host/tests/services_builder.rs#legacy_archive_prefix_omits_the_ara2_archive_id_tail",
+          "ara2-bridge-host/tests/services_builder.rs#a_panicking_service_quarantines_only_its_document",
+          "ara2-bridge-host/tests/audio_access.rs#planar_reads_silence_out_of_range_portions_and_failures",
+          "ara2-bridge-core/tests/lifecycle.rs#sample_content_and_teardown_states_are_checked"
+        ],
+        "test_target": "shared host-service callback dispatch"
       },
       {
         "c_name": "addPlaybackRegion",
@@ -1374,9 +2363,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAPlaybackRendererInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "removePlaybackRegion",
@@ -1389,9 +2389,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAPlaybackRendererInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "removePlaybackRegion",
@@ -1404,9 +2415,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAPlugInExtensionInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       },
       {
         "c_name": "setPlaybackRegion",
@@ -1419,9 +2441,20 @@
           "lifecycle-and-thread",
           "teardown"
         ],
+        "evidence_scope": "shared-mechanism",
         "implementation": "ara2_bridge_plugin::ExtensionBinding / ara2_bridge_host::ExtensionController",
+        "mechanism": "ara2_bridge_plugin::extension::ExtensionBinding::with_state + ara2_bridge_host::extension::ExtensionController",
         "surface": "ARAPlugInExtensionInterface",
-        "test_target": "ara2-bridge-plugin/tests/extensions.rs + ara2-bridge-host/tests/extensions.rs"
+        "test_ids": [
+          "ara2-bridge-plugin/tests/extensions.rs#role_calls_validate_assignment_and_controller_lifetime",
+          "ara2-bridge-plugin/tests/extensions.rs#interface_storage_survives_either_owner_destruction_order",
+          "ara2-bridge-plugin/tests/extensions.rs#ara1_binding_exposes_legacy_extension_prefix",
+          "ara2-bridge-plugin/tests/extensions.rs#editor_view_callbacks_copy_selection_and_hidden_sequence_arrays",
+          "ara2-bridge-host/tests/extensions.rs#role_sets_are_validated_against_returned_interface_pairs",
+          "ara2-bridge-host/tests/extensions.rs#ara2_roles_assign_graph_objects_and_copy_view_state",
+          "ara2-bridge-testkit/tests/editor_renderer_concurrency.rs#concurrent_editor_renderer_updates_and_both_teardown_orders_are_leak_free"
+        ],
+        "test_target": "shared extension-role callback dispatch"
       }
     ]
   },

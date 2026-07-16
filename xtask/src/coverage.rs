@@ -1,6 +1,8 @@
 //! Joined interface-coverage report generation and verification.
 
-use ara2_bridge_testkit::coverage::{all_contract_tests, all_delegates, CoverageReport};
+use ara2_bridge_testkit::coverage::{
+    all_contract_tests, all_delegates, ContractTest, CoverageReport,
+};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::{BTreeMap, BTreeSet};
@@ -59,10 +61,12 @@ struct Summary {
 
 /// Writes or verifies the deterministic interface coverage reports.
 pub fn generate(root: &Path, mode: crate::Mode) -> Result<(), DynError> {
+    let contracts = all_contract_tests();
+    validate_contract_sources(root, &contracts)?;
     let callbacks = CoverageReport::build(
         ara2_bridge_sys::compatibility::RECORDS,
         &all_delegates(),
-        &all_contract_tests(),
+        &contracts,
     );
     if !callbacks.semantic_gaps().is_empty() {
         return Err(format!("semantic coverage gaps: {:#?}", callbacks.semantic_gaps()).into());
@@ -193,6 +197,39 @@ pub fn generate(root: &Path, mode: crate::Mode) -> Result<(), DynError> {
         &json,
         mode,
     )
+}
+
+fn validate_contract_sources(root: &Path, contracts: &[ContractTest]) -> Result<(), DynError> {
+    let mut checked = BTreeSet::new();
+    for contract in contracts {
+        for identifier in contract.test_ids {
+            if !checked.insert(*identifier) {
+                continue;
+            }
+            let (relative, test) = identifier.split_once('#').ok_or_else(|| {
+                format!("contract evidence must use path#test_function: {identifier}")
+            })?;
+            if relative.starts_with('/')
+                || relative
+                    .split('/')
+                    .any(|part| part.is_empty() || part == "..")
+            {
+                return Err(format!("invalid contract evidence path: {identifier}").into());
+            }
+            let path = root.join(relative);
+            let source = std::fs::read_to_string(&path).map_err(|error| {
+                format!("cannot read contract evidence {}: {error}", path.display())
+            })?;
+            if !source.contains(&format!("fn {test}(")) {
+                return Err(format!(
+                    "contract evidence test `{test}` is missing from {}",
+                    path.display()
+                )
+                .into());
+            }
+        }
+    }
+    Ok(())
 }
 
 fn read_json<T: for<'de> Deserialize<'de>>(path: &Path, label: &str) -> Result<T, DynError> {

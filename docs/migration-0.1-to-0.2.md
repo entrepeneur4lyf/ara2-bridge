@@ -71,4 +71,4 @@ When migrating, replace stored raw ARA references with the matching host handle.
 
 ## Companion SDK Configuration
 
-User builds never download SDKs. CLAP declarations are checked in from the pinned source. VST3 and Audio Unit builds require verified local SDK checkouts at the environment variables above. Repository CI provisions exact commits through `ci/bootstrap-reference-sdks.sh` only after an explicit license-policy identifier is supplied.
+User builds never download SDKs. CLAP declarations are checked in from the pinned source. VST3 and Audio Unit builds require verified local SDK checkouts at the environment variables above. Maintainer ARA conformance uses the official Celemony GitHub repository cached at `.third-party/ARA_SDK`, with no `ARA_SDK_DIR`. Repository CI provisions exact commits through `ci/bootstrap-reference-sdks.sh` only after an explicit license-policy identifier is supplied.

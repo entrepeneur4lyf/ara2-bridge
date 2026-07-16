@@ -1,5 +1,5 @@
 schema_version = 1
-source_header = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+source_header = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
 source_commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
 
 [rules]

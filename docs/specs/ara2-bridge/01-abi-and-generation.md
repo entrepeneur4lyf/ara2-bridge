@@ -10,7 +10,7 @@ This spec owns the exact Rust representation of the released ARA 2.3 C ABI. It d
 
 ## Source provenance
 
-The ignored `reference/ARA_SDK/` checkout is a reproducibly provisioned external input, not a root-repository submodule. The tracked SDK lock/bootstrap files clone `https://github.com/Celemony/ARA_SDK.git` at top-level commit `a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c` and initialize its pinned recursive submodules. `reference/ARA_SDK/ARA_API/` commit `65ec5c43b943a48cb5446f448a0492db6af8534b` (`releases/2.3.0`) is the canonical ABI input. The top-level commit is one README-only commit after the release tag; it is recorded but does not alter normative code. The repository records every top-level/submodule commit, Git tree identity, license decision, and SHA-256 of every consumed or behavior-derived source. Regeneration fails if the reference is absent, dirty, at the wrong identity, or hashes differ unless the explicit SDK-update workflow is invoked.
+The canonical input is the official `https://github.com/Celemony/ARA_SDK.git` repository, never `reference/`. The tracked SDK lock/bootstrap files clone it into the ignored `.third-party/ARA_SDK/` cache at top-level commit `a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c` and initialize its pinned recursive submodules. `.third-party/ARA_SDK/ARA_API/` commit `65ec5c43b943a48cb5446f448a0492db6af8534b` (`releases/2.3.0`) is the canonical ABI input. The top-level commit is one README-only commit after the release tag; it is recorded but does not alter normative code. The repository records every top-level/submodule commit, Git tree identity, license decision, and SHA-256 of every consumed or behavior-derived source. Regeneration fails if the GitHub checkout is absent, dirty, at the wrong identity, or hashes differ unless the explicit SDK-update workflow is invoked.
 
 Consumed headers are `ARAInterface.h`, `ARAAudioFileChunks.h`, `ARACLAP.h`, `ARAVST3.h`, and `ARAAudioUnit.h`. License and NOTICE files must accompany distributed source and generated artifacts.
 
@@ -24,7 +24,7 @@ Consumed headers are `ARAInterface.h`, `ARAAudioFileChunks.h`, `ARACLAP.h`, `ARA
 4. write a packaged machine-readable coverage manifest mapping every public declaration from all five ARA headers to its generated Rust symbol, audited companion shim symbol, explicit target/SDK-gated classification, or companion-deferred declaration that the final companion manifests must close; core headers are preprocessed in Phase 0, while companion headers are lexically inventoried without resolving their external includes and are compiled/preprocessed only after the corresponding pinned SDK is provisioned; and
 5. compare output against checked-in artifacts in CI.
 
-Coverage discovery is a source-inventory operation, not a host-ABI probe. Its preprocessing and AST passes therefore use the canonical x86_64 Linux target on every maintainer host; the separate per-family binding and C/C++ probe stages remain authoritative for target layout.
+Coverage discovery is a source-inventory operation, not a host-ABI probe. Its preprocessing and AST passes therefore use the canonical x86_64 Linux target on every maintainer host; the separate per-family binding and C/C++ probe stages remain authoritative for target layout. Canonical binding generation and `release audit-api` run on Linux or macOS because Windows libclang emits the packed `ARAFactory` as opaque. Windows consumes the checked-in bindings and proves its ABI through the Windows-specific C/C++ probes and Rust layout tests; the release audit must report the unsupported generation host rather than silently skip freshness.
 
 Handwritten code may wrap generated symbols but must not edit generated files. The generator itself is tested and versioned.
 
@@ -75,3 +75,4 @@ Downstream `cargo build` works without libclang. Regeneration from the pinned SD
 - 2026-07-15: Audit made external SDK bootstrap, exhaustive all-symbol coverage, and the synthetic chunk constant explicit release artifacts.
 - 2026-07-15: Implementation evidence requires generator normalization and compile-time type tests for bindgen-omitted or widened scalar macros.
 - 2026-07-15: Coverage discovery uses one canonical preprocessing target so regeneration is byte-identical on Linux and macOS; target ABI evidence remains per-family.
+- 2026-07-16: Make the locked Celemony GitHub checkout under `.third-party/` the sole maintainer SDK source; `reference/` and `ARA_SDK_DIR` are not build inputs.

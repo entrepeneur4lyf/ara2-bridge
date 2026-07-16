@@ -5,7 +5,7 @@
 ## Features
 
 - `clap` uses checked-in direct declarations from CLAP 1.1.9. No SDK path is needed for ordinary builds.
-- `vst3` builds an opaque C++17 shim against VST3 SDK `v3.7.11_build_10`. Set `ARA_VST3_SDK_DIR` to the exact locked checkout.
+- `vst3` builds an opaque C++17 shim against MIT-licensed VST3 SDK `v3.8.0_build_66`. Set `ARA_VST3_SDK_DIR` to the exact locked checkout.
 - `audio-unit-v2` is Apple-only and builds an Objective-C++ property shim against AudioUnitSDK `AudioUnitSDK-1.0.0`. Set `ARA_AUDIO_UNIT_SDK_DIR`.
 
 All features are independent and disabled by default. Build scripts validate configured SDK identity but never download code or accept licenses.

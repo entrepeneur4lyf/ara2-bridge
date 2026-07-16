@@ -7,15 +7,14 @@ crate rustdoc, migration guidance, and `docs/troubleshooting.md`.
 
 The local release surface is executable through `cargo xtask release`: API,
 unsafe, and license audits; precommit source-input verification; deterministic
-source-bundle creation; isolated offline bundle verification; internally invoked
-GitHub attestation import; and same-SHA evidence verification. The source bundle
+source-bundle creation; and isolated offline bundle verification. The source bundle
 contains seven `.crate` archives, their unpacked clean-room workspace, the locked
 directory source, complete licenses and provenance, and a sorted SHA-256 inventory.
-The release workflow embeds that archive and its digest before attesting the outer
-40-fragment evidence archive.
+Only the operator-controlled local procedure creates, signs, or publishes release
+artifacts; CI is validation-only and has no release workflow.
 
 No tracked document claims run-specific success. Exact package hashes, native
-platform results, sanitizer/fuzz durations, workflow IDs, and conclusions belong
-only to the signed evidence artifact for the candidate SHA. AAX and Audio Unit v3
-remain explicit boundaries. Any tracked change creates a new candidate and requires
-the complete matrix and archive-level attestation again.
+platform results, sanitizer/fuzz durations, workflow IDs, and conclusions remain
+operator-reviewed candidate evidence. AAX and Audio Unit v3 remain explicit
+boundaries. Any tracked change creates a new candidate and requires the complete
+matrix plus local source-bundle verification again.

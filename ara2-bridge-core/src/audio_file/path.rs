@@ -31,7 +31,7 @@ impl PathRewriteError {
 /// Atomically replaces the ARA iXML dictionary in an audio file.
 ///
 /// The original path must not be a symbolic link. Output is written beside the original, checked,
-/// synced, assigned the original permissions, and renamed only after all validation succeeds.
+/// synced, and renamed only after all validation succeeds. The original permissions are preserved.
 pub fn replace_ara_in_path(
     path: impl AsRef<Path>,
     chunk: &AraChunkSet,
@@ -63,6 +63,7 @@ fn replace_ixml_in_path(path: &Path, xml: &[u8]) -> Result<(), PathRewriteError>
         let mut input = File::open(path)?;
         rewrite_ixml(&mut input, &mut output, Some(xml))?;
         output.sync_all()?;
+        #[cfg(not(windows))]
         output.set_permissions(metadata.permissions())?;
         output.seek(SeekFrom::Start(0))?;
         let actual = AraChunkSet::from_audio_reader(&mut output, ChunkLimits::default())?
@@ -84,7 +85,37 @@ fn replace_ixml_in_path(path: &Path, xml: &[u8]) -> Result<(), PathRewriteError>
         });
     }
     drop(output);
+    #[cfg(windows)]
+    if let Err(error) = std::fs::set_permissions(&temporary_path, metadata.permissions()) {
+        return Err(PathRewriteError {
+            source: AudioFileError::Io(error),
+            temporary_path: Some(temporary_path),
+        });
+    }
+    #[cfg(windows)]
+    if metadata.permissions().readonly() {
+        let mut writable = metadata.permissions();
+        // This branch is compiled only on Windows, where clearing the read-only file attribute
+        // does not broaden Unix mode bits.
+        #[allow(clippy::permissions_set_readonly_false)]
+        writable.set_readonly(false);
+        if let Err(error) = std::fs::set_permissions(path, writable) {
+            return Err(PathRewriteError {
+                source: AudioFileError::Io(error),
+                temporary_path: Some(temporary_path),
+            });
+        }
+    }
     if let Err(error) = std::fs::rename(&temporary_path, path) {
+        #[cfg(windows)]
+        if metadata.permissions().readonly() {
+            return Err(rename_failure_with_restoration(
+                path,
+                metadata.permissions(),
+                temporary_path,
+                error,
+            ));
+        }
         return Err(PathRewriteError {
             source: AudioFileError::Io(error),
             temporary_path: Some(temporary_path),
@@ -95,6 +126,22 @@ fn replace_ixml_in_path(path: &Path, xml: &[u8]) -> Result<(), PathRewriteError>
         temporary_path: None,
     })?;
     Ok(())
+}
+
+#[cfg(any(windows, test))]
+fn rename_failure_with_restoration(
+    path: &Path,
+    original_permissions: std::fs::Permissions,
+    temporary_path: PathBuf,
+    rename_error: std::io::Error,
+) -> PathRewriteError {
+    let source = std::fs::set_permissions(path, original_permissions)
+        .err()
+        .map_or(AudioFileError::Io(rename_error), AudioFileError::Io);
+    PathRewriteError {
+        source,
+        temporary_path: Some(temporary_path),
+    }
 }
 
 fn create_temporary(parent: &Path, original: &Path) -> std::io::Result<(PathBuf, File)> {
@@ -134,5 +181,35 @@ fn sync_directory(path: &Path) -> std::io::Result<()> {
     {
         let _ = path;
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{rename_failure_with_restoration, AudioFileError};
+
+    #[test]
+    fn permission_restoration_failure_is_reported_after_rename_failure() {
+        let directory = tempfile::tempdir().unwrap();
+        let original = directory.path().join("original.wav");
+        std::fs::write(&original, b"fixture").unwrap();
+        let permissions = std::fs::metadata(&original).unwrap().permissions();
+        std::fs::remove_file(&original).unwrap();
+        let temporary = directory.path().join("retained.tmp");
+
+        let error = rename_failure_with_restoration(
+            &original,
+            permissions,
+            temporary.clone(),
+            std::io::Error::other("rename failed"),
+        );
+
+        match error.source() {
+            AudioFileError::Io(source) => {
+                assert_eq!(source.kind(), std::io::ErrorKind::NotFound);
+            }
+            source => panic!("expected restoration I/O failure, got {source}"),
+        }
+        assert_eq!(error.temporary_path(), Some(temporary.as_path()));
     }
 }

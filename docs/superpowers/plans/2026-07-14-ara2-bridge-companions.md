@@ -6,7 +6,7 @@
 
 **Architecture:** `CompanionProcessorBinding` connects an externally owned processor to shared plug-in/host runtime state. CLAP uses audited direct Rust declarations; VST3 and AUv2 use narrow C++/Objective-C++ shims around pinned SDKs. Every adapter shares factory pointers, enforces one-shot pre-activation binding, and preserves both teardown orders.
 
-**Tech Stack:** Rust, C11/C++17, CLAP 1.1.9 commit `094bb76c85366a13cc6c49292226d8608d6ae50c`, VST3 SDK `v3.7.11_build_10`, AudioUnitSDK `AudioUnitSDK-1.0.0`, platform Core Audio.
+**Tech Stack:** Rust, C11/C++17, CLAP 1.1.9 commit `094bb76c85366a13cc6c49292226d8608d6ae50c`, MIT-licensed VST3 SDK `v3.8.0_build_66` commit `9fad9770f2ae8542ab1a548a68c1ad1ac690abe0`, AudioUnitSDK `AudioUnitSDK-1.0.0`, platform Core Audio.
 
 ---
 
@@ -14,7 +14,7 @@ Read first: specs `01`, `02`, `03`, `04`, `06`, `07`, `08` and handoffs `phase-0
 
 ### Task 0: Provision and preflight companion SDK inputs
 
-Use the Phase 0 lock/bootstrap boundary before any feature-gated build. Run portably: `ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT && ci/bootstrap-reference-sdks.sh check --component clap`. Run on configured VST3 jobs with the operator-selected locked GPL/commercial policy ID: `ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license "$ARA_VST3_LICENSE_POLICY" && ci/bootstrap-reference-sdks.sh check --component vst3`. Run on macOS: `ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0 && ci/bootstrap-reference-sdks.sh check --component audio-unit`. This initial preflight verifies only the exact commits, recursive identities, license choices, and clean state recorded in `ci/reference-sdks.lock.toml`. Tasks 2, 4, and 6 create the component provenance manifests, hash every transitively consumed source, and require `cargo xtask ara provenance --check --component <name>` before accepting generated output. Missing flags, wrong identities, later hash drift, and dirty checkouts fail before compilation. The script sets or documents the canonical SDK paths under `.third-party/` and never downloads during a package build.
+Use the Phase 0 lock/bootstrap boundary before any feature-gated build. Run portably: `ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT && ci/bootstrap-reference-sdks.sh check --component clap`. Run configured VST3 jobs with the locked MIT identity: `ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license MIT && ci/bootstrap-reference-sdks.sh check --component vst3`. Run on macOS: `ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0 && ci/bootstrap-reference-sdks.sh check --component audio-unit`. This initial preflight verifies only the exact commits, recursive identities, license choices, and clean state recorded in `ci/reference-sdks.lock.toml`. Tasks 2, 4, and 6 create the component provenance manifests, hash every transitively consumed source, and require `cargo xtask ara provenance --check --component <name>` before accepting generated output. Missing flags, wrong identities, later hash drift, and dirty checkouts fail before compilation. The script sets or documents the canonical SDK paths under `.third-party/` and never downloads during a package build.
 
 ### Task 1: Define the companion-neutral processor boundary
 
@@ -176,16 +176,16 @@ Declare the feature-gated `vst3` module from `lib.rs`, create a minimal `vst3/mo
 - [x] **Step 2: Verify configured failure**
 
 Run: `ARA_VST3_SDK_DIR=$PWD/ara2-bridge-testkit/fixtures/empty-vst3-sdk cargo test -p ara2-bridge-testkit --test vst3_abi --features vst3`  
-Expected: FAIL after inspecting that exact empty fixture, naming missing version `v3.7.11_build_10` and `ARA_VST3_SDK_DIR`. A second run with the variable unset produces the same actionable configuration contract.
+Expected: FAIL after inspecting that exact empty fixture, naming missing version `v3.8.0_build_66` and `ARA_VST3_SDK_DIR`. A second run with the variable unset produces the same actionable configuration contract.
 
-- [ ] **Step 3: Implement a narrow `extern "C"` shim**
+- [x] **Step 3: Implement a narrow `extern "C"` shim**
 
 Build only when `vst3` is enabled. Validate the configured SDK provenance before compiling. Catch every C++ exception, translate COM ownership explicitly, expose no C++ layout directly to Rust, and provide ABI probes for constants/IIDs used by the adapter. Generate `vst3-symbols.json` for every ARAVST3/shim declaration and emit/import the five exact OS/architecture results above with the same immutable envelope checks as CLAP.
 
-- [ ] **Step 4: Run shim probes**
+- [x] **Step 4: Run shim probes**
 
 Run these exact emit commands on matching native or system-emulated runners: `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-linux-x86_64.probe.tar.zst --target x86_64-unknown-linux-gnu`, `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-linux-aarch64.probe.tar.zst --target aarch64-unknown-linux-gnu`, `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-windows-x86_64.probe.tar.zst --target x86_64-pc-windows-msvc`, `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-macos-x86_64.probe.tar.zst --target x86_64-apple-darwin`, and `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-macos-aarch64.probe.tar.zst --target aarch64-apple-darwin`, each with `ARA_VST3_SDK_DIR` set to the locked checkout. Collect those five envelopes without renaming into `target/companion-probes/`, then run: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo xtask ara companion-probe vst3 --import-dir target/companion-probes && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo xtask ara companion-probe vst3 --check-all && cargo xtask ara provenance --check --component vst3 && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo test -p ara2-bridge-testkit --test vst3_abi --features vst3`  
-Expected: PASS against exact `v3.7.11_build_10` inputs with complete symbol classification and five deterministic results.
+Expected: PASS against exact `v3.8.0_build_66` MIT inputs with complete symbol classification and five deterministic results.
 
 - [ ] **Step 5: Commit**
 
@@ -206,7 +206,7 @@ git commit -m "build(companion): add audited vst3 shim"
 
 Test main-factory class category/name, processor `PClassInfo.name`, `ARAFactory::plugInName`, ambiguous duplicate rejection, identical factory pointers, generation-1 and role-aware entry points, COM ownership, and pre-activation binding.
 
-- [ ] **Step 2: Verify failure**
+- [x] **Step 2: Verify failure**
 
 Run: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo test -p ara2-bridge-testkit --test vst3_interop --features vst3`  
 Expected: FAIL on missing adapters.
@@ -215,7 +215,7 @@ Expected: FAIL on missing adapters.
 
 Expose/query `IMainFactory`; associate processor and factory classes unambiguously; implement both entry-point generations; enforce role validation and binding before `setActive`, state/process-context setup, or view creation. Share runtime factory/extension state through `CompanionProcessorBinding`.
 
-- [ ] **Step 4: Run native interoperability tests**
+- [x] **Step 4: Run native interoperability tests**
 
 Run: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo test -p ara2-bridge-testkit --test vst3_interop --features vst3`  
 Expected: PASS for host and plug-in paths, exception injection, reference counts returning to zero, and both teardown orders.
@@ -253,11 +253,11 @@ On macOS, declare the feature-gated `audio_unit` module from `ara2-bridge-compan
 Run on macOS: `ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo test -p ara2-bridge-testkit --test audio_unit_interop --features audio-unit-v2`  
 Expected: FAIL on missing AUv2 implementation. On non-Apple targets, `cargo check -p ara2-bridge-companion --features audio-unit-v2` must fail with the documented Apple-only message.
 
-- [ ] **Step 3: Implement the Apple-only shim and adapters**
+- [x] **Step 3: Implement the Apple-only shim and adapters**
 
 Validate `AudioUnitSDK-1.0.0` provenance and use platform Core Audio headers. Implement instance-property discovery, generation-1 and role-aware binding, exact scope/mutability, and pre-initialization/state/preset/view ordering. Preserve factory identity across paths; treat the component tag only as cache discovery. Generate the exact Audio Unit symbol manifest and two architecture result artifacts above through emit/import/check-all.
 
-- [ ] **Step 4: Run host/plug-in, role, and teardown tests**
+- [x] **Step 4: Run host/plug-in, role, and teardown tests**
 
 Run on the matching macOS runners: `ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo xtask ara companion-probe audio-unit-v2 --emit target/companion-probes/audio-unit-macos-x86_64.probe.tar.zst --target x86_64-apple-darwin` and `ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo xtask ara companion-probe audio-unit-v2 --emit target/companion-probes/audio-unit-macos-aarch64.probe.tar.zst --target aarch64-apple-darwin`. Collect both envelopes without renaming into `target/companion-probes/`, then run on macOS: `ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo xtask ara companion-probe audio-unit-v2 --import-dir target/companion-probes && ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo xtask ara companion-probe audio-unit-v2 --check-all && cargo xtask ara provenance --check --component audio-unit && ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo test -p ara2-bridge-testkit --test audio_unit_interop --features audio-unit-v2`  
 Expected: PASS for every property path, role combination, invalid magic, lifecycle boundary, and both destruction orders.
@@ -283,21 +283,21 @@ git commit -m "feat(companion): add audio unit v2 ara adapters"
 
 Make `clap`, `vst3`, and `audio-unit-v2` additive. Ensure core ARA code has no companion dependency and enabling one adapter cannot remove APIs. Document explicit SDK variables, versions, licenses, hashes, and no-download build behavior.
 
-- [ ] **Step 2: Compile zero/one/bundle combinations**
+- [x] **Step 2: Compile zero/one/bundle combinations**
 
 Run portably: `cargo test -p ara2-bridge-testkit --test companion_features && cargo check -p ara2-bridge-companion --no-default-features && cargo check -p ara2-bridge-companion --features clap`  
 Run with VST3 provisioned: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo check -p ara2-bridge --features full-portable`  
 Run on macOS: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo check -p ara2-bridge --features full-apple`  
 Expected: PASS; a separate non-Apple compile-fail fixture proves `audio-unit-v2` emits the documented Apple-only error.
 
-- [ ] **Step 3: Run the companion phase gate**
+- [x] **Step 3: Run the companion phase gate**
 
 Run portably: `cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo clippy -p ara2-bridge-companion --all-targets --features clap -- -D warnings && cargo test --workspace && cargo test -p ara2-bridge-companion --features clap && cargo test -p ara2-bridge-testkit --features clap --test clap_abi --test clap_interop && RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps && RUSTDOCFLAGS="-D warnings" cargo doc -p ara2-bridge-companion --features clap --no-deps && cargo xtask ara companion-probe clap --check-all && cargo xtask ara provenance --check`  
 Run with VST3 provisioned: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo clippy -p ara2-bridge-companion --all-targets --features vst3 -- -D warnings && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk RUSTDOCFLAGS="-D warnings" cargo doc -p ara2-bridge-companion --features vst3 --no-deps && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo xtask ara companion-probe vst3 --check-all && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo test -p ara2-bridge-testkit --features vst3 --test vst3_abi --test vst3_interop`  
 Run on macOS: `ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo clippy -p ara2-bridge-companion --all-targets --features audio-unit-v2 -- -D warnings && ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK RUSTDOCFLAGS="-D warnings" cargo doc -p ara2-bridge-companion --features audio-unit-v2 --no-deps && ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo xtask ara companion-probe audio-unit-v2 --check-all && ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK cargo test -p ara2-bridge-testkit --features audio-unit-v2 --test audio_unit_interop`  
 Expected: PASS portably and on each configured native job.
 
-- [ ] **Step 4: Write the compact phase handoff**
+- [x] **Step 4: Write the compact phase handoff**
 
 Record feature forwarding, SDK variables/versions, probe outputs, native gate commands/results, lifecycle boundaries, and normative revisions already committed in this phase. The gate fails if any discovered normative revision remains pending.
 

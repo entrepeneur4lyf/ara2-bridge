@@ -282,6 +282,7 @@ fn validate_chapter(root: &Path, chapter: &Chapter) -> Result<(), String> {
         if !api.contains("::") || api.chars().any(char::is_whitespace) {
             return Err(format!("{label} invalid public API reference: {api}"));
         }
+        validate_public_api(root, &label, api)?;
     }
     for command in &chapter.conformance_commands {
         validate_command(root, &label, command)?;
@@ -299,6 +300,89 @@ fn validate_chapter(root: &Path, chapter: &Chapter) -> Result<(), String> {
 
     let _ = chapter.expected_skips;
     Ok(())
+}
+
+fn validate_public_api(root: &Path, label: &str, api: &str) -> Result<(), String> {
+    let parts: Vec<_> = api.split("::").collect();
+    if parts.first() != Some(&"ara2_bridge") || parts.len() < 2 {
+        return Err(format!("{label} invalid public API reference: {api}"));
+    }
+    let crate_name = match parts[1] {
+        "sys" => "ara2-bridge-sys",
+        "core" => "ara2-bridge-core",
+        "plugin" => "ara2-bridge-plugin",
+        "host" => "ara2-bridge-host",
+        "companion" => "ara2-bridge-companion",
+        "testkit" => "ara2-bridge-testkit",
+        _ => return Err(format!("{label} missing public API: {api}")),
+    };
+    let mut source_path = root.join(crate_name).join("src/lib.rs");
+    if !source_path.is_file() {
+        return Err(format!("{label} missing public API: {api}"));
+    }
+    if parts.len() == 2 {
+        return Ok(());
+    }
+
+    for module in &parts[2..parts.len() - 1] {
+        let source = fs::read_to_string(&source_path)
+            .map_err(|error| format!("cannot read {}: {error}", source_path.display()))?;
+        if !public_module_declared(&source, module) {
+            return Err(format!("{label} missing public API: {api}"));
+        }
+        let directory = source_path
+            .parent()
+            .expect("Rust source paths always have a parent");
+        let flat = directory.join(format!("{module}.rs"));
+        let nested = directory.join(module).join("mod.rs");
+        source_path = if flat.is_file() {
+            flat
+        } else if nested.is_file() {
+            nested
+        } else {
+            return Err(format!("{label} missing public API: {api}"));
+        };
+    }
+
+    let source = fs::read_to_string(&source_path)
+        .map_err(|error| format!("cannot read {}: {error}", source_path.display()))?;
+    if publicly_names(&source, parts[parts.len() - 1]) {
+        Ok(())
+    } else {
+        Err(format!("{label} missing public API: {api}"))
+    }
+}
+
+fn public_module_declared(source: &str, expected: &str) -> bool {
+    rust_identifiers(source)
+        .windows(3)
+        .any(|tokens| tokens == ["pub", "mod", expected])
+}
+
+fn publicly_names(source: &str, expected: &str) -> bool {
+    if rust_identifiers(source).windows(3).any(|tokens| {
+        tokens[0] == "pub"
+            && matches!(
+                tokens[1].as_str(),
+                "const" | "enum" | "fn" | "mod" | "static" | "struct" | "trait" | "type"
+            )
+            && tokens[2] == expected
+    }) {
+        return true;
+    }
+    source.split(';').any(|statement| {
+        let tokens = rust_identifiers(statement);
+        tokens.windows(2).any(|tokens| tokens == ["pub", "use"])
+            && tokens.iter().any(|token| token == expected)
+    })
+}
+
+fn rust_identifiers(source: &str) -> Vec<String> {
+    source
+        .split(|character: char| !(character.is_ascii_alphanumeric() || character == '_'))
+        .filter(|token| !token.is_empty())
+        .map(str::to_owned)
+        .collect()
 }
 
 fn validate_fixture_hash(root: &Path, label: &str, fixture: &str) -> Result<(), String> {

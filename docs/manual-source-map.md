@@ -32,11 +32,11 @@ examples = ["ara2-bridge/examples/minimal-plugin.rs"]
 conformance_commands = ["cargo test -p ara2-bridge --test features", "cargo +1.82.0 check --workspace --all-targets --locked", "ci/bootstrap-reference-sdks.sh verify --component ara"]
 testhost_args = ["not-applicable: feature compilation does not launch TestHost"]
 companion_binaries = ["target/debug/examples/clap-binding", "target/debug/examples/vst3-binding", "target/debug/examples/audio-unit-v2-binding"]
-sdk_environment = ["ARA_SDK_DIR=$PWD/reference/ARA_SDK", "ARA_CLAP_DIR=$PWD/.third-party/clap", "ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk", "ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK"]
+sdk_environment = ["ARA SDK=https://github.com/Celemony/ARA_SDK.git (locked cache: $PWD/.third-party/ARA_SDK)", "ARA_CLAP_DIR=$PWD/.third-party/clap", "ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk", "ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK"]
 required_capabilities = ["Rust 1.82 or newer", "C++17 compiler for VST3", "Apple SDK and Objective-C++ compiler for Audio Unit v2"]
 expected_skips = 0
 fixture_hashes = ["not-applicable: feature checks consume locked source commits, not media fixtures"]
-platform_steps = ["CLAP and VST3 builds run on Linux, Windows, and macOS; Audio Unit v2 builds only on macOS", "accept GPL-3.0-only or a documented proprietary policy before provisioning VST3"]
+platform_steps = ["CLAP and VST3 builds run on Linux, Windows, and macOS; Audio Unit v2 builds only on macOS", "provision the exact VST3 3.8 checkout with --accept-license MIT"]
 gui_main_loop = ["not-applicable: compilation does not create a format GUI"]
 timeouts = ["10 minutes per clean SDK-backed feature build"]
 troubleshooting = ["docs/troubleshooting.md#sdk-configuration", "docs/troubleshooting.md#generation-mismatch"]
@@ -63,7 +63,7 @@ troubleshooting = ["docs/troubleshooting.md#lifecycle-and-ownership", "docs/trou
 number = 4
 title = "Document editing, analysis, content, and rendering"
 normative_specs = ["docs/specs/ara2-bridge/03-plugin-runtime.md", "docs/specs/ara2-bridge/05-content-persistence-and-utilities.md"]
-public_apis = ["ara2_bridge::plugin::PluginRuntime", "ara2_bridge::plugin::EditSession", "ara2_bridge::core::ContentReader", "ara2_bridge::plugin::RenderAssignment"]
+public_apis = ["ara2_bridge::plugin::PluginRuntime", "ara2_bridge::plugin::EditSession", "ara2_bridge::core::ContentReader", "ara2_bridge::plugin::ExtensionBinding"]
 examples = ["ara2-bridge/examples/content-reader.rs"]
 conformance_commands = ["cargo run -p ara2-bridge --example content-reader", "cargo test -p ara2-bridge-testkit --test upstream_scenarios -- --nocapture"]
 testhost_args = ["in-process: generation=V23Final; scenarios=update_content,read_content_analysis,playback_renderer,playback_renderer_transformations; --nocapture"]
@@ -135,7 +135,7 @@ troubleshooting = ["docs/troubleshooting.md#companion-discovery", "docs/troubles
 number = 8
 title = "Threading, realtime safety, ownership, and teardown"
 normative_specs = ["docs/specs/ara2-bridge/02-core-safety-and-dispatch.md", "docs/specs/ara2-bridge/03-plugin-runtime.md", "docs/specs/ara2-bridge/04-host-runtime.md"]
-public_apis = ["ara2_bridge::core::ModelThread", "ara2_bridge::core::Lifecycle", "ara2_bridge::core::RealtimeFailureQueue", "ara2_bridge::plugin::RealtimeProcessContext"]
+public_apis = ["ara2_bridge::core::ModelThread", "ara2_bridge::core::Lifecycle", "ara2_bridge::core::RealtimeFailureQueue", "ara2_bridge::plugin::RealtimeHeadTailAdapter"]
 examples = ["ara2-bridge/examples/minimal-plugin.rs", "ara2-bridge/examples/minimal-host.rs"]
 conformance_commands = ["cargo test -p ara2-bridge-testkit --test realtime -- --nocapture", "cargo test -p ara2-bridge-testkit --test analysis_concurrency -- --nocapture", "cargo test -p ara2-bridge-testkit --test sample_access_concurrency -- --nocapture"]
 testhost_args = ["in-process: generation=V23Final; scenario=basic_document_smoke; teardown=controller-first-and-companion-first; --nocapture"]
@@ -173,10 +173,10 @@ title = "Testing with the conformance kit"
 normative_specs = ["docs/specs/ara2-bridge/07-conformance-and-quality.md"]
 public_apis = ["ara2_bridge::testkit::TestHost", "ara2_bridge::testkit::TestPluginTrace", "ara2_bridge::testkit::scenarios"]
 examples = ["ara2-bridge/examples/content-reader.rs"]
-conformance_commands = ["cargo test -p ara2-bridge-testkit --test upstream_scenarios -- --nocapture", "ARA_SDK_DIR=$PWD/reference/ARA_SDK cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture"]
+conformance_commands = ["cargo test -p ara2-bridge-testkit --test upstream_scenarios -- --nocapture", "ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0", "cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture"]
 testhost_args = ["Rust TestHost: generation=V23Final; scenario=<docs/conformance/upstream-scenarios.toml name>; expected_skips=0; --nocapture", "C++ TestHost: pairing=cpp-host-rust-plugin; generation=V23Final; scenario=<buildable direct-factory scenario>; --nocapture"]
 companion_binaries = ["target/debug/examples/clap-binding", "target/debug/examples/vst3-binding", "target/debug/examples/audio-unit-v2-binding"]
-sdk_environment = ["ARA_SDK_DIR=$PWD/reference/ARA_SDK", "ARA_CLAP_DIR=$PWD/.third-party/clap", "ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk", "ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK"]
+sdk_environment = ["ARA SDK=https://github.com/Celemony/ARA_SDK.git (locked cache: $PWD/.third-party/ARA_SDK)", "ARA_CLAP_DIR=$PWD/.third-party/clap", "ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk", "ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK"]
 required_capabilities = ["capability-rich release fixture", "ARA generation 2.3 Final", "all applicable host services", "all applicable plug-in capabilities"]
 expected_skips = 0
 fixture_hashes = ["ara2-bridge-testkit/fixtures/scenarios/ara1-full.archive@3071f1d6bd332cec8e56112c0c60f79ebc399030459671ab7e11a08ece132dfc", "ara2-bridge-testkit/fixtures/scenarios/ara2-full.archive@3c0cfb45fc5dab202d26a16bfb5788af87d88d5c6569621e78c4434542f50c9f", "ara2-bridge-testkit/fixtures/scenarios/chunk-wave.wav@88dbe314538135405b47393dfac1d0bee801ffb463e658031f6d17fefecdbe53"]
@@ -212,7 +212,7 @@ examples = ["ara2-bridge/examples/minimal-plugin.rs", "ara2-bridge/examples/mini
 conformance_commands = ["cargo xtask ara coverage --check", "cargo xtask ci validate", "cargo xtask docs verify-manual-map", "RUSTDOCFLAGS=-Dwarnings cargo doc --workspace --no-deps"]
 testhost_args = ["in-process: generation=V23Final; scenario=all named scenarios; expected_skips=0; --nocapture"]
 companion_binaries = ["target/debug/examples/clap-binding", "target/debug/examples/vst3-binding", "target/debug/examples/audio-unit-v2-binding"]
-sdk_environment = ["ARA_SDK_DIR=$PWD/reference/ARA_SDK", "ARA_CLAP_DIR=$PWD/.third-party/clap", "ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk", "ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK"]
+sdk_environment = ["ARA SDK=https://github.com/Celemony/ARA_SDK.git (locked cache: $PWD/.third-party/ARA_SDK)", "ARA_CLAP_DIR=$PWD/.third-party/clap", "ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk", "ARA_AUDIO_UNIT_SDK_DIR=$PWD/.third-party/AudioUnitSDK"]
 required_capabilities = ["every coverage-manifest entry implemented or explicitly ARA-unsupported", "all additive facade features", "all named conformance scenarios"]
 expected_skips = 0
 fixture_hashes = ["ara2-bridge-testkit/fixtures/chunks/full-2.3.xml@ab9149beb163d4a5b49b768e4e51e9c32acf378fe40eb0e25ce76ead6647ec62", "ara2-bridge-testkit/fixtures/audio/rf64-ds64.wav@96321f5b8a751443f6a21229b41128fe16c8baf7697d7ae87cd54c85170c8a24"]

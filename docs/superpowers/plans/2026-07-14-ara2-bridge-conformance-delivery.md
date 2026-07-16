@@ -267,7 +267,6 @@ git commit -m "test(safety): add ara miri fuzz and realtime gates"
 - Modify: `.github/workflows/ci.yml`
 - Create: `.github/workflows/native-conformance.yml`
 - Create: `.github/workflows/safety.yml`
-- Create: `.github/workflows/release.yml`
 - Modify: `ci/bootstrap-reference-sdks.sh`
 - Verify: `ci/reference-sdks.lock.toml`
 - Verify: `ci/run-sanitizers.sh`
@@ -287,7 +286,7 @@ Run format, workspace check, clippy `-D warnings`, tests, rustdoc `-D warnings`,
 
 - [x] **Step 2: Encode native and scheduled gates**
 
-Run cross-language conformance on all desktop OSes with testkit feature `cpp-interop` and `ARA_SDK_DIR`; keep that feature disabled in portable/package jobs. Provision ARA/CLAP/VST3/AUv2 only through the tracked bootstrap/lock file with explicit CI license-policy flags, then run CLAP everywhere, configured VST3 everywhere, and AUv2 on macOS. Schedule Miri, ASan/UBSan/TSan, all eight fuzz smoke targets (including `audio_file_xml` and `audio_file_container`), dependency/license audit, minimum-version resolution, and selected pairwise feature combinations. Pin and hash all installed external SDK inputs. Every gate emits a schema-validated evidence fragment containing repository, exact head SHA, workflow/run/job IDs, target/toolchain, command, conclusion, input hashes, and output hashes. The release workflow combines these only for one SHA into deterministic `ara2-evidence-<sha>.tar.zst`, uploads an artifact named `ara2-evidence-<sha>` containing that archive and its digest, and signs the archive itself with GitHub artifact attestation.
+Run cross-language conformance on all desktop OSes with testkit feature `cpp-interop` and `ARA_SDK_DIR`; keep that feature disabled in portable/package jobs. Provision ARA/CLAP/VST3/AUv2 only through the tracked bootstrap/lock file with explicit locked license identifiers (`MIT` for VST3), then run CLAP everywhere, configured VST3 everywhere, and AUv2 on macOS. Schedule Miri, ASan/UBSan/TSan, all eight fuzz smoke targets (including `audio_file_xml` and `audio_file_container`), dependency/license audit, minimum-version resolution, and selected pairwise feature combinations. Pin and hash all installed external SDK inputs. Every gate may emit a schema-validated validation fragment containing repository, exact head SHA, workflow/run/job IDs, target/toolchain, command, conclusion, input hashes, and output hashes. No workflow combines those fragments into a release artifact or performs release construction, attestation, signing, upload, or publication.
 
 - [x] **Step 3: Register and red-test CI validation commands**
 
@@ -303,13 +302,13 @@ Implement `xtask/src/ci.rs` to parse the checked-in workflows and canonical matr
 - [x] **Step 5: Validate workflows and local command parity**
 
 Run: `cargo test -p xtask --test ci && cargo xtask ci validate && cargo xtask ci list-jobs && cargo +1.82.0 check --workspace --all-targets --locked && cargo deny check licenses sources && cargo audit`  
-Run the pinned workflow semantic check: `go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 .github/workflows/ci.yml .github/workflows/native-conformance.yml .github/workflows/safety.yml .github/workflows/release.yml`.  
-Expected: PASS; the 14 emitted jobs match `docs/conformance/ci-matrix.md`, include Linux AArch64 and i686 runtime tests, preserve phase-0 ABI jobs, require all 40 successful pre-release evidence fragments for one head SHA, emit/attest the release archive, and contain no unpinned Action/download or implicit SDK license acceptance. Advisory and license/source policy must be clean; findings are fixed rather than suppressed.
+Run the pinned workflow semantic check: `go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.7 .github/workflows/ci.yml .github/workflows/native-conformance.yml .github/workflows/safety.yml`.
+Expected: PASS; the 13 validation jobs match `docs/conformance/ci-matrix.md`, include Linux AArch64 and i686 runtime tests, preserve phase-0 ABI jobs, cover all 40 validation fragments for one head SHA, contain no release workflow or publication capability, and contain no unpinned Action/download or implicit SDK license acceptance. Advisory and license/source policy must be clean; findings are fixed rather than suppressed.
 
 - [x] **Step 6: Commit**
 
 ```bash
-git add -- Cargo.toml Cargo.lock ara2-bridge-core/src/audio_file/xml.rs ara2-bridge-host/src/plugin/mod.rs deny.toml .github/workflows/ci.yml .github/workflows/native-conformance.yml .github/workflows/safety.yml .github/workflows/release.yml ci/bootstrap-reference-sdks.sh ci/write-evidence.sh docs/conformance/ci-matrix.md docs/conformance/evidence-schema.json xtask/Cargo.toml xtask/src/ci.rs xtask/tests/ci.rs xtask/tests/workspace.rs xtask/src/lib.rs xtask/src/main.rs
+git add -- Cargo.toml Cargo.lock ara2-bridge-core/src/audio_file/xml.rs ara2-bridge-host/src/plugin/mod.rs deny.toml .github/workflows/ci.yml .github/workflows/native-conformance.yml .github/workflows/safety.yml ci/bootstrap-reference-sdks.sh ci/write-evidence.sh docs/conformance/ci-matrix.md docs/conformance/evidence-schema.json xtask/Cargo.toml xtask/src/ci.rs xtask/tests/ci.rs xtask/tests/workspace.rs xtask/src/lib.rs xtask/src/main.rs
 git commit -m "ci: add full ara conformance matrix"
 ```
 
@@ -416,7 +415,7 @@ git add -- README.md ara2-bridge/Cargo.toml ara2-bridge/src/lib.rs ara2-bridge/e
 git commit -m "docs: add executable ara manual sources"
 ```
 
-### Task 8: Verify packages and assemble release evidence
+### Task 8: Verify packages and define the manual release procedure
 
 **Files:**
 - Create: `docs/releases/0.2.0-alpha.1-conformance.md`
@@ -440,50 +439,73 @@ git commit -m "docs: add executable ara manual sources"
 - Modify: `Cargo.lock`
 - Modify: `xtask/src/lib.rs`
 - Modify: `xtask/src/main.rs`
-- Modify: `.github/workflows/release.yml`
+- Delete: `.github/workflows/release.yml`
 - Create: `docs/superpowers/handoffs/phase-6-delivery.md`
 
 - [x] **Step 1: Register and red-test release commands**
 
-Export `xtask::release`, register the command shell, and add integration tests for `--help`, invalid versions, missing/unattested/wrong-SHA evidence, direct-import attestation bypass attempts, wrong subject digest/repository/issuer/workflow identity, package contamination, unsafe-review gaps, license gaps, and missing/extra/stale source-bundle entries. Add negative package fixtures that independently remove or mismatch every generated-derivative provenance field: source repository, tag, commit, generator crate/version, SPDX license, and `DO NOT EDIT`. Leave the clean-room and source-bundle verifiers deliberately unimplemented.
+Export `xtask::release`, register the command shell, and add integration tests for `--help`, invalid versions, dirty/wrong-SHA candidates, package contamination, unsafe-review gaps, license gaps, and missing/extra/stale source-bundle entries. Add negative package fixtures that independently remove or mismatch every generated-derivative provenance field: source repository, tag, commit, generator crate/version, SPDX license, and `DO NOT EDIT`. Add a workflow regression test that rejects any CI release workflow or publish command. Leave the clean-room and source-bundle verifiers deliberately unimplemented.
 
 Run: `cargo test -p xtask --test release`  
 Expected: FAIL on the deliberate unimplemented clean-room verifier, not on an unresolved module or command.
 
 - [x] **Step 2: Implement release commands and clean-room smoke tests**
 
-Add workspace-pinned `tar = "0.4"` and `zstd = "0.13"`, opt `xtask` into them, and update `Cargo.lock`. Implement `import-evidence`, `verify`, `audit-api`, `audit-unsafe`, `audit-licenses`, `verify-source-inputs`, `source-bundle`, and `verify-source-bundle` in `xtask/src/release.rs`. `import-evidence` itself invokes the configured GitHub/Sigstore verifier, validates and writes a machine-readable receipt under ignored `target/release-evidence/` binding the archive digest to the expected repository, GitHub Actions issuer/workflow identity, and release commit; no prior shell command can substitute for this internal check. Because sibling `0.2.0-alpha.1` crates are not yet in crates.io, the precommit input check vendors the locked registry graph, then packages and inserts each sibling into a Cargo directory source in dependency order before packaging its consumers with `cargo package --allow-dirty --no-verify --locked`. The clean post-commit source-bundle workflow repeats that staged-directory-source process with `cargo package --no-verify --locked` and rejects a dirty tree. The defined vendored clean-room workspace is the mandatory replacement for Cargo's skipped registry-based package verification. Unpack and build there with no `reference/`, clang, network, or undeclared SDK. Check Cargo metadata, README, licenses, dependency versions, and every generated Rust/C/C++/JSON/TOML/Markdown derivative for exact source repository/tag/commit, generator crate/version, SPDX license, and `DO NOT EDIT` metadata.
+Add workspace-pinned `tar = "0.4"` and `zstd = "0.13"`, opt `xtask` into them, and update `Cargo.lock`. Implement `audit-api`, `audit-unsafe`, `audit-licenses`, `verify-source-inputs`, `source-bundle`, and `verify-source-bundle` in `xtask/src/release.rs`; there is no CI-attestation import or workflow-authorized release command. Because sibling `0.2.0-alpha.1` crates are not yet in crates.io, the precommit input check vendors the locked registry graph, then packages and inserts each sibling into a Cargo directory source in dependency order before packaging its consumers with `cargo package --allow-dirty --no-verify --locked`. The clean post-commit manual source-bundle procedure repeats that staged-directory-source process with `cargo package --no-verify --locked` and rejects a dirty tree. The defined vendored clean-room workspace is the mandatory replacement for Cargo's skipped registry-based package verification. Unpack and build there with no `reference/`, clang, network, or undeclared SDK. Check Cargo metadata, README, licenses, dependency versions, and every generated Rust/C/C++/JSON/TOML/Markdown derivative for exact source repository/tag/commit, generator crate/version, SPDX license, and `DO NOT EDIT` metadata.
 
 `docs/releases/source-bundle.toml` is the exact, schema-versioned recipe. `cargo xtask release source-bundle --version 0.2.0-alpha.1 --output target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst` must produce a byte-deterministic archive containing: the seven publishable member `.crate` files under `packages/`; those archives unpacked under `clean-room/crates/<name>-<version>/`; `clean-room/Cargo.toml` listing those seven exact directories as workspace members; a generated `clean-room/Cargo.lock`; a versioned `vendor/` source directory containing the seven packaged crates for their normalized registry dependencies and every exact registry dependency from the release lock; a bundle-root `.cargo/config.toml` replacing `crates-io` with `vendor/`; root `Cargo.toml` and `Cargo.lock`; the existing Apache-2.0 project `LICENSE`, project `LICENSE-MIT`, and `LICENSES/**`; `sdk-provenance.toml`; `ara2-bridge-sys/generated/symbol-coverage.json`; every companion provenance and symbol/probe JSON; `docs/conformance/interface-coverage.{json,md}` and release conformance files; all normative specs; `docs/manual-source-map.md`, troubleshooting, migration, and changelog; plus generated `source-bundle.json` metadata and a sorted `MANIFEST.sha256` covering every other entry. Canonicalize each Cargo-produced `.crate` by sorted path, normalized metadata, and deterministic gzip before computing its package digest. Remove cache-specific vendored `.gitignore` files and regenerate directory checksums while retaining published package digests; retain every vendored license and source file. Reject any package not locked by name/version/source/checksum. Archive metadata fixes path order, uid/gid, modes, and timestamps to the candidate commit.
 
 `verify-source-bundle` extracts to a temporary root, sets its current directory to that root so `.cargo/config.toml` is discovered, sets `CARGO_HOME` to a new empty sibling directory, saves and removes `clean-room/Cargo.lock`, and runs `cargo generate-lockfile --manifest-path clean-room/Cargo.toml --offline`. It requires the regenerated lock to be byte-identical to the saved bundle lock and semantically consistent with the root release lock/source-bundle manifest, then runs `cargo build --manifest-path clean-room/Cargo.toml --workspace --offline --locked`. It rejects any missing, extra, duplicated, unhashed, stale, unresolved companion-deferred, unlicensed, ambient-cache-dependent, or non-reproducible entry. No package-local lockfile is assumed. The sys `.crate` itself must include `ara2-bridge-sys/generated/symbol-coverage.json`; workspace-level evidence and notices are carried by this defined source bundle rather than an undefined package set.
 
-Update `.github/workflows/release.yml` to run both source-bundle commands for the candidate SHA and include the exact source archive plus its digest inside `ara2-evidence-<sha>.tar.zst` before that evidence archive is attested. The bundle manifest records the same repository and candidate SHA, so evidence import rejects a source bundle built from another commit.
+Delete `.github/workflows/release.yml`. The bundle manifest records the exact repository and candidate SHA, and local verification rejects a source bundle built from another commit. CI workflow validation must fail if a release workflow or `cargo publish` command is later introduced.
 
 Run: `cargo test -p xtask --test release`  
-Expected: PASS for all synthetic valid/invalid attestation, evidence, audit, package, clean-room lock, and deterministic source-bundle fixtures. Do not run the real release bundle yet because its tracked candidate inputs are created in Step 3.
+Expected: PASS for all synthetic candidate-identity, audit, package, clean-room lock, deterministic source-bundle, and no-CI-release fixtures. Do not run the real release bundle yet because its tracked candidate inputs are created in Step 3.
 
 - [x] **Step 3: Produce and audit the tracked release candidate**
 
-Generate the changelog, licenses, package metadata, release checklist, and a conformance document that names the immutable candidate inputs, required evidence schema, exact commands, known AAX/AUv3 boundaries, and the external attested-artifact location. Run-specific workflow/run/job IDs, sanitizer/fuzz durations, package hashes, receipts, and conclusions remain in the signed evidence artifact under ignored `target/release-evidence/`; the tracked document must not claim a gate ran before the candidate commit exists.
+Generate the changelog, licenses, package metadata, release checklist, and a conformance document that names the immutable candidate inputs, exact manual commands, known AAX/AUv3 boundaries, and local artifact locations. Run-specific workflow/run/job IDs, sanitizer/fuzz durations, package hashes, checksums, and conclusions remain operator-reviewed candidate evidence under ignored `target/release-evidence/`; the tracked document must not claim a gate ran before the candidate commit exists.
 
 Run after all listed tracked candidate inputs have their final bytes: `cargo xtask release audit-api && cargo xtask release audit-unsafe && cargo xtask release audit-licenses && cargo xtask release verify-source-inputs --version 0.2.0-alpha.1`  
-`verify-source-inputs` deliberately invokes `cargo package --allow-dirty --no-verify --locked` for all seven crates into a temporary preflight directory, records that these are non-release test packages, validates the recipe's complete input set and vendorable lock graph, and runs the same custom vendored clean-room verification used after commit without emitting a release artifact or claiming a candidate commit. The post-commit workflow reruns `cargo package --no-verify --locked` from a clean tree and then performs that custom verification again. Expected: PASS with reviewed diffs, every unsafe block linked to a tested invariant, complete redistributable notices, and all final tracked inputs ready for the post-commit workflow.
+`verify-source-inputs` deliberately invokes `cargo package --allow-dirty --no-verify --locked` for all seven crates into a temporary preflight directory, records that these are non-release test packages, validates the recipe's complete input set and vendorable lock graph, and runs the same custom vendored clean-room verification used after commit without emitting a release artifact or claiming a candidate commit. The post-commit manual procedure reruns `cargo package --no-verify --locked` from a clean tree and then performs that custom verification again. Expected: PASS with reviewed diffs, every unsafe block linked to a tested invariant, complete redistributable notices, and all final tracked inputs ready for manual release verification.
 
 - [x] **Step 4: Write the final compact handoff**
 
-Record candidate crates/features, evidence requirements, known AAX/AUv3 boundaries, manual source-map location, and every normative revision. State that run-specific package hashes and exact conformance results are published only in the signed evidence artifact for the candidate SHA. This is the starting point for manual authoring and maintenance.
+Record candidate crates/features, evidence requirements, known AAX/AUv3 boundaries, manual source-map location, every normative revision, and the exact operator-owned package order. State that run-specific package hashes and exact conformance results are reviewed locally and are not manufactured by tracked documentation or CI. This is the starting point for manual authoring and maintenance.
 
-- [ ] **Step 5: Commit the complete release candidate before requesting evidence**
+- [ ] **Step 5: Commit the complete release candidate before manual validation**
 
 ```bash
-git add -- Cargo.toml Cargo.lock CHANGELOG.md LICENSE-MIT LICENSES/ARA-SDK-Apache-2.0.txt LICENSES/third-party.md docs/releases/0.2.0-alpha.1-conformance.md docs/releases/0.2.0-alpha.1-checklist.md docs/releases/source-bundle.toml docs/superpowers/handoffs/phase-6-delivery.md ara2-bridge-sys/Cargo.toml ara2-bridge-core/Cargo.toml ara2-bridge-plugin/Cargo.toml ara2-bridge-host/Cargo.toml ara2-bridge-companion/Cargo.toml ara2-bridge-testkit/Cargo.toml ara2-bridge/Cargo.toml xtask/Cargo.toml xtask/src/release.rs xtask/tests/release.rs xtask/src/lib.rs xtask/src/main.rs .github/workflows/release.yml
+git add -- Cargo.toml Cargo.lock CHANGELOG.md LICENSE-MIT LICENSES/ARA-SDK-Apache-2.0.txt LICENSES/third-party.md docs/releases/0.2.0-alpha.1-conformance.md docs/releases/0.2.0-alpha.1-checklist.md docs/releases/source-bundle.toml docs/superpowers/handoffs/phase-6-delivery.md ara2-bridge-sys/Cargo.toml ara2-bridge-core/Cargo.toml ara2-bridge-plugin/Cargo.toml ara2-bridge-host/Cargo.toml ara2-bridge-companion/Cargo.toml ara2-bridge-testkit/Cargo.toml ara2-bridge/Cargo.toml xtask/Cargo.toml xtask/src/release.rs xtask/tests/release.rs xtask/src/lib.rs xtask/src/main.rs .github/workflows
 git commit -m "chore(release): prepare 0.2.0-alpha.1 candidate"
 ```
 
-- [ ] **Step 6: Run the complete matrix, verify that exact SHA, and tag without further tracked changes**
+- [ ] **Step 6: Run the complete matrix locally, verify that exact SHA, and tag without further tracked changes**
 
-Push a release-candidate branch whose head is the Step 5 commit and trigger the full release workflow on that branch. The workflow must run `source-bundle` and `verify-source-bundle` only after checkout of that exact clean candidate commit, so archive metadata and `source-bundle.json` bind to an existing immutable SHA. Wait for every required job and the deterministic, archive-level attestation. Set `ARA_RELEASE_RUN_ID` only to that workflow run after confirming its `headSha` equals `COMMIT`.
+On the operator's machines, run the complete Linux, macOS, and Windows matrix against the exact Step 5 commit and inspect every result. From that same clean checkout, run `source-bundle` and `verify-source-bundle`, write and inspect the SHA-256 checksum, and perform `cargo publish --dry-run --locked` for all seven crates in dependency order. These commands create only local candidate artifacts; the operator alone decides whether to sign the tag and later enters the real `cargo publish --locked` commands.
 
-Run: `COMMIT=$(git rev-parse HEAD) && test -z "$(git status --porcelain)" && gh run view "$ARA_RELEASE_RUN_ID" --json headSha --jq '.headSha' | grep -Fx "$COMMIT" && gh run download "$ARA_RELEASE_RUN_ID" --name "ara2-evidence-$COMMIT" --dir target/release-evidence && cargo xtask release import-evidence --bundle "target/release-evidence/ara2-evidence-$COMMIT.tar.zst" --repository entrepeneur4lyf/ara2-bridge --commit "$COMMIT" && cargo xtask release verify --version 0.2.0-alpha.1 --commit "$COMMIT" && test -z "$(git status --porcelain --untracked-files=no)" && git tag -s v0.2.0-alpha.1 "$COMMIT" -m "ara2-bridge 0.2.0-alpha.1"`  
-Expected: PASS only after the attested bundle proves formatting, clippy, tests, rustdoc, manifests, scenarios, Miri/sanitizer/fuzz results, native companion jobs, cross-language pairings, dependency/license audit, MSRV, and package smoke evidence all refer to the committed candidate SHA. The tag points to that same SHA; importing/verifying evidence produces no tracked changes, and any later code or documentation change requires a new candidate commit and a complete matrix rerun.
+Run these commands explicitly from the clean candidate checkout; `target/release-evidence/fragments/` must contain the 40 operator-collected matrix fragments for `COMMIT`:
+
+```bash
+COMMIT=$(git rev-parse HEAD)
+test -z "$(git status --porcelain)"
+cargo xtask ci bundle-evidence --input target/release-evidence/fragments --output "target/release-evidence/ara2-validation-$COMMIT.tar.zst" --head-sha "$COMMIT" --matrix docs/conformance/ci-matrix.md
+cargo xtask release audit-api
+cargo xtask release audit-unsafe
+cargo xtask release audit-licenses
+cargo xtask docs verify-manual-map
+cargo xtask release source-bundle --version 0.2.0-alpha.1 --output target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst
+cargo xtask release verify-source-bundle --bundle target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst
+sha256sum target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst > target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256
+cargo publish -p ara2-bridge-sys --dry-run --locked
+cargo publish -p ara2-bridge-core --dry-run --locked
+cargo publish -p ara2-bridge-plugin --dry-run --locked
+cargo publish -p ara2-bridge-host --dry-run --locked
+cargo publish -p ara2-bridge-companion --dry-run --locked
+cargo publish -p ara2-bridge-testkit --dry-run --locked
+cargo publish -p ara2-bridge --dry-run --locked
+test -z "$(git status --porcelain --untracked-files=no)"
+git tag -s v0.2.0-alpha.1 "$COMMIT" -m "ara2-bridge 0.2.0-alpha.1"
+```
+
+Expected: PASS only after the operator has verified formatting, clippy, tests, rustdoc, manifests, scenarios, Miri/sanitizer/fuzz results, native companion jobs, cross-language pairings, dependency/license audit, MSRV, package dry-runs, and the deterministic source bundle against the committed candidate SHA. The tag points to that same SHA; any later tracked change creates a new candidate and requires the complete manual matrix and bundle verification again. Actual crate publication remains a separate explicit operator action and is never run by CI or this implementation plan.

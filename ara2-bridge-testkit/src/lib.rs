@@ -15,9 +15,9 @@
 //!
 //! # Features and platforms
 //!
-//! `cpp-interop` requires `ARA_SDK_DIR`. `clap`, `vst3`, and `audio-unit-v2` forward to their
-//! companion adapters and require the same platform/SDK configuration. Default Rust scenarios need
-//! no SDK checkout.
+//! `cpp-interop` uses the pinned Celemony GitHub checkout provisioned by the repository bootstrap.
+//! `clap`, `vst3`, and `audio-unit-v2` forward to their companion adapters and require the same
+//! platform/SDK configuration. Default Rust scenarios need no SDK checkout.
 //!
 //! # Compatibility and licensing
 //!

@@ -89,7 +89,7 @@ pub(super) fn verify(bundle: &Path) -> Result<(), String> {
     verify_inner(bundle, None)
 }
 
-pub(super) fn verify_for_commit(bundle: &Path, expected_commit: &str) -> Result<(), String> {
+pub(crate) fn verify_for_commit(bundle: &Path, expected_commit: &str) -> Result<(), String> {
     verify_inner(bundle, Some(expected_commit))
 }
 
@@ -386,6 +386,75 @@ fn unpack_crate(archive: &Path, destination: &Path, name: &str) -> Result<PathBu
     }
 }
 
+fn verify_crate_matches_clean_tree(archive: &Path, clean: &Path, name: &str) -> Result<(), String> {
+    let extracted_root = tempfile::tempdir()
+        .map_err(|error| format!("cannot create crate verification directory: {error}"))?;
+    let extracted = unpack_crate(archive, extracted_root.path(), name)?;
+    let expected = list_files(&extracted)?;
+    let actual = list_files(clean)?;
+    if actual != expected {
+        return Err(format!(
+            "clean-room package {name} differs from package archive file set"
+        ));
+    }
+    for relative in expected {
+        let archive_file = extracted.join(&relative);
+        let clean_file = clean.join(&relative);
+        if fs::read(&archive_file).map_err(|error| {
+            format!(
+                "cannot read extracted crate file {}: {error}",
+                archive_file.display()
+            )
+        })? != fs::read(&clean_file).map_err(|error| {
+            format!(
+                "cannot read clean-room file {}: {error}",
+                clean_file.display()
+            )
+        })? {
+            return Err(format!(
+                "clean-room package {name} differs from package archive at {}",
+                relative.display()
+            ));
+        }
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let archive_mode = fs::metadata(&archive_file)
+                .map_err(|error| format!("cannot inspect {}: {error}", archive_file.display()))?
+                .permissions()
+                .mode()
+                & 0o777;
+            let clean_mode = fs::metadata(&clean_file)
+                .map_err(|error| format!("cannot inspect {}: {error}", clean_file.display()))?
+                .permissions()
+                .mode()
+                & 0o777;
+            if clean_mode != archive_mode {
+                return Err(format!(
+                    "clean-room package {name} differs from package archive mode at {}",
+                    relative.display()
+                ));
+            }
+        }
+        #[cfg(windows)]
+        if fs::metadata(&clean_file)
+            .map_err(|error| format!("cannot inspect {}: {error}", clean_file.display()))?
+            .permissions()
+            .readonly()
+            != fs::metadata(&archive_file)
+                .map_err(|error| format!("cannot inspect {}: {error}", archive_file.display()))?
+                .permissions()
+                .readonly()
+        {
+            return Err(format!(
+                "clean-room package {name} differs from package archive permissions at {}",
+                relative.display()
+            ));
+        }
+    }
+    Ok(())
+}
+
 fn reject_package_contamination(package: &Path) -> Result<(), String> {
     for relative in list_files(package)? {
         let text = relative.to_string_lossy();
@@ -453,6 +522,7 @@ fn verify_staged_tree(staging: &Path, metadata: &BundleMetadata) -> Result<(), S
         if !clean.is_dir() {
             return Err(format!("missing clean-room package {}", clean.display()));
         }
+        verify_crate_matches_clean_tree(&archive, &clean, &record.name)?;
         reject_package_contamination(&clean)?;
         let manifest_path = clean.join("Cargo.toml");
         let manifest = fs::read_to_string(&manifest_path)
@@ -574,7 +644,7 @@ fn clean_cargo(staging: &Path, cargo_home: &Path) -> Command {
         .current_dir(staging)
         .env("CARGO_HOME", cargo_home)
         .env("CARGO_NET_OFFLINE", "true")
-        .env_remove("ARA_SDK_DIR")
+        .env_remove("CARGO_TARGET_DIR")
         .env_remove("ARA_CLAP_DIR")
         .env_remove("ARA_VST3_SDK_DIR")
         .env_remove("ARA_AUDIO_UNIT_SDK_DIR")
@@ -586,12 +656,39 @@ fn clean_cargo(staging: &Path, cargo_home: &Path) -> Command {
 
 fn copy_recipe_inputs(root: &Path, staging: &Path, recipe: &Recipe) -> Result<(), String> {
     for relative in &recipe.required_files {
+        let object = format!("HEAD:{relative}");
+        if git(root, &["cat-file", "-t", &object]).as_deref() != Ok("blob") {
+            return Err(format!(
+                "required source file {relative} is not committed at HEAD"
+            ));
+        }
         copy_file(root, staging, Path::new(relative))?;
     }
     for tree in &recipe.required_trees {
-        let source = root.join(tree);
-        for child in list_files(&source)? {
-            copy_file(root, staging, &Path::new(tree).join(child))?;
+        let output = command_output(
+            {
+                let mut command = Command::new("git");
+                command.current_dir(root).args([
+                    "ls-tree",
+                    "-r",
+                    "--name-only",
+                    "-z",
+                    "HEAD",
+                    "--",
+                    tree,
+                ]);
+                command
+            },
+            &format!("enumerate committed source tree {tree}"),
+        )?;
+        for bytes in output
+            .stdout
+            .split(|byte| *byte == 0)
+            .filter(|bytes| !bytes.is_empty())
+        {
+            let relative = std::str::from_utf8(bytes)
+                .map_err(|_| format!("committed source tree {tree} contains a non-UTF-8 path"))?;
+            copy_file(root, staging, Path::new(relative))?;
         }
     }
     Ok(())
@@ -884,11 +981,89 @@ fn command_output(mut command: Command, action: &str) -> Result<Output, String> 
 
 #[cfg(test)]
 mod tests {
-    use super::{canonicalize_crate_archive, normalize_vendored_sources, read_json};
+    use super::{
+        canonicalize_crate_archive, clean_cargo, copy_recipe_inputs, normalize_vendored_sources,
+        read_json, unpack_crate, verify_crate_matches_clean_tree,
+    };
+    use crate::release::Recipe;
     use flate2::{Compression, GzBuilder};
     use serde_json::Value;
     use std::fs::{self, File};
     use std::path::Path;
+    use std::process::Command;
+
+    fn recipe_copy_fixture() -> (tempfile::TempDir, Recipe) {
+        let repository = tempfile::tempdir().unwrap();
+        fs::create_dir(repository.path().join("sources")).unwrap();
+        fs::write(repository.path().join("sources/tracked.rs"), b"tracked\n").unwrap();
+        fs::write(repository.path().join("sources/.gitignore"), b"*.obj\n").unwrap();
+        let git = |arguments: &[&str]| {
+            let status = Command::new("git")
+                .current_dir(repository.path())
+                .args(arguments)
+                .status()
+                .unwrap();
+            assert!(status.success(), "git {arguments:?} failed");
+        };
+        git(&["init", "--quiet"]);
+        git(&["config", "user.name", "ARA2 Bridge Test"]);
+        git(&["config", "user.email", "test@ara2-bridge.invalid"]);
+        git(&["add", "sources"]);
+        git(&["commit", "--quiet", "-m", "fixture"]);
+        (
+            repository,
+            Recipe {
+                schema: 1,
+                version: super::VERSION.to_owned(),
+                repository: "https://example.invalid/fixture".to_owned(),
+                packages: Vec::new(),
+                required_files: Vec::new(),
+                required_trees: vec!["sources".to_owned()],
+            },
+        )
+    }
+
+    #[test]
+    fn recipe_copy_excludes_untracked_files() {
+        let (repository, recipe) = recipe_copy_fixture();
+        fs::write(
+            repository.path().join("sources/untracked.rs"),
+            b"untracked\n",
+        )
+        .unwrap();
+        let staging = tempfile::tempdir().unwrap();
+
+        copy_recipe_inputs(repository.path(), staging.path(), &recipe).unwrap();
+
+        assert!(!staging.path().join("sources/untracked.rs").exists());
+    }
+
+    #[test]
+    fn recipe_copy_excludes_ignored_build_artifacts() {
+        let (repository, recipe) = recipe_copy_fixture();
+        fs::write(
+            repository.path().join("sources/generated.obj"),
+            b"artifact\n",
+        )
+        .unwrap();
+        let staging = tempfile::tempdir().unwrap();
+
+        copy_recipe_inputs(repository.path(), staging.path(), &recipe).unwrap();
+
+        assert!(!staging.path().join("sources/generated.obj").exists());
+    }
+
+    #[test]
+    fn recipe_copy_rejects_an_uncommitted_required_file() {
+        let (repository, mut recipe) = recipe_copy_fixture();
+        fs::write(repository.path().join("required.txt"), b"uncommitted\n").unwrap();
+        recipe.required_files = vec!["required.txt".to_owned()];
+        let staging = tempfile::tempdir().unwrap();
+
+        let error = copy_recipe_inputs(repository.path(), staging.path(), &recipe).unwrap_err();
+
+        assert!(error.contains("not committed at HEAD"), "{error}");
+    }
 
     fn write_crate(path: &Path, entries: &[(&str, &[u8])], mtime: u64) {
         let output = File::create(path).unwrap();
@@ -937,6 +1112,21 @@ mod tests {
     }
 
     #[test]
+    fn clean_room_package_must_match_its_crate_archive() {
+        let temp = tempfile::tempdir().unwrap();
+        let archive = temp.path().join("example.crate");
+        let root = format!("example-{}/src/lib.rs", super::VERSION);
+        write_crate(&archive, &[(root.as_str(), b"original")], 7);
+        let clean_root = temp.path().join("clean");
+        let clean = unpack_crate(&archive, &clean_root, "example").unwrap();
+        fs::write(clean.join("src/lib.rs"), b"mutated").unwrap();
+
+        let error = verify_crate_matches_clean_tree(&archive, &clean, "example").unwrap_err();
+
+        assert!(error.contains("differs from package archive"), "{error}");
+    }
+
+    #[test]
     fn vendored_sources_drop_cache_specific_ignore_files() {
         let temp = tempfile::tempdir().unwrap();
         let package = temp.path().join("dependency-1.0.0");
@@ -959,5 +1149,14 @@ mod tests {
         );
         assert!(checksum["files"].get("lib.rs").is_some());
         assert!(checksum["files"].get("nested/.gitignore").is_none());
+    }
+
+    #[test]
+    fn clean_room_build_does_not_inherit_the_parent_target_directory() {
+        let command = clean_cargo(Path::new("staging"), Path::new("cargo-home"));
+
+        assert!(command
+            .get_envs()
+            .any(|(key, value)| { key == "CARGO_TARGET_DIR" && value.is_none() }));
     }
 }

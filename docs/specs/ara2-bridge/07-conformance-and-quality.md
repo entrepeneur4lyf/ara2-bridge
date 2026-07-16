@@ -21,6 +21,8 @@ Tests are organized so the smallest useful layer runs first:
 
 Failures must identify interface, method, host-selected generation, lifecycle state, and object identity. Test helpers may not bypass the public safe API except in tests explicitly exercising malformed foreign input.
 
+The C++ TestHost/TestPlugIn pairing compiles as C++17 against the pinned ARA SDK on every supported target family. Windows MSVC-target validation uses the `clang-cl` driver, enables standard C++ exception semantics with `/EHsc`, matching the upstream examples and the testkit bridge's `try`/`catch` boundary, and defines `NOMINMAX` as the upstream CMake build does so Windows SDK macros cannot corrupt standard-library calls. A compiler configuration that disables exceptions is a conformance build failure.
+
 ## Upstream scenario parity
 
 The upstream TestHost scenarios are a named conformance manifest. Each has a Rust scenario with equivalent setup, operations, assertions, and teardown:
@@ -54,7 +56,7 @@ Every C function slot has tests for:
 - valid and invalid lifecycle/thread state;
 - teardown and retained-allocation behavior.
 
-The machine-readable ABI coverage manifest and the test manifest are joined in CI. Any public slot lacking a safe delegate or contract-test classification fails the build.
+The machine-readable ABI coverage manifest and the test manifest are joined in validation. Each claimed class records exact `path#test_function` identifiers. Interface-wide evidence is accepted only when it names the shared production adapter through which every listed slot flows; tooling verifies that every referenced test function exists. Any public slot lacking a safe delegate, behavioral class, resolvable test identifier, or explicit shared mechanism fails the build.
 
 ## Safety verification
 
@@ -64,9 +66,9 @@ Fuzz targets cover every inbound versioned struct family, opaque reference looku
 
 No test may rely only on process termination to prove cleanup. Allocation/reference counters and weak ownership observations verify release. Realtime tests instrument allocation, blocking synchronization, file I/O, and logging on designated callback paths.
 
-## CI matrix
+## Automated validation matrix
 
-Required always-on jobs:
+When repository automation is enabled, it reproduces these validation jobs:
 
 - formatting, workspace check, clippy with warnings denied, tests, and rustdoc warnings denied;
 - MSRV and stable Rust;
@@ -75,9 +77,9 @@ Required always-on jobs:
 - pregenerated-binding freshness and C/C++ ABI probes;
 - Rust-only conformance on every platform;
 - cross-language conformance on Linux, Windows, and macOS;
-- CLAP on Linux/macOS/Windows, VST3 with the pinned SDK shim, and Audio Unit v2 on macOS.
+- CLAP on Linux/macOS/Windows, VST3 with the pinned SDK shim, and Audio Unit v2 on macOS. Each runner that owns a canonical companion probe re-emits it locally and compares every envelope field with the checked-in canonical record before interoperability tests run; JSON whitespace is ignored, while validating stored hashes alone is insufficient.
 
-Miri, sanitizers, fuzz smoke runs, dependency/license audit, and minimum-version resolution run on scheduled or release jobs if runtime makes them unsuitable for every PR. Feature CI exhausts zero/one-feature cases plus `plugin+host`, each companion with its required runtime, both published bundles, and pairwise combinations selected from changed dependency edges; it does not promise an unbounded power set. Release branches require their most recent successful result on the release commit.
+Miri, sanitizers, fuzz smoke runs, dependency/license audit, and minimum-version resolution may run on scheduled or manually dispatched validation jobs if runtime makes them unsuitable for every PR. Feature CI exhausts zero/one-feature cases plus `plugin+host`, each companion with its required runtime, both published bundles, and pairwise combinations selected from changed dependency edges; it does not promise an unbounded power set. Automation may emit validation evidence for an exact commit, but it never packages, attests, signs, uploads, or publishes a release. The release operator manually verifies the candidate and runs the local release procedure.
 
 ## Coverage and review gates
 
@@ -87,7 +89,7 @@ Release review includes: ABI diff against 2.3, unsafe-code review, dependency/li
 
 ## Acceptance criteria
 
-All manifests join without gaps; upstream and bridge-specific scenarios pass in the required pairings; Miri/sanitizer findings are zero; no realtime prohibition is observed; fuzz smoke tests are clean; and CI can reproduce generated artifacts and cross-language probes from a clean checkout.
+All manifests join without gaps; upstream and bridge-specific scenarios pass in the required pairings; Miri/sanitizer findings are zero; no realtime prohibition is observed; fuzz smoke tests are clean; and both local tooling and configured validation runners can reproduce generated artifacts and cross-language probes from a clean checkout. Release creation remains a separate manual operation.
 
 ## Decisions and revisions
 
@@ -97,3 +99,9 @@ All manifests join without gaps; upstream and bridge-specific scenarios pass in 
 - 2026-07-15: Audit requires TSan against production synchronization paths in addition to abstract state models.
 - 2026-07-15: Direct Rust/C++ pairing runs the ten upstream scenarios that require only an ARA factory. Rendering/editor scenarios remain companion-suite gates, while chunk loading remains a decoder-only gate; neither category is recorded as a runtime capability skip.
 - 2026-07-15: Scenario parity distinguishes target-inapplicable API generations from capability skips, and negative auto-trait contracts use compiler-stable semantic assertions.
+- 2026-07-15: CI is a validation mechanism, not a release authority. Only the operator-controlled local procedure may create, attest, sign, upload, or publish release artifacts.
+- 2026-07-15: Native or system-emulated probe runners derive identity from their compiled target; host toolchain discovery may not label a cross-target result.
+- 2026-07-15: SDK bootstrap disables automatic line-ending conversion before checkout so Windows and Unix provenance hashes cover identical upstream bytes.
+- 2026-07-15: Windows native conformance standardizes on `clang-cl`, enables `/EHsc` for the pinned C++ exception boundary, and defines `NOMINMAX` for parity with the upstream CMake build.
+- 2026-07-15: Callback coverage now carries resolvable test-function identifiers and an explicit per-slot/shared-mechanism scope instead of assigning anonymous interface-level classes.
+- 2026-07-15: Native companion validation re-executes each runner-owned probe and compares every semantic envelope field with its canonical artifact; serialization whitespace is not evidence.

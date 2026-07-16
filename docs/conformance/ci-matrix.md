@@ -1,8 +1,8 @@
-# CI and Release Evidence Matrix
+# Automated Validation Matrix
 
-The pull-request workflow carries fast, portable checks. Native SDK interoperability is isolated so its explicit license policy and SDK inputs are visible. Scheduled safety work covers the slower dynamic-analysis and supply-chain gates. Release evidence is assembled only when all supplied fragments identify one exact commit.
+The pull-request workflow carries fast, portable checks. Native SDK interoperability is isolated so its exact SDK identities and licenses are visible. Scheduled safety work covers the slower dynamic-analysis and supply-chain gates. These workflows validate commits; they do not construct or publish releases.
 
-Every job writes one schema-validated JSON fragment and uploads it independently. A fragment records the repository, head SHA, workflow/run/job identity, target, toolchain, exact command summary, conclusion, and SHA-256 maps for existing inputs and outputs. The release workflow rejects mixed commits, non-success conclusions, and incomplete canonical job sets before creating and attesting `ara2-evidence-<sha>.tar.zst`.
+Every job writes one schema-validated JSON fragment and uploads it independently. A fragment records the repository, head SHA, workflow/run/job identity, target, toolchain, exact command summary, conclusion, and SHA-256 maps for existing inputs and outputs. The local manual release procedure may inspect these fragments as additional evidence, but CI never packages, attests, signs, uploads, or publishes a release artifact.
 
 | Workflow | Job | Coverage |
 | --- | --- | --- |
@@ -13,7 +13,6 @@ Every job writes one schema-validated JSON fragment and uploads it independently
 | `ci.yml` | `phase0-core-probe` | Regression lock for provenance and native core-probe artifacts |
 | `native-conformance.yml` | four native jobs | C++ ARA, CLAP, configured VST3, and Apple AUv2 |
 | `safety.yml` | four safety jobs | Miri, sanitizers, eight fuzz targets, dependency/minimum/feature checks |
-| `release.yml` | `bundle-evidence` | Same-SHA deterministic bundle, digest, upload, and attestation |
 
 The block below is parsed by `cargo xtask ci validate`; keep it synchronized with the table and workflows.
 
@@ -50,25 +49,25 @@ required = ["bootstrap-reference-sdks.sh fetch --component ara --accept-license 
 workflow = "native-conformance.yml"
 id = "cpp-interop"
 evidence_count = 5
-required = ["cpp-interop", "ARA_SDK_DIR", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
+required = ["cpp-interop", "https://github.com/Celemony/ARA_SDK.git", ".third-party/ARA_SDK", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
 
 [[job]]
 workflow = "native-conformance.yml"
 id = "clap-conformance"
 evidence_count = 5
-required = ["--component clap --accept-license MIT", "clap_abi", "clap_interop", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
+required = ["--component clap --accept-license MIT", "companion-probe clap --check-target", "clap_abi", "clap_interop", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
 
 [[job]]
 workflow = "native-conformance.yml"
 id = "vst3-conformance"
 evidence_count = 5
-required = ["ARA_VST3_LICENSE_POLICY", "--component vst3 --accept-license", "vst3_abi", "vst3_interop", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
+required = ["--component vst3 --accept-license MIT", "companion-probe vst3 --check-target", "vst3_abi", "vst3_interop", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
 
 [[job]]
 workflow = "native-conformance.yml"
 id = "audio-unit-conformance"
 evidence_count = 2
-required = ["--component audio-unit --accept-license Apache-2.0", "audio_unit_interop", "x86_64-apple-darwin", "aarch64-apple-darwin"]
+required = ["--component audio-unit --accept-license Apache-2.0", "companion-probe audio-unit-v2 --check-target", "audio_unit_interop", "x86_64-apple-darwin", "aarch64-apple-darwin"]
 
 [[job]]
 workflow = "safety.yml"
@@ -92,12 +91,8 @@ workflow = "safety.yml"
 id = "supply-chain-and-features"
 required = ["cargo-audit --version 0.22.1", "cargo-deny --version 0.20.2", "cargo audit", "cargo deny check licenses sources", "-Z minimal-versions", "cargo check -p ara2-bridge --no-default-features", "--features clap,testkit"]
 
-[[job]]
-workflow = "release.yml"
-id = "bundle-evidence"
-required = ["inputs.head_sha", "actions/download-artifact@", "cargo xtask ci bundle-evidence", "ara2-evidence-", "actions/attest-build-provenance@"]
 -->
 
 ## Local validation
 
-Run `cargo xtask ci validate` to enforce the exact matrix, immutable Action revisions, explicit SDK license acceptance, evidence emission/upload, and required command tokens. Run `cargo xtask ci list-jobs` for the stable canonical job list. The validator performs structural checks; GitHub runner availability and native SDK compilation remain execution evidence, not inferred local results.
+Run `cargo xtask ci validate` to enforce the exact 13-job validation matrix, immutable Action revisions, explicit SDK license acceptance, evidence emission/upload, required command tokens, and absence of CI release authority. Run `cargo xtask ci list-jobs` for the stable canonical job list. The validator performs structural checks; GitHub runner availability and native SDK compilation remain execution evidence, not inferred local results.

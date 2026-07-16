@@ -5,7 +5,7 @@ Companion SDKs are build inputs, not redistributed library payloads.
 | Component | Locked revision | License policy |
 | --- | --- | --- |
 | CLAP 1.1.9 | `094bb76c85366a13cc6c49292226d8608d6ae50c` | MIT |
-| Steinberg VST3 SDK 3.7.11 | `7d92338ae922db2d559ac458824a4df40f37e82e` | GPL-3.0-only or integrator-held `LicenseRef-Steinberg-VST3` |
+| Steinberg VST3 SDK 3.8.0 | `9fad9770f2ae8542ab1a548a68c1ad1ac690abe0` | MIT |
 | Apple AudioUnitSDK 1.0.0 | `53ea94e5efebf864b70afb673bdd60c977818ec7` | Apache-2.0 |
 
 Exact repositories, submodules, trees, and license URLs are recorded in

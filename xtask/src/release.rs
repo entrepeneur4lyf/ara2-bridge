@@ -1,14 +1,11 @@
 //! Release-candidate audits, packaging, and evidence verification.
 
 use serde::Deserialize;
-use sha2::{Digest, Sha256};
-use std::fs::{self, File};
-use std::io::Read;
+use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-mod bundle;
-mod evidence;
+pub(crate) mod bundle;
 
 pub(crate) const VERSION: &str = "0.2.0-alpha.1";
 pub(crate) const PACKAGES: &[&str] = &[
@@ -30,134 +27,6 @@ pub(crate) struct Recipe {
     pub(crate) packages: Vec<String>,
     pub(crate) required_files: Vec<String>,
     pub(crate) required_trees: Vec<String>,
-}
-
-#[derive(Debug, Deserialize, serde::Serialize)]
-#[serde(deny_unknown_fields)]
-struct EvidenceReceipt {
-    schema: u32,
-    repository: String,
-    commit: String,
-    subject_sha256: String,
-    issuer: String,
-    workflow: String,
-    verified_by: String,
-}
-
-/// Imports an evidence archive only after an in-process verifier succeeds.
-#[doc(hidden)]
-pub fn import_evidence_with_verifier<F>(
-    root: &Path,
-    bundle: &Path,
-    repository: &str,
-    commit: &str,
-    verifier: F,
-) -> Result<PathBuf, String>
-where
-    F: FnOnce(&Path, &str, &str) -> Result<serde_json::Value, String>,
-{
-    validate_repository_commit(repository, commit)?;
-    let digest = sha256_path(bundle)?;
-    let verification = verifier(bundle, repository, commit)?;
-    if verification
-        .as_array()
-        .is_none_or(|results| results.is_empty())
-    {
-        return Err("attestation verifier returned no verified statements".to_owned());
-    }
-    let receipt = EvidenceReceipt {
-        schema: 1,
-        repository: repository.to_owned(),
-        commit: commit.to_owned(),
-        subject_sha256: digest.clone(),
-        issuer: "https://token.actions.githubusercontent.com".to_owned(),
-        workflow: ".github/workflows/release.yml".to_owned(),
-        verified_by: "gh attestation verify".to_owned(),
-    };
-    let value = serde_json::to_value(&receipt)
-        .map_err(|error| format!("cannot serialize evidence receipt: {error}"))?;
-    validate_evidence_receipt(&value, commit, &digest)?;
-    let directory = root.join("target/release-evidence");
-    fs::create_dir_all(&directory)
-        .map_err(|error| format!("cannot create {}: {error}", directory.display()))?;
-    let path = directory.join(format!("receipt-{commit}.json"));
-    let temporary = directory.join(format!(".receipt-{commit}.tmp"));
-    let mut bytes = serde_json::to_vec_pretty(&receipt)
-        .map_err(|error| format!("cannot encode evidence receipt: {error}"))?;
-    bytes.push(b'\n');
-    fs::write(&temporary, bytes)
-        .map_err(|error| format!("cannot write {}: {error}", temporary.display()))?;
-    fs::rename(&temporary, &path)
-        .map_err(|error| format!("cannot publish {}: {error}", path.display()))?;
-    Ok(path)
-}
-
-fn validate_repository_commit(repository: &str, commit: &str) -> Result<(), String> {
-    if repository != "entrepeneur4lyf/ara2-bridge" {
-        return Err("release repository must be entrepeneur4lyf/ara2-bridge".to_owned());
-    }
-    if commit.len() != 40 || !commit.bytes().all(|byte| byte.is_ascii_hexdigit()) {
-        return Err("release commit must be a 40-character hexadecimal SHA".to_owned());
-    }
-    Ok(())
-}
-
-fn sha256_path(path: &Path) -> Result<String, String> {
-    let mut file =
-        File::open(path).map_err(|error| format!("cannot open {}: {error}", path.display()))?;
-    let mut hash = Sha256::new();
-    let mut buffer = [0_u8; 64 * 1024];
-    loop {
-        let count = file
-            .read(&mut buffer)
-            .map_err(|error| format!("cannot read {}: {error}", path.display()))?;
-        if count == 0 {
-            break;
-        }
-        hash.update(&buffer[..count]);
-    }
-    Ok(format!("{:x}", hash.finalize()))
-}
-
-fn import_evidence(
-    root: &Path,
-    bundle: &Path,
-    repository: &str,
-    commit: &str,
-) -> Result<PathBuf, String> {
-    import_evidence_with_verifier(root, bundle, repository, commit, verify_attestation)
-}
-
-fn verify_attestation(
-    bundle: &Path,
-    repository: &str,
-    commit: &str,
-) -> Result<serde_json::Value, String> {
-    let signer = format!("{repository}/.github/workflows/release.yml");
-    let output = Command::new("gh")
-        .args(["attestation", "verify"])
-        .arg(bundle)
-        .args(["--repo", repository])
-        .args(["--signer-workflow", &signer])
-        .args(["--source-digest", commit])
-        .args([
-            "--cert-oidc-issuer",
-            "https://token.actions.githubusercontent.com",
-            "--deny-self-hosted-runners",
-            "--format",
-            "json",
-        ])
-        .output()
-        .map_err(|error| format!("cannot execute gh attestation verify: {error}"))?;
-    if !output.status.success() {
-        return Err(format!(
-            "gh attestation verify rejected the evidence archive: {}{}",
-            String::from_utf8_lossy(&output.stdout),
-            String::from_utf8_lossy(&output.stderr)
-        ));
-    }
-    serde_json::from_slice(&output.stdout)
-        .map_err(|error| format!("gh attestation verify returned invalid JSON: {error}"))
 }
 
 /// Runs the `cargo xtask release` command family.
@@ -191,20 +60,8 @@ pub fn run(mut args: impl Iterator<Item = String>) -> Result<(), String> {
         "verify-source-bundle" => {
             let bundle = path_arg(&mut args, "--bundle", "verify-source-bundle")?;
             no_args(args, "verify-source-bundle")?;
-            verify_source_bundle(&bundle)
-        }
-        "import-evidence" => {
-            let bundle = path_arg(&mut args, "--bundle", "import-evidence")?;
-            let repository = string_arg(&mut args, "--repository", "import-evidence")?;
-            let commit = string_arg(&mut args, "--commit", "import-evidence")?;
-            no_args(args, "import-evidence")?;
-            import_evidence(root, &bundle, &repository, &commit).map(|_| ())
-        }
-        "verify" => {
-            let version = version_arg(&mut args)?;
-            let commit = string_arg(&mut args, "--commit", "verify")?;
-            no_args(args, "verify")?;
-            verify_release_at(root, &version, &commit, true)
+            let commit = current_commit(root)?;
+            bundle::verify_for_commit(&bundle, &commit)
         }
         _ => Err(format!("unknown release command: {command}")),
     }
@@ -239,24 +96,26 @@ fn path_arg(
         .ok_or_else(|| format!("release {command} requires {flag} <path>"))
 }
 
-fn string_arg(
-    args: &mut impl Iterator<Item = String>,
-    flag: &str,
-    command: &str,
-) -> Result<String, String> {
-    if args.next().as_deref() != Some(flag) {
-        return Err(format!("release {command} requires {flag} <value>"));
-    }
-    args.next()
-        .ok_or_else(|| format!("release {command} requires {flag} <value>"))
-}
-
 fn validate_version(version: &str) -> Result<(), String> {
     if version == VERSION {
         Ok(())
     } else {
         Err(format!("release version must be exactly {VERSION}"))
     }
+}
+
+fn current_commit(root: &Path) -> Result<String, String> {
+    let output = Command::new("git")
+        .current_dir(root)
+        .args(["rev-parse", "HEAD"])
+        .output()
+        .map_err(|error| format!("cannot inspect release candidate commit: {error}"))?;
+    if !output.status.success() {
+        return Err("cannot inspect release candidate commit with Git".to_owned());
+    }
+    String::from_utf8(output.stdout)
+        .map(|commit| commit.trim().to_owned())
+        .map_err(|error| format!("release candidate commit is not UTF-8: {error}"))
 }
 
 /// Validates the closed source-bundle recipe and every tracked input path.
@@ -316,46 +175,6 @@ pub fn verify_clean_candidate(root: &Path) -> Result<(), String> {
 #[doc(hidden)]
 pub fn verify_source_bundle(bundle: &Path) -> Result<(), String> {
     bundle::verify(bundle)
-}
-
-/// Verifies one complete release candidate from locally imported evidence.
-#[doc(hidden)]
-pub fn verify_release_at(
-    root: &Path,
-    version: &str,
-    commit: &str,
-    require_clean: bool,
-) -> Result<(), String> {
-    validate_version(version)?;
-    validate_repository_commit("entrepeneur4lyf/ara2-bridge", commit)?;
-    if require_clean {
-        let output = Command::new("git")
-            .current_dir(root)
-            .args(["status", "--porcelain", "--untracked-files=no"])
-            .output()
-            .map_err(|error| format!("cannot inspect release tree: {error}"))?;
-        if !output.status.success() {
-            return Err("cannot inspect release tree with Git".to_owned());
-        }
-        if !output.stdout.is_empty() {
-            return Err("release verify requires a clean tracked candidate tree".to_owned());
-        }
-    }
-    let directory = root.join("target/release-evidence");
-    let archive = directory.join(format!("ara2-evidence-{commit}.tar.zst"));
-    let receipt_path = directory.join(format!("receipt-{commit}.json"));
-    let digest = sha256_path(&archive)?;
-    let receipt: serde_json::Value = serde_json::from_slice(
-        &fs::read(&receipt_path)
-            .map_err(|error| format!("cannot read {}: {error}", receipt_path.display()))?,
-    )
-    .map_err(|error| format!("invalid {}: {error}", receipt_path.display()))?;
-    validate_evidence_receipt(&receipt, commit, &digest)?;
-    evidence::verify_archive(
-        &archive,
-        commit,
-        &root.join("docs/conformance/ci-matrix.md"),
-    )
 }
 
 fn verify_source_inputs(root: &Path) -> Result<(), String> {
@@ -445,71 +264,14 @@ pub fn validate_packaged_manifest(_source: &str, _expected_name: &str) -> Result
     Ok(())
 }
 
-/// Validates the identity fields produced only after external attestation verification.
-pub fn validate_evidence_receipt(
-    value: &serde_json::Value,
-    expected_commit: &str,
-    expected_digest: &str,
-) -> Result<(), String> {
-    let receipt: EvidenceReceipt = serde_json::from_value(value.clone())
-        .map_err(|error| format!("invalid evidence receipt: {error}"))?;
-    for (field, actual, expected) in [
-        (
-            "repository",
-            receipt.repository.as_str(),
-            "entrepeneur4lyf/ara2-bridge",
-        ),
-        ("commit", receipt.commit.as_str(), expected_commit),
-        (
-            "subject_sha256",
-            receipt.subject_sha256.as_str(),
-            expected_digest,
-        ),
-        (
-            "issuer",
-            receipt.issuer.as_str(),
-            "https://token.actions.githubusercontent.com",
-        ),
-        (
-            "workflow",
-            receipt.workflow.as_str(),
-            ".github/workflows/release.yml",
-        ),
-        (
-            "verified_by",
-            receipt.verified_by.as_str(),
-            "gh attestation verify",
-        ),
-    ] {
-        if actual != expected {
-            return Err(format!(
-                "evidence receipt {field} mismatch: expected {expected}, found {actual}"
-            ));
-        }
-    }
-    if receipt.schema != 1 {
-        return Err("evidence receipt schema mismatch".to_owned());
-    }
-    Ok(())
-}
-
 /// Audits checked-in coverage and compatibility artifacts.
 pub fn audit_api(root: &Path) -> Result<(), String> {
-    for relative in [
-        "ara2-bridge-sys/generated/symbol-coverage.json",
-        "docs/conformance/interface-coverage.json",
-        "docs/specs/ara2-bridge/api-compatibility.toml",
-    ] {
-        let source = fs::read_to_string(root.join(relative))
-            .map_err(|error| format!("cannot read {relative}: {error}"))?;
-        if relative.ends_with(".json") {
-            serde_json::from_str::<serde_json::Value>(&source)
-                .map_err(|error| format!("invalid {relative}: {error}"))?;
-        } else {
-            toml::from_str::<toml::Value>(&source)
-                .map_err(|error| format!("invalid {relative}: {error}"))?;
-        }
-    }
+    crate::bindings::generate(crate::Mode::Check)
+        .map_err(|error| format!("raw ABI generation audit failed: {error}"))?;
+    crate::compatibility::generate(crate::Mode::Check)
+        .map_err(|error| format!("compatibility audit failed: {error}"))?;
+    crate::coverage::generate(root, crate::Mode::Check)
+        .map_err(|error| format!("semantic coverage audit failed: {error}"))?;
     Ok(())
 }
 

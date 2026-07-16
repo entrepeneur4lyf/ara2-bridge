@@ -31,6 +31,9 @@ fn clap_probe_emit_import_and_check_are_deterministic() {
     assert!(xtask::companion_probe::import_dir(&root, "clap", &import).is_err());
     std::fs::remove_file(duplicate).unwrap();
 
+    #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
+    xtask::companion_probe::check_target(&root, "clap", "x86_64-unknown-linux-gnu").unwrap();
+
     let _ = std::fs::remove_file(envelope);
     let _ = std::fs::remove_dir_all(import);
 }

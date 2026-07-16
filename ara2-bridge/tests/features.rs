@@ -72,13 +72,13 @@ fn facade_feature_matrix_compiles_in_isolated_consumers() {
 
     let vst3_cases = [
         Case {
-            name: "vst3",
+            name: "vst3-3-8",
             default_features: false,
             features: &["vst3"],
             modules: &["companion"],
         },
         Case {
-            name: "full-portable",
+            name: "full-portable-vst3-3-8",
             default_features: false,
             features: &["full-portable"],
             modules: &["plugin", "host", "companion"],
@@ -167,7 +167,7 @@ fn assert_missing_vst3_error(root: &Path, case: Case<'_>) {
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(
         stderr.contains(
-            "VST3 SDK v3.7.11_build_10 is required when this companion feature is enabled"
+            "VST3 SDK v3.8.0_build_66 is required when this companion feature is enabled"
         ),
         "{} produced the wrong diagnostic:\n{stderr}",
         case.name

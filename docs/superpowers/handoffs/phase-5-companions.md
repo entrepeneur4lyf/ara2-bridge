@@ -1,6 +1,6 @@
 # Phase 5 Handoff — Companion Integrations
 
-Status: portable implementation complete; locked native evidence pending
+Status: implementation and locked native evidence complete
 Baseline: ARA API `releases/2.3.0`, normative commit `65ec5c43b943a48cb5446f448a0492db6af8534b`
 
 ## Implemented surface
@@ -18,8 +18,8 @@ uses an Apple-only Objective-C++ property shim backed by the pinned AudioUnitSDK
 ## Features and SDK routing
 
 - `clap` is portable and requires no SDK during consumer builds.
-- `vst3` requires `ARA_VST3_SDK_DIR` and an operator-selected
-  `ARA_VST3_LICENSE_POLICY` (`GPL-3.0-only` or `LicenseRef-Steinberg-VST3`).
+- `vst3` requires `ARA_VST3_SDK_DIR` pointing to the locked MIT-licensed
+  VST3 `v3.8.0_build_66` checkout; provisioning accepts the literal `MIT` identifier.
 - `audio-unit-v2` requires Apple targets and `ARA_AUDIO_UNIT_SDK_DIR`.
 - `full-portable` enables plug-in, host, CLAP, and VST3; `full-apple` adds Audio Unit v2.
 
@@ -27,23 +27,26 @@ Builds never download SDKs. Provisioning and exact identities are documented in
 `docs/companion-sdk-setup.md`; every native build validates repository, commit, tree, submodule,
 license, and clean-state invariants before compilation.
 
-## Portable gate evidence
+## Gate evidence
 
 - workspace tests, all-target clippy with warnings denied, and strict rustdoc pass;
 - CLAP ABI, interoperability, provenance, and three canonical target probe families pass;
 - strict-provenance Miri passes for the neutral binding and CLAP adapters;
-- VST3 compatibility compilation and Rust adapter tests pass against a non-authoritative header
-  set; this is diagnostic evidence only;
+- VST3 provenance, ABI, and interoperability tests pass against the locked 3.8/MIT SDK on Linux
+  x86_64, Windows x86_64, and macOS x86_64/AArch64;
+- all five canonical VST3 probes pass: Linux x86_64/AArch64, Windows x86_64, and macOS
+  x86_64/AArch64;
+- Audio Unit v2 provenance, ABI, interoperability, and both canonical probes pass natively on
+  macOS x86_64/AArch64;
 - non-Apple Audio Unit feature builds fail with the documented platform diagnostic;
 - CLAP, VST3, and Audio Unit companion symbol manifests close all 47 unique symbols represented by
   the 49 companion-deferred core inventory records.
 
-## Pending native release evidence
-
-The VST3 provenance manifest, five canonical native probe results, and locked SDK test gate remain
-pending until the operator chooses the applicable VST3 license policy. Audio Unit v2 native tests
-and its two canonical probes require the configured macOS CI runners. These are release blockers,
-not implementation waivers. CI contains the corresponding jobs and artifact emission paths.
+Linux AArch64 VST3 evidence was produced by a target-compiled runner under system emulation. Runner
+identity is derived from the compiled binary, so a host `rustc` cannot mislabel a cross-target
+probe. Windows SDK bootstrap forces LF-preserving Git configuration before checkout so provenance
+hashes remain byte-identical across operating systems. Automation may reproduce these results but
+does not create or authorize a release.
 
 ## Revisions discovered during implementation
 
@@ -53,4 +56,6 @@ not implementation waivers. CI contains the corresponding jobs and artifact emis
   outlive the ARA controller.
 - Audio Unit property failures must preserve caller output bytes and validate the ARA magic value
   before delegation.
-- VST3 license selection is an operator policy decision and cannot be inferred by the build.
+- VST3 3.8 is pinned under MIT; the old operator-selected GPL/proprietary policy is removed.
+- Probe target identity follows the compiled runner rather than the toolchain installed on its host.
+- SDK bootstrap disables Git line-ending conversion before checkout for portable provenance hashes.

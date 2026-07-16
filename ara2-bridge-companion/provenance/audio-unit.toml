@@ -54,7 +54,7 @@ sha256 = "482efd3c90a1740fa6f1314619353bbf8b2a56f952b7814813b30a1ef9fdad8d"
 [[file]]
 path = "ara2-bridge-companion/build.rs"
 role = "generated-declaration"
-sha256 = "d913489dda9c2f3cc251b452ebd030bede9f20863f3e16666c2c99f43b8c8809"
+sha256 = "b6b6a2da94d0edf1dd54100260b3fdbcdc8fed237e9d90a39abbab648a2f4977"
 
 [[file]]
 path = "ara2-bridge-companion/native/audio_unit/ara_au_shim.h"
@@ -87,11 +87,11 @@ role = "generated-declaration"
 sha256 = "e2ba8b24478928a811d56670e1fea9302c3d47ecc5b9c5c829997f76074c8725"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAAudioUnit.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"
 role = "generated-declaration"
 sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
 
 [[file]]
-path = "reference/ARA_SDK/ARA_API/ARAInterface.h"
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
 role = "ara-header"
 sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

@@ -1,6 +1,10 @@
 # Companion SDK Setup
 
-Companion features never download SDKs during Cargo builds. Maintainers provision exact ignored checkouts through `ci/bootstrap-reference-sdks.sh`; downstream users may point the same environment variables at independently obtained, identity-matching checkouts.
+Companion features never download SDKs during Cargo builds. Maintainers provision exact ignored checkouts from the repositories recorded in `ci/reference-sdks.lock.toml` through `ci/bootstrap-reference-sdks.sh`. The ARA source is always `https://github.com/Celemony/ARA_SDK.git`, cached at `.third-party/ARA_SDK`; `reference/` and `ARA_SDK_DIR` are not used.
+
+The bootstrap command configures every checkout and submodule with `core.autocrlf=false` and
+`core.filemode=false` before materializing files. This is required on Windows: converted CRLF files
+do not match the byte-level provenance recorded from the upstream repositories.
 
 ## CLAP 1.1.9
 
@@ -12,16 +16,26 @@ cargo xtask ara provenance --check --component clap
 cargo xtask ara companion-probe clap --check-all
 ```
 
-## VST3 v3.7.11_build_10
+## VST3 v3.8.0_build_66
 
-The exact commit is `7d92338ae922db2d559ac458824a4df40f37e82e`. Its locked release offers GPL-3.0-only or Steinberg VST3 license-policy paths; the operator must deliberately select the policy they are entitled to use. Do not copy a policy value from an example without reviewing the linked SDK terms.
+The exact commit is `9fad9770f2ae8542ab1a548a68c1ad1ac690abe0`. Steinberg licenses VST3 3.8 under MIT; the former GPL/proprietary policy paths do not apply to this pin.
+
+On Windows, install LLVM's `clang-cl` driver and set `CXX=clang-cl` for provenance and native-probe commands. The crate build also accepts MSVC; both build paths enable `/EHsc` because the native shim must catch every C++ exception before returning through its `extern "C"` boundary.
+
+```powershell
+$env:CXX = "clang-cl"
+$env:ARA_VST3_SDK_DIR = "$PWD\.third-party\vst3sdk"
+cargo xtask ara provenance --check --component vst3
+cargo xtask ara companion-probe vst3 --check-target x86_64-pc-windows-msvc
+```
 
 ```bash
-export ARA_VST3_LICENSE_POLICY='<GPL-3.0-only-or-LicenseRef-Steinberg-VST3>'
 ci/bootstrap-reference-sdks.sh fetch --component vst3 \
-  --accept-license "$ARA_VST3_LICENSE_POLICY"
+  --accept-license MIT
 export ARA_VST3_SDK_DIR="$PWD/.third-party/vst3sdk"
 cargo xtask ara provenance --check --component vst3
+cargo xtask ara companion-probe vst3 --check-all
+cargo test -p ara2-bridge-testkit --features vst3 --test vst3_abi --test vst3_interop
 ```
 
 ## AudioUnitSDK 1.0.0
@@ -32,6 +46,21 @@ Audio Unit v2 is built only on Apple targets. The SDK commit is `53ea94e5efebf86
 ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0
 export ARA_AUDIO_UNIT_SDK_DIR="$PWD/.third-party/AudioUnitSDK"
 cargo xtask ara provenance --check --component audio-unit
+cargo xtask ara companion-probe audio-unit-v2 --check-all
+cargo test -p ara2-bridge-testkit --features audio-unit-v2 --test audio_unit_interop
 ```
 
-Canonical probe envelopes are produced on each named native runner, imported without renaming, then checked with `cargo xtask ara companion-probe <component> --check-all`. Any commit, tree, transitive input hash, target, payload, or probe hash mismatch fails closed.
+Canonical probe envelopes are produced on each named native runner and imported without renaming. Routine native validation runs `cargo xtask ara companion-probe <component> --check-target <runner-triple>` to re-execute and compare every runner-owned envelope field with the canonical record, then `--check-all` to validate the complete canonical set. JSON whitespace is not evidence; any commit, tree, transitive input hash, target, payload, or probe hash mismatch fails closed.
+
+Linux AArch64 may use a system-emulated target runner. The validated setup used `cross` 0.2.5 and
+the locked AArch64 target:
+
+```bash
+ARA_VST3_SDK_DIR="$PWD/.third-party/vst3sdk" CXX=aarch64-linux-gnu-g++ \
+  cross run -p xtask --target aarch64-unknown-linux-gnu --locked -- \
+  ara companion-probe vst3 \
+  --emit ara2-bridge-companion/probes/vst3-linux-aarch64.json \
+  --target aarch64-unknown-linux-gnu
+```
+
+Probe runner identity comes from the compiled target, not a host `rustc -vV` query.

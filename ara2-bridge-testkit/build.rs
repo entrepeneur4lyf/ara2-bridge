@@ -1,6 +1,4 @@
 fn main() {
-    println!("cargo:rerun-if-env-changed=ARA_SDK_DIR");
-
     if std::env::var_os("CARGO_FEATURE_CLAP").is_some() {
         let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .parent()
@@ -8,11 +6,11 @@ fn main() {
         cc::Build::new()
             .file("native/clap_probe.c")
             .include(root.join(".third-party/clap/include"))
-            .include(root.join("reference/ARA_SDK/ARA_API"))
+            .include(root.join(".third-party/ARA_SDK/ARA_API"))
             .warnings(true)
             .compile("ara2_clap_probe");
         println!("cargo:rerun-if-changed=native/clap_probe.c");
-        println!("cargo:rerun-if-changed=../reference/ARA_SDK/ARA_API/ARACLAP.h");
+        println!("cargo:rerun-if-changed=../.third-party/ARA_SDK/ARA_API/ARACLAP.h");
     }
 
     if std::env::var_os("CARGO_FEATURE_CPP_INTEROP").is_some() {
@@ -21,17 +19,14 @@ fn main() {
 }
 
 fn build_cpp_interop() {
-    use std::path::PathBuf;
-
-    let sdk = std::env::var_os("ARA_SDK_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            panic!("cpp-interop requires ARA_SDK_DIR to point at the pinned ARA_SDK")
-        });
+    let sdk = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .expect("testkit is a workspace child")
+        .join(".third-party/ARA_SDK");
     for required in ["ARA_API", "ARA_Library", "ARA_Examples"] {
         assert!(
             sdk.join(required).is_dir(),
-            "ARA_SDK_DIR is missing {required}: {}",
+            "the GitHub-provisioned ARA SDK is missing {required}; run ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0 (expected {})",
             sdk.display()
         );
     }
@@ -102,6 +97,8 @@ fn build_cpp_interop() {
     let target = std::env::var("TARGET").expect("Cargo always provides TARGET to build scripts");
     if target.contains("msvc") {
         cpp.flag(format!("/FI{}", prelude.display()));
+        cpp.flag_if_supported("/EHsc");
+        cpp.define("NOMINMAX", "1");
     } else {
         cpp.flag(format!("-include{}", prelude.display()));
     }

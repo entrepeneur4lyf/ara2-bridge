@@ -29,7 +29,7 @@ jobs:
             cxx: c++
           - os: windows-2025
             target: x86_64-pc-windows-msvc
-            cxx: clang++
+            cxx: clang-cl
           - os: macos-15-large
             target: x86_64-apple-darwin
             cxx: clang++
@@ -38,7 +38,6 @@ jobs:
             cxx: clang++
     runs-on: ${{ matrix.os }}
     env:
-      ARA_SDK_DIR: ${{ github.workspace }}/reference/ARA_SDK
       CXX: ${{ matrix.cxx }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -78,9 +77,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: ubuntu-24.04, target: x86_64-unknown-linux-gnu }
-          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu }
-          - { os: windows-2025, target: x86_64-pc-windows-msvc }
+          - { os: ubuntu-24.04, target: x86_64-unknown-linux-gnu, probe_target: x86_64-unknown-linux-gnu }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, probe_target: aarch64-unknown-linux-gnu }
+          - { os: windows-2025, target: x86_64-pc-windows-msvc, probe_target: i686-pc-windows-msvc }
           - { os: macos-15-large, target: x86_64-apple-darwin }
           - { os: macos-15, target: aarch64-apple-darwin }
     runs-on: ${{ matrix.os }}
@@ -99,8 +98,11 @@ jobs:
           ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
           ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT
       - shell: bash
+        env:
+          PROBE_TARGET: ${{ matrix.probe_target }}
         run: |
           cargo xtask ara provenance --check --component clap
+          if [[ -n "$PROBE_TARGET" ]]; then cargo xtask ara companion-probe clap --check-target "$PROBE_TARGET"; fi
           cargo xtask ara companion-probe clap --check-all
           cargo test -p ara2-bridge-testkit --features clap --test clap_abi --test clap_interop --test companion_features
       - name: Write evidence
@@ -125,19 +127,17 @@ jobs:
 
   vst3-conformance:
     name: VST3 ${{ matrix.target }}
-    if: ${{ vars.ARA_VST3_LICENSE_POLICY != '' }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - { os: ubuntu-24.04, target: x86_64-unknown-linux-gnu, cxx: c++ }
           - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, cxx: c++ }
-          - { os: windows-2025, target: x86_64-pc-windows-msvc, cxx: clang++ }
+          - { os: windows-2025, target: x86_64-pc-windows-msvc, cxx: clang-cl }
           - { os: macos-15-large, target: x86_64-apple-darwin, cxx: clang++ }
           - { os: macos-15, target: aarch64-apple-darwin, cxx: clang++ }
     runs-on: ${{ matrix.os }}
     env:
-      ARA_VST3_LICENSE_POLICY: ${{ vars.ARA_VST3_LICENSE_POLICY }}
       ARA_VST3_SDK_DIR: ${{ github.workspace }}/.third-party/vst3sdk
       CXX: ${{ matrix.cxx }}
     steps:
@@ -151,10 +151,11 @@ jobs:
       - shell: bash
         run: |
           ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
-          ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license "$ARA_VST3_LICENSE_POLICY"
+          ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license MIT
       - shell: bash
         run: |
           cargo xtask ara provenance --check --component vst3
+          cargo xtask ara companion-probe vst3 --check-target ${{ matrix.target }}
           cargo xtask ara companion-probe vst3 --check-all
           cargo test -p ara2-bridge-testkit --features vst3 --test vst3_abi --test vst3_interop
       - name: Write evidence
@@ -202,6 +203,7 @@ jobs:
           ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0
       - run: |
           cargo xtask ara provenance --check --component audio-unit
+          cargo xtask ara companion-probe audio-unit-v2 --check-target ${{ matrix.target }}
           cargo xtask ara companion-probe audio-unit-v2 --check-all
           cargo test -p ara2-bridge-testkit --features audio-unit-v2 --test audio_unit_interop
       - name: Write evidence

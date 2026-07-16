@@ -1,6 +1,6 @@
 use std::fs;
-use std::io::Read;
 use std::path::Path;
+use std::process::Command;
 
 const HEAD: &str = "0123456789abcdef0123456789abcdef01234567";
 
@@ -81,6 +81,88 @@ fn checked_in_matrix_validates_and_preserves_phase_zero_jobs() {
 }
 
 #[test]
+fn checked_in_automation_has_no_release_workflow() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
+    assert!(
+        !root.join(".github/workflows/release.yml").exists(),
+        "release artifacts must be created only by the manual local procedure"
+    );
+
+    let jobs = xtask::ci::list_jobs_paths(
+        &root.join(".github/workflows"),
+        &root.join("docs/conformance/ci-matrix.md"),
+    )
+    .unwrap();
+    assert_eq!(
+        jobs.len(),
+        13,
+        "the canonical matrix contains validation jobs only"
+    );
+    assert!(jobs.iter().all(|job| !job.starts_with("release.yml:")));
+}
+
+#[test]
+fn validator_rejects_a_ci_release_workflow() {
+    let temp = tempfile::tempdir().unwrap();
+    let workflows = temp.path().join("workflows");
+    fs::create_dir(&workflows).unwrap();
+    fs::write(
+        workflows.join("ci.yml"),
+        "jobs:\n  quality:\n    runs-on: ubuntu-latest\n",
+    )
+    .unwrap();
+    fs::write(
+        workflows.join("release.yml"),
+        "jobs:\n  publish:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish\n",
+    )
+    .unwrap();
+    let matrix = temp.path().join("matrix.md");
+    write_matrix(&matrix);
+
+    let error = xtask::ci::validate_paths(&workflows, &matrix).unwrap_err();
+    assert!(error.contains("release workflow"), "{error}");
+}
+
+#[test]
+fn validator_rejects_release_operations_in_unlisted_workflow_names() {
+    let temp = tempfile::tempdir().unwrap();
+    let workflows = temp.path().join("workflows");
+    fs::create_dir(&workflows).unwrap();
+    fs::write(
+        workflows.join("ci.yml"),
+        "jobs:\n  quality:\n    runs-on: ubuntu-latest\n",
+    )
+    .unwrap();
+    fs::write(
+        workflows.join("publish.yaml"),
+        "jobs:\n  bundle:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo xtask release source-bundle --version 0.2.0-alpha.1 --output candidate.tar.zst\n",
+    )
+    .unwrap();
+    let matrix = temp.path().join("matrix.md");
+    write_matrix(&matrix);
+
+    let error = xtask::ci::validate_paths(&workflows, &matrix).unwrap_err();
+    assert!(error.contains("source-bundle"), "{error}");
+}
+
+#[test]
+fn validator_rejects_cargo_publish_in_validation_workflows() {
+    let temp = tempfile::tempdir().unwrap();
+    let workflows = temp.path().join("workflows");
+    fs::create_dir(&workflows).unwrap();
+    fs::write(
+        workflows.join("ci.yml"),
+        "jobs:\n  quality:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo publish\n",
+    )
+    .unwrap();
+    let matrix = temp.path().join("matrix.md");
+    write_matrix(&matrix);
+
+    let error = xtask::ci::validate_paths(&workflows, &matrix).unwrap_err();
+    assert!(error.contains("cargo publish"), "{error}");
+}
+
+#[test]
 fn evidence_bundle_is_deterministic_and_rejects_mixed_commits() {
     let temp = tempfile::tempdir().unwrap();
     let input = temp.path().join("input");
@@ -103,7 +185,7 @@ fn evidence_bundle_is_deterministic_and_rejects_mixed_commits() {
 }
 
 #[test]
-fn release_evidence_bundle_embeds_the_verified_source_bundle() {
+fn release_evidence_bundle_rejects_an_invalid_source_bundle() {
     let temp = tempfile::tempdir().unwrap();
     let input = temp.path().join("input");
     fs::create_dir(&input).unwrap();
@@ -111,7 +193,7 @@ fn release_evidence_bundle_embeds_the_verified_source_bundle() {
     let source = temp.path().join("ara2-bridge-0.2.0-alpha.1-source.tar.zst");
     fs::write(&source, b"source bundle bytes").unwrap();
     let output = temp.path().join("evidence.tar.zst");
-    xtask::ci::run([
+    let error = xtask::ci::run([
         "bundle-evidence".to_owned(),
         "--input".to_owned(),
         input.display().to_string(),
@@ -122,29 +204,86 @@ fn release_evidence_bundle_embeds_the_verified_source_bundle() {
         "--source-bundle".to_owned(),
         source.display().to_string(),
     ])
-    .unwrap();
+    .unwrap_err();
 
-    let decoder = zstd::stream::read::Decoder::new(fs::File::open(output).unwrap()).unwrap();
-    let mut archive = tar::Archive::new(decoder);
-    let mut embedded = None;
-    let mut digest = None;
-    for entry in archive.entries().unwrap() {
-        let mut entry = entry.unwrap();
-        let path = entry.path().unwrap().into_owned();
-        if path == Path::new("release/ara2-bridge-0.2.0-alpha.1-source.tar.zst") {
-            let mut bytes = Vec::new();
-            entry.read_to_end(&mut bytes).unwrap();
-            embedded = Some(bytes);
-        } else if path == Path::new("release/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256") {
-            let mut text = String::new();
-            entry.read_to_string(&mut text).unwrap();
-            digest = Some(text);
-        }
-    }
-    assert_eq!(embedded.as_deref(), Some(b"source bundle bytes".as_slice()));
-    let digest = digest.unwrap();
-    assert!(digest.ends_with("  ara2-bridge-0.2.0-alpha.1-source.tar.zst\n"));
-    assert_eq!(digest.split_whitespace().next().unwrap().len(), 64);
+    assert!(error.contains("invalid source archive"), "{error}");
+}
+
+#[test]
+fn release_evidence_bundle_requires_the_canonical_source_bundle_name() {
+    let temp = tempfile::tempdir().unwrap();
+    let input = temp.path().join("input");
+    fs::create_dir(&input).unwrap();
+    write_fragment(&input.join("one.json"), HEAD, "quality");
+    let source = temp.path().join("source.tar.zst");
+    fs::write(&source, b"source bundle bytes").unwrap();
+    let output = temp.path().join("evidence.tar.zst");
+
+    let error = xtask::ci::run([
+        "bundle-evidence".to_owned(),
+        "--input".to_owned(),
+        input.display().to_string(),
+        "--output".to_owned(),
+        output.display().to_string(),
+        "--head-sha".to_owned(),
+        HEAD.to_owned(),
+        "--source-bundle".to_owned(),
+        source.display().to_string(),
+    ])
+    .unwrap_err();
+
+    assert!(
+        error.contains("canonical source bundle filename"),
+        "{error}"
+    );
+}
+
+#[test]
+fn release_evidence_bundle_accepts_only_a_verified_matching_candidate() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
+    let head = Command::new("git")
+        .current_dir(root)
+        .args(["rev-parse", "HEAD"])
+        .output()
+        .unwrap();
+    assert!(head.status.success());
+    let head = String::from_utf8(head.stdout).unwrap().trim().to_owned();
+    let temp = tempfile::tempdir().unwrap();
+    let input = temp.path().join("input");
+    fs::create_dir(&input).unwrap();
+    write_fragment(&input.join("one.json"), &head, "quality");
+    let source = temp.path().join("ara2-bridge-0.2.0-alpha.1-source.tar.zst");
+    xtask::release::create_source_bundle(root, &source, true).unwrap();
+    let output = temp.path().join("evidence.tar.zst");
+
+    xtask::ci::run([
+        "bundle-evidence".to_owned(),
+        "--input".to_owned(),
+        input.display().to_string(),
+        "--output".to_owned(),
+        output.display().to_string(),
+        "--head-sha".to_owned(),
+        head,
+        "--source-bundle".to_owned(),
+        source.display().to_string(),
+    ])
+    .unwrap();
+    assert!(output.is_file());
+
+    write_fragment(&input.join("one.json"), HEAD, "quality");
+    let error = xtask::ci::run([
+        "bundle-evidence".to_owned(),
+        "--input".to_owned(),
+        input.display().to_string(),
+        "--output".to_owned(),
+        output.display().to_string(),
+        "--head-sha".to_owned(),
+        HEAD.to_owned(),
+        "--source-bundle".to_owned(),
+        source.display().to_string(),
+    ])
+    .unwrap_err();
+    assert!(error.contains("candidate commit mismatch"), "{error}");
 }
 
 fn write_fragment(path: &Path, head_sha: &str, job_id: &str) {

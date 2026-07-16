@@ -46,6 +46,7 @@ fn fixture_root() -> tempfile::TempDir {
     fs::create_dir_all(temp.path().join("docs/specs/ara2-bridge")).unwrap();
     fs::create_dir_all(temp.path().join("docs")).unwrap();
     fs::create_dir_all(temp.path().join("ara2-bridge/examples")).unwrap();
+    fs::create_dir_all(temp.path().join("ara2-bridge-core/src")).unwrap();
     fs::write(
         temp.path()
             .join("docs/specs/ara2-bridge/08-packaging-versioning-and-manual.md"),
@@ -60,6 +61,11 @@ fn fixture_root() -> tempfile::TempDir {
     fs::write(
         temp.path().join("ara2-bridge/examples/minimal-plugin.rs"),
         "fn main() {}\n",
+    )
+    .unwrap();
+    fs::write(
+        temp.path().join("ara2-bridge-core/src/lib.rs"),
+        "pub struct ExistingApi;\n",
     )
     .unwrap();
     temp
@@ -152,6 +158,19 @@ fn invalid_command_reference_is_rejected() {
     let error = xtask::docs::verify_manual_map_path(temp.path(), &write_map(temp.path(), &source))
         .unwrap_err();
     assert!(error.contains("invalid conformance command"), "{error}");
+}
+
+#[test]
+fn fabricated_public_api_reference_is_rejected() {
+    let temp = fixture_root();
+    let source = valid_map().replacen(
+        "ara2_bridge::core\"]",
+        "ara2_bridge::core::FabricatedApi\"]",
+        1,
+    );
+    let error = xtask::docs::verify_manual_map_path(temp.path(), &write_map(temp.path(), &source))
+        .unwrap_err();
+    assert!(error.contains("missing public API"), "{error}");
 }
 
 #[test]

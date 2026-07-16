@@ -1,0 +1,5 @@
+# Deterministic generated artifacts and source files use LF on every platform.
+* text=auto eol=lf
+
+# Golden fixtures are byte-exact inputs; Git must never rewrite their line endings.
+ara2-bridge-testkit/fixtures/** -text

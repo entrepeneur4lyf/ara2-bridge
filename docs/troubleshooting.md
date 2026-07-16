@@ -8,7 +8,7 @@ Run `cargo check --workspace --all-targets`, then repeat the failing command wit
 
 ## SDK Configuration
 
-Builds never download SDKs. Provision locked checkouts with `ci/bootstrap-reference-sdks.sh` after accepting the named license policy. Use `ARA_SDK_DIR`, `ARA_CLAP_DIR`, `ARA_VST3_SDK_DIR`, or `ARA_AUDIO_UNIT_SDK_DIR` exactly as documented. A missing VST3 variable or non-Apple Audio Unit feature is an intentional compile error.
+Cargo builds never download SDKs. Provision the locked Celemony GitHub checkout with `ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0`; it is cached at `.third-party/ARA_SDK` without an `ARA_SDK_DIR` override. Use `ARA_CLAP_DIR`, `ARA_VST3_SDK_DIR`, or `ARA_AUDIO_UNIT_SDK_DIR` exactly as documented. A missing VST3 variable or non-Apple Audio Unit feature is an intentional compile error.
 
 ## Generation Mismatch
 

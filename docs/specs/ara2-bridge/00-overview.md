@@ -48,7 +48,7 @@ Dependency edges point downward only. `core` depends on `sys`; ABI-owning `plugi
 - [04-host-runtime.md](04-host-runtime.md): all five host interfaces, plug-in dispatch, graph editing, loading, and host lifecycle.
 - [05-content-persistence-and-utilities.md](05-content-persistence-and-utilities.md): typed content, readers, analysis, archives, audio-file chunks, algorithms, licensing, and SDK utilities.
 - [06-companion-integrations.md](06-companion-integrations.md): CLAP, VST3, Audio Unit, platform boundaries, and role binding.
-- [07-conformance-and-quality.md](07-conformance-and-quality.md): upstream scenario parity, safety testing, CI matrix, and release gates.
+- [07-conformance-and-quality.md](07-conformance-and-quality.md): upstream scenario parity, safety testing, automated validation, and manual release gates.
 - [08-packaging-versioning-and-manual.md](08-packaging-versioning-and-manual.md): features, migration, examples, rustdoc, and manual inputs.
 - [09-generation-compatibility.md](09-generation-compatibility.md): ARA 1, ARA 2.0, and ARA 2.3 wire graphs, struct prefixes, fallbacks, and target restrictions.
 
@@ -78,3 +78,5 @@ The system is complete when every item in the API coverage manifests is implemen
 - 2026-07-14: Audit narrowed companion scope to released public CLAP, VST3, and Audio Unit v2; AUv3 and proprietary AAX are explicit external boundaries.
 - 2026-07-15: Audit made the facade/testkit exception and acyclic dependency graph explicit.
 - 2026-07-15: Implementation audit clarified that crates which publish raw ARA vtables require a direct downward `sys` edge in addition to `core`; hiding that compile-time ABI dependency behind a safe crate would misstate the actual architecture.
+- 2026-07-15: Companion conformance targets the MIT-licensed VST3 SDK 3.8 baseline; the earlier 3.7 dual-license pin is not a release input.
+- 2026-07-15: Release construction and publication are manual operator actions. CI may validate a candidate but never creates, attests, or publishes release artifacts.

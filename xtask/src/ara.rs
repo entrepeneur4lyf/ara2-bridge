@@ -66,7 +66,7 @@ fn run_companion_probe(mut args: impl Iterator<Item = String>) -> Result<(), Str
         return Err(format!("unknown companion component: {component}"));
     }
     let action = args.next().ok_or_else(|| {
-        "companion-probe requires --emit, --import-dir, or --check-all".to_owned()
+        "companion-probe requires --emit, --check-target, --import-dir, or --check-all".to_owned()
     })?;
     let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
         .parent()
@@ -96,6 +96,15 @@ fn run_companion_probe(mut args: impl Iterator<Item = String>) -> Result<(), Str
             }
             crate::companion_probe::import_dir(root, &component, std::path::Path::new(&directory))
         }
+        "--check-target" => {
+            let target = args
+                .next()
+                .ok_or_else(|| "--check-target requires a target triple".to_owned())?;
+            if args.next().is_some() {
+                return Err("unexpected companion-probe arguments".to_owned());
+            }
+            crate::companion_probe::check_target(root, &component, &target)
+        }
         "--check-all" => {
             if args.next().is_some() {
                 return Err("unexpected companion-probe arguments".to_owned());
@@ -103,7 +112,10 @@ fn run_companion_probe(mut args: impl Iterator<Item = String>) -> Result<(), Str
             crate::companion_probe::check_all(root, &component)
         }
         _ => {
-            return Err("companion-probe requires --emit, --import-dir, or --check-all".to_owned())
+            return Err(
+                "companion-probe requires --emit, --check-target, --import-dir, or --check-all"
+                    .to_owned(),
+            )
         }
     };
     result.map_err(|error| error.to_string())

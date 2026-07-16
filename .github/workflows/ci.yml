@@ -23,7 +23,7 @@ jobs:
     name: Stable quality, generated ABI, and Rust conformance
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -74,7 +74,7 @@ jobs:
             ci/reference-sdks.lock.toml
         run: ci/write-evidence.sh target/evidence/quality.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-quality
           path: target/evidence/quality.json
@@ -84,7 +84,7 @@ jobs:
     name: Rust 1.82 locked workspace
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: 1.82.0
@@ -100,7 +100,7 @@ jobs:
           EVIDENCE_INPUTS: Cargo.lock
         run: ci/write-evidence.sh target/evidence/msrv.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-msrv
           path: target/evidence/msrv.json
@@ -124,7 +124,7 @@ jobs:
             target: aarch64-apple-darwin
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -146,7 +146,7 @@ jobs:
           EVIDENCE_INPUTS: Cargo.lock
         run: ci/write-evidence.sh target/evidence/runtime-${{ matrix.target }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-runtime-${{ matrix.target }}
           path: target/evidence/runtime-${{ matrix.target }}.json
@@ -156,7 +156,7 @@ jobs:
     name: Windows i686 oversized archive refusal
     runs-on: windows-2025
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -175,7 +175,7 @@ jobs:
           EVIDENCE_INPUTS: Cargo.lock
         run: ci/write-evidence.sh target/evidence/i686-archive.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-i686-archive
           path: target/evidence/i686-archive.json
@@ -185,7 +185,7 @@ jobs:
     name: Phase 0 provenance and native core probe regression
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -208,7 +208,7 @@ jobs:
           EVIDENCE_OUTPUTS: target/core-probe.tar.zst
         run: ci/write-evidence.sh target/evidence/phase0-core-probe.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-phase0-core-probe
           path: |

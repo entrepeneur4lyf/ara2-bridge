@@ -1,6 +1,10 @@
+use std::ffi::OsStr;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
+use std::sync::Mutex;
+
+static SDK_ENV_LOCK: Mutex<()> = Mutex::new(());
 
 #[derive(Clone, Copy)]
 struct Case<'a> {
@@ -12,6 +16,7 @@ struct Case<'a> {
 
 #[test]
 fn facade_feature_matrix_compiles_in_isolated_consumers() {
+    let _sdk_env_guard = SDK_ENV_LOCK.lock().unwrap();
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
     let cases = [
         Case {
@@ -161,11 +166,32 @@ fn native_build_scripts_resolve_ara_from_the_consuming_project() {
 
 #[test]
 fn vst3_fallback_requires_the_locked_header_layout() {
+    let _sdk_env_guard = SDK_ENV_LOCK.lock().unwrap();
     let root =
         std::env::temp_dir().join(format!("ara2-bridge-vst3-fallback-{}", std::process::id()));
     let _ = fs::remove_dir_all(&root);
     fs::create_dir_all(&root).unwrap();
 
+    let original = std::env::var_os("ARA_VST3_SDK_DIR");
+    std::env::set_var("ARA_VST3_SDK_DIR", &root);
+    assert!(!sdk_is_configured(
+        &root,
+        "ARA_VST3_SDK_DIR",
+        "missing-vst3-sdk"
+    ));
+    let mut command = Command::new("unused");
+    configure_sdk(
+        &mut command,
+        "ARA_VST3_SDK_DIR",
+        root.join("missing-vst3-sdk"),
+    );
+    assert_eq!(
+        command
+            .get_envs()
+            .find(|(key, _)| *key == OsStr::new("ARA_VST3_SDK_DIR"))
+            .and_then(|(_, value)| value),
+        None
+    );
     assert!(!sdk_fallback_is_configured("ARA_VST3_SDK_DIR", &root));
     for relative in [
         "pluginterfaces/base/funknown.h",
@@ -176,8 +202,18 @@ fn vst3_fallback_requires_the_locked_header_layout() {
         fs::create_dir_all(marker.parent().unwrap()).unwrap();
         fs::write(marker, []).unwrap();
     }
+    assert!(sdk_is_configured(
+        &root,
+        "ARA_VST3_SDK_DIR",
+        "missing-vst3-sdk"
+    ));
     assert!(sdk_fallback_is_configured("ARA_VST3_SDK_DIR", &root));
 
+    if let Some(value) = original {
+        std::env::set_var("ARA_VST3_SDK_DIR", value);
+    } else {
+        std::env::remove_var("ARA_VST3_SDK_DIR");
+    }
     fs::remove_dir_all(root).unwrap();
 }
 
@@ -217,7 +253,14 @@ fn assert_missing_vst3_error(root: &Path, case: Case<'_>) {
 }
 
 fn run_case(root: &Path, case: Case<'_>) -> Output {
-    let directory = root.join("target/feature-matrix").join(case.name);
+    let directory = std::env::temp_dir()
+        .join(format!("ara2-bridge-feature-matrix-{}", std::process::id()))
+        .join(case.name);
+    assert!(
+        !directory.starts_with(root),
+        "isolated consumers must not inherit repository Cargo configuration"
+    );
+    let _ = fs::remove_dir_all(&directory);
     let source = directory.join("src");
     fs::create_dir_all(&source).unwrap();
     fs::write(directory.join("Cargo.toml"), manifest(root, case)).unwrap();
@@ -249,19 +292,27 @@ fn run_case(root: &Path, case: Case<'_>) -> Output {
         "ARA_AUDIO_UNIT_SDK_DIR",
         root.join(".third-party/AudioUnitSDK"),
     );
-    command.output().unwrap()
+    let output = command.output().unwrap();
+    fs::remove_dir_all(directory).unwrap();
+    output
 }
 
 fn configure_sdk(command: &mut Command, variable: &str, fallback: PathBuf) {
-    if let Some(value) = std::env::var_os(variable) {
-        command.env(variable, value);
-    } else if sdk_fallback_is_configured(variable, &fallback) {
-        command.env(variable, fallback);
+    let configured = std::env::var_os(variable)
+        .map(PathBuf::from)
+        .filter(|path| sdk_fallback_is_configured(variable, path))
+        .or_else(|| sdk_fallback_is_configured(variable, &fallback).then_some(fallback));
+    if let Some(path) = configured {
+        command.env(variable, path);
+    } else {
+        command.env_remove(variable);
     }
 }
 
 fn sdk_is_configured(root: &Path, variable: &str, fallback: &str) -> bool {
-    std::env::var_os(variable).is_some()
+    std::env::var_os(variable)
+        .map(PathBuf::from)
+        .is_some_and(|configured| sdk_fallback_is_configured(variable, &configured))
         || sdk_fallback_is_configured(variable, &root.join(fallback))
 }
 

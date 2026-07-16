@@ -25,6 +25,16 @@ do
     fi
 done
 
+if output="$(PYTHONPATH="$repo_root/ci/tests/crlf-python" \
+    "$bootstrap" check --root "$empty_root" --component ara 2>&1)"; then
+    echo "expected the CRLF preflight to reject an absent SDK checkout" >&2
+    exit 1
+fi
+if [[ "$output" == *$'\r'* ]]; then
+    echo "Windows Python CRLF leaked into a parsed SDK path" >&2
+    exit 1
+fi
+
 if output="$($bootstrap fetch --root "$empty_root" --component ara --accept-license MIT 2>&1)"; then
     echo "expected a mismatched license policy to be rejected" >&2
     exit 1

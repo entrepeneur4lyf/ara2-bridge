@@ -2,7 +2,7 @@
   "schema": 1,
   "component": "clap",
   "target": "aarch64-unknown-linux-gnu",
-  "probe_method": "clang-target-layout",
+  "probe_method": "native-execution",
   "source_commit": "094bb76c85366a13cc6c49292226d8608d6ae50c",
   "source_tree": "4b56d7267e846fbe2a420370ea4f88f3ca7869b3",
   "source_hash": "9577020d34ff6d608ef473bac68f4fa548d5b047fea5d8f611df7bf135d9c798",

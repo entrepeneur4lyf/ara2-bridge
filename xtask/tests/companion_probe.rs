@@ -37,3 +37,24 @@ fn clap_probe_emit_import_and_check_are_deterministic() {
     let _ = std::fs::remove_file(envelope);
     let _ = std::fs::remove_dir_all(import);
 }
+
+#[test]
+fn aarch64_clap_canonical_uses_the_native_runner_payload() {
+    let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .to_owned();
+    let canonical: serde_json::Value = serde_json::from_slice(
+        &std::fs::read(root.join("ara2-bridge-companion/probes/clap-aarch64.json")).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(canonical["probe_method"], "native-execution");
+
+    let cross_envelope = temporary("clap-aarch64-cross-check.json");
+    xtask::companion_probe::emit(&root, "clap", &cross_envelope, "aarch64-unknown-linux-gnu")
+        .unwrap();
+    let cross: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&cross_envelope).unwrap()).unwrap();
+    assert_eq!(canonical["payload"], cross["payload"]);
+    let _ = std::fs::remove_file(cross_envelope);
+}

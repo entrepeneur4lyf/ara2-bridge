@@ -17,7 +17,7 @@ jobs:
     name: Explicit Miri suites
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: nightly
@@ -51,7 +51,7 @@ jobs:
           EVIDENCE_INPUTS: Cargo.lock
         run: ci/write-evidence.sh target/evidence/miri.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-miri
           path: target/evidence/miri.json
@@ -69,7 +69,7 @@ jobs:
           - tsan-production
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: nightly
@@ -91,7 +91,7 @@ jobs:
             ci/invalid-pointer-ubsan.c
         run: ci/write-evidence.sh target/evidence/sanitizer-${{ matrix.mode }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-sanitizer-${{ matrix.mode }}
           path: target/evidence/sanitizer-${{ matrix.mode }}.json
@@ -113,7 +113,7 @@ jobs:
           - dispatch
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: nightly
@@ -136,7 +136,7 @@ jobs:
             fuzz/corpus-manifest.toml
         run: ci/write-evidence.sh target/evidence/fuzz-${{ matrix.target }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-fuzz-${{ matrix.target }}
           path: target/evidence/fuzz-${{ matrix.target }}.json
@@ -146,7 +146,7 @@ jobs:
     name: Audit, minimum versions, and feature pairs
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -191,7 +191,7 @@ jobs:
             deny.toml
         run: ci/write-evidence.sh target/evidence/supply-chain-and-features.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-supply-chain-and-features
           path: target/evidence/supply-chain-and-features.json

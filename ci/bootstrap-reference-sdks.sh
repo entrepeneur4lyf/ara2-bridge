@@ -77,6 +77,7 @@ fields_output="$("$python_command" - "$lock_file" "$component" <<'PY'
 import sys
 import tomllib
 
+sys.stdout.reconfigure(newline="\n")
 with open(sys.argv[1], "rb") as stream:
     data = tomllib.load(stream)
 for item in data.get("component", []):
@@ -141,6 +142,7 @@ verify_checkout() {
 import sys
 import tomllib
 
+sys.stdout.reconfigure(newline="\n")
 with open(sys.argv[1], "rb") as stream:
     data = tomllib.load(stream)
 item = next(entry for entry in data["component"] if entry["name"] == sys.argv[2])

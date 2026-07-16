@@ -42,7 +42,7 @@ jobs:
       ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       CXX: ${{ matrix.cxx }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -67,7 +67,7 @@ jobs:
             ci/reference-sdks.lock.toml
         run: ci/write-evidence.sh target/evidence/cpp-${{ matrix.target }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-cpp-${{ matrix.target }}
           path: target/evidence/cpp-${{ matrix.target }}.json
@@ -89,7 +89,7 @@ jobs:
       ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       ARA_CLAP_DIR: ${{ github.workspace }}/.third-party/clap
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -122,7 +122,7 @@ jobs:
             ci/reference-sdks.lock.toml
         run: ci/write-evidence.sh target/evidence/clap-${{ matrix.target }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-clap-${{ matrix.target }}
           path: target/evidence/clap-${{ matrix.target }}.json
@@ -145,7 +145,7 @@ jobs:
       ARA_VST3_SDK_DIR: ${{ github.workspace }}/.third-party/vst3sdk
       CXX: ${{ matrix.cxx }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -176,7 +176,7 @@ jobs:
             ci/reference-sdks.lock.toml
         run: ci/write-evidence.sh target/evidence/vst3-${{ matrix.target }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-vst3-${{ matrix.target }}
           path: target/evidence/vst3-${{ matrix.target }}.json
@@ -196,7 +196,7 @@ jobs:
       ARA_AUDIO_UNIT_SDK_DIR: ${{ github.workspace }}/.third-party/AudioUnitSDK
       CXX: clang++
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
       - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88
         with:
           toolchain: stable
@@ -224,7 +224,7 @@ jobs:
             ci/reference-sdks.lock.toml
         run: ci/write-evidence.sh target/evidence/audio-unit-${{ matrix.target }}.json
       - if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: evidence-${{ github.run_id }}-audio-unit-${{ matrix.target }}
           path: target/evidence/audio-unit-${{ matrix.target }}.json

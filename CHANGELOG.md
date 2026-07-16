@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0-alpha.1 - Unreleased
+## 0.3.0 - Unreleased
 
 - Replaced the partial 0.1 raw callback facade with focused safe plug-in, host,
   core, companion, testkit, raw ABI, and facade crates.

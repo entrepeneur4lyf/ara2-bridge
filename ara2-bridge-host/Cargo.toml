@@ -8,8 +8,8 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
-ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.2.0-alpha.1" }
-ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
+ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.3.0" }
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.3.0" }
 bitflags.workspace = true
 
 [dev-dependencies]

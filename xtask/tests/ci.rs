@@ -135,7 +135,7 @@ fn validator_rejects_release_operations_in_unlisted_workflow_names() {
     .unwrap();
     fs::write(
         workflows.join("publish.yaml"),
-        "jobs:\n  bundle:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo xtask release source-bundle --version 0.2.0-alpha.1 --output candidate.tar.zst\n",
+        "jobs:\n  bundle:\n    runs-on: ubuntu-latest\n    steps:\n      - run: cargo xtask release source-bundle --version 0.3.0 --output candidate.tar.zst\n",
     )
     .unwrap();
     let matrix = temp.path().join("matrix.md");
@@ -190,7 +190,7 @@ fn release_evidence_bundle_rejects_an_invalid_source_bundle() {
     let input = temp.path().join("input");
     fs::create_dir(&input).unwrap();
     write_fragment(&input.join("one.json"), HEAD, "quality");
-    let source = temp.path().join("ara2-bridge-0.2.0-alpha.1-source.tar.zst");
+    let source = temp.path().join("ara2-bridge-0.3.0-source.tar.zst");
     fs::write(&source, b"source bundle bytes").unwrap();
     let output = temp.path().join("evidence.tar.zst");
     let error = xtask::ci::run([
@@ -252,7 +252,7 @@ fn release_evidence_bundle_accepts_only_a_verified_matching_candidate() {
     let input = temp.path().join("input");
     fs::create_dir(&input).unwrap();
     write_fragment(&input.join("one.json"), &head, "quality");
-    let source = temp.path().join("ara2-bridge-0.2.0-alpha.1-source.tar.zst");
+    let source = temp.path().join("ara2-bridge-0.3.0-source.tar.zst");
     xtask::release::create_source_bundle(root, &source, true).unwrap();
     let output = temp.path().join("evidence.tar.zst");
 

@@ -15,11 +15,11 @@ audio-unit-v2 = ["ara2-bridge-companion/audio-unit-v2"]
 cpp-interop = []
 
 [dependencies]
-ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
-ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.2.0-alpha.1" }
-ara2-bridge-plugin = { path = "../ara2-bridge-plugin", version = "=0.2.0-alpha.1" }
-ara2-bridge-host = { path = "../ara2-bridge-host", version = "=0.2.0-alpha.1" }
-ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.2.0-alpha.1" }
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.3.0" }
+ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.3.0" }
+ara2-bridge-plugin = { path = "../ara2-bridge-plugin", version = "=0.3.0" }
+ara2-bridge-host = { path = "../ara2-bridge-host", version = "=0.3.0" }
+ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.3.0" }
 libc.workspace = true
 serde.workspace = true
 serde_json.workspace = true

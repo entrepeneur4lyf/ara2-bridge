@@ -31,7 +31,7 @@ fn every_generated_metadata_field_is_required() {
         "https://github.com/Celemony/ARA_API\n",
         "releases/2.3.0\n",
         "65ec5c43b943a48cb5446f448a0492db6af8534b\n",
-        "ara2-bridge xtask 0.2.0-alpha.1\n",
+        "ara2-bridge xtask 0.3.0\n",
         "Apache-2.0\n",
     );
     xtask::bindings::validate_generated_metadata(complete).unwrap();
@@ -41,7 +41,7 @@ fn every_generated_metadata_field_is_required() {
         "https://github.com/Celemony/ARA_API",
         "releases/2.3.0",
         "65ec5c43b943a48cb5446f448a0492db6af8534b",
-        "ara2-bridge xtask 0.2.0-alpha.1",
+        "ara2-bridge xtask 0.3.0",
         "Apache-2.0",
     ] {
         let altered = complete.replace(expected, "");

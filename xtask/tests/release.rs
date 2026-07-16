@@ -1,7 +1,7 @@
 use std::path::Path;
 use std::process::Command;
 
-const VERSION: &str = "0.2.0-alpha.1";
+const VERSION: &str = "0.3.0";
 const REPOSITORY: &str = "https://github.com/Celemony/ARA_API";
 const COMMIT: &str = "65ec5c43b943a48cb5446f448a0492db6af8534b";
 
@@ -42,7 +42,7 @@ fn invalid_release_version_is_rejected() {
         "0.2".to_owned(),
     ])
     .unwrap_err();
-    assert!(error.contains("0.2.0-alpha.1"), "{error}");
+    assert!(error.contains("0.3.0"), "{error}");
 }
 
 #[test]
@@ -54,7 +54,7 @@ fn generated_derivative_requires_every_provenance_field() {
         "Source repository:",
         "Source tag:",
         "Normative ARA API commit:",
-        "Generator: ara2-bridge xtask 0.2.0-alpha.1",
+        "Generator: ara2-bridge xtask 0.3.0",
         "SPDX-License-Identifier: Apache-2.0",
     ] {
         let invalid = valid.replace(missing, "removed");
@@ -66,7 +66,7 @@ fn generated_derivative_requires_every_provenance_field() {
         ("releases/2.3.0", "releases/2.2.0"),
         (COMMIT, "0000000000000000000000000000000000000000"),
         (
-            "Generator: ara2-bridge xtask 0.2.0-alpha.1",
+            "Generator: ara2-bridge xtask 0.3.0",
             "Generator: unknown 9.9.9",
         ),
         (
@@ -87,26 +87,26 @@ fn packaged_manifest_requires_exact_release_identity_and_sibling_versions() {
     let valid = r#"
 [package]
 name = "ara2-bridge-plugin"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 edition = "2021"
 rust-version = "1.82"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/entrepeneur4lyf/ara2-bridge"
 
 [dependencies.ara2-bridge-core]
-version = "=0.2.0-alpha.1"
+version = "=0.3.0"
 "#;
     xtask::release::validate_packaged_manifest(valid, "ara2-bridge-plugin").unwrap();
     for (expected, wrong) in [
         ("name = \"ara2-bridge-plugin\"", "name = \"wrong\""),
-        ("version = \"0.2.0-alpha.1\"", "version = \"0.1.0\""),
+        ("version = \"0.3.0\"", "version = \"0.1.0\""),
         ("rust-version = \"1.82\"", "rust-version = \"1.90\""),
         ("license = \"MIT OR Apache-2.0\"", "license = \"NONE\""),
         (
             "repository = \"https://github.com/entrepeneur4lyf/ara2-bridge\"",
             "repository = \"https://example.invalid\"",
         ),
-        ("version = \"=0.2.0-alpha.1\"", "version = \"0.2\""),
+        ("version = \"=0.3.0\"", "version = \"0.2\""),
     ] {
         let invalid = valid.replacen(expected, wrong, 1);
         assert!(

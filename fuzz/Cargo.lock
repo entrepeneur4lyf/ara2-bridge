@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "ara2-bridge-core"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-sys",
  "base64",
@@ -26,7 +26,7 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge-sys"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 
 [[package]]
 name = "arbitrary"

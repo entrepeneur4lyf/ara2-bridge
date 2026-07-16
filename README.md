@@ -19,7 +19,7 @@ companions. DSP algorithms, AUv3, and the separately licensed AAX API are outsid
 | `ara2-bridge-testkit` | Mock peers, fixtures, and conformance scenarios |
 | `ara2-bridge` | Aggregating facade |
 
-The current `0.2.0-alpha.1` implementation includes the plug-in and host runtimes, core content and
+The current `0.3.0` implementation includes the plug-in and host runtimes, core content and
 persistence utilities, CLAP/VST3/Audio Unit v2 adapters, deterministic conformance kit, native C++
 interoperability, safety harnesses, and provenance-aware raw bindings. Platform-specific native
 evidence is collected by the runner matrix before a release is declared conformant.
@@ -30,7 +30,7 @@ The facade defaults to plug-in authoring:
 
 ```toml
 [dependencies]
-ara2-bridge = "0.2.0-alpha.1"
+ara2-bridge = "0.3.0"
 ```
 
 Run the public examples from a checkout:
@@ -48,7 +48,7 @@ See `docs/migration-0.1-to-0.2.md` for the intentional 0.1 API break,
 Projects using native companion features can install and build the complete locked SDK locally:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.2.0-alpha.1/scripts/install-ara-sdk.sh
+curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.3.0/scripts/install-ara-sdk.sh
 bash install-ara-sdk.sh
 cargo build
 ```

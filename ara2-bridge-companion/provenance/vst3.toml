@@ -64,7 +64,7 @@ sha256 = "4b1e8e729fe585726ffee59bbe76a785f77dc4f2008a8166977bdf8b6d65254f"
 [[file]]
 path = "ara2-bridge-companion/probes/vst3-symbols.json"
 role = "generated-declaration"
-sha256 = "6f69ff3bfc4fd78b8480e725ca1121cae67349f3735e9ce62f100de8179232d6"
+sha256 = "66730fbc09306a32dac801fc96c387e1f410ee88ba5fd9685fb28ade8c5f16d6"
 
 [[file]]
 path = "ara2-bridge-companion/src/vst3/ffi.rs"

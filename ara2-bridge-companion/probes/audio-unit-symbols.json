@@ -4,7 +4,7 @@
     "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
     "audio_unit_sdk_tag": "AudioUnitSDK-1.0.0",
     "audio_unit_sdk_commit": "53ea94e5efebf864b70afb673bdd60c977818ec7",
-    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "generator": "ara2-bridge xtask 0.3.0",
     "notice": "DO NOT EDIT"
   },
   "records": [

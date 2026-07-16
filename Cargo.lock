@@ -19,7 +19,7 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-companion",
  "ara2-bridge-core",
@@ -31,7 +31,7 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge-companion"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-core",
  "ara2-bridge-host",
@@ -43,7 +43,7 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge-core"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-sys",
  "base64",
@@ -60,7 +60,7 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge-host"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-core",
  "ara2-bridge-sys",
@@ -70,7 +70,7 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge-plugin"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-core",
  "ara2-bridge-sys",
@@ -79,14 +79,14 @@ dependencies = [
 
 [[package]]
 name = "ara2-bridge-sys"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "serde_json",
 ]
 
 [[package]]
 name = "ara2-bridge-testkit"
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 dependencies = [
  "ara2-bridge-companion",
  "ara2-bridge-core",

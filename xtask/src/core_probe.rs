@@ -15,7 +15,7 @@ type DynError = Box<dyn std::error::Error>;
 const SOURCE_REPOSITORY: &str = "https://github.com/Celemony/ARA_API";
 const SOURCE_TAG: &str = "releases/2.3.0";
 const SOURCE_COMMIT: &str = "65ec5c43b943a48cb5446f448a0492db6af8534b";
-const GENERATOR: &str = "ara2-bridge xtask 0.2.0-alpha.1";
+const GENERATOR: &str = "ara2-bridge xtask 0.3.0";
 
 /// Canonical target ABI families required by the core probe gate.
 pub const FAMILIES: &[&str] = &["x86_64", "aarch64", "i686"];

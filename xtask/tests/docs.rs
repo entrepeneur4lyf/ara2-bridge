@@ -128,7 +128,7 @@ fn installer_downloads_must_use_the_matching_immutable_release_tag() {
     fs::create_dir_all(temp.path().join("docs")).unwrap();
     fs::write(
         temp.path().join("Cargo.toml"),
-        "[workspace]\n[workspace.package]\nversion = \"0.2.0-alpha.1\"\n",
+        "[workspace]\n[workspace.package]\nversion = \"0.3.0\"\n",
     )
     .unwrap();
     let mutable = "https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/main/scripts/install-ara-sdk.sh";
@@ -138,7 +138,7 @@ fn installer_downloads_must_use_the_matching_immutable_release_tag() {
     let error = xtask::docs::verify_installer_download_refs(temp.path()).unwrap_err();
     assert!(error.contains("immutable release tag"), "{error}");
 
-    let immutable = "https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.2.0-alpha.1/scripts/install-ara-sdk.sh";
+    let immutable = "https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.3.0/scripts/install-ara-sdk.sh";
     fs::write(temp.path().join("README.md"), immutable).unwrap();
     fs::write(temp.path().join("docs/companion-sdk-setup.md"), immutable).unwrap();
     xtask::docs::verify_installer_download_refs(temp.path()).unwrap();

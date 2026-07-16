@@ -11,12 +11,12 @@ keywords = ["audio", "ara2", "daw", "vst", "plugin"]
 categories = ["multimedia::audio", "development-tools::ffi"]
 
 [dependencies]
-ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.2.0-alpha.1" }
-ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.2.0-alpha.1" }
-ara2-bridge-plugin = { path = "../ara2-bridge-plugin", version = "=0.2.0-alpha.1", optional = true }
-ara2-bridge-host = { path = "../ara2-bridge-host", version = "=0.2.0-alpha.1", optional = true }
-ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.2.0-alpha.1", optional = true }
-ara2-bridge-testkit = { path = "../ara2-bridge-testkit", version = "=0.2.0-alpha.1", optional = true }
+ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.3.0" }
+ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.3.0" }
+ara2-bridge-plugin = { path = "../ara2-bridge-plugin", version = "=0.3.0", optional = true }
+ara2-bridge-host = { path = "../ara2-bridge-host", version = "=0.3.0", optional = true }
+ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.3.0", optional = true }
+ara2-bridge-testkit = { path = "../ara2-bridge-testkit", version = "=0.3.0", optional = true }
 
 [features]
 default = ["plugin"]

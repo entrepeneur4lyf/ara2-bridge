@@ -3,7 +3,7 @@
   "source_repository": "https://github.com/Celemony/ARA_API",
   "source_tag": "releases/2.3.0",
   "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
-  "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+  "generator": "ara2-bridge xtask 0.3.0",
   "spdx_license": "Apache-2.0",
   "notice": "DO NOT EDIT",
   "target_triple": "x86_64-unknown-linux-gnu",

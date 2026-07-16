@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Prove full ARA 2.3 support, cross-language interoperability, safety, packaging independence, and documentation readiness, then prepare the `0.2.0-alpha.1` release surface.
+**Goal:** Prove full ARA 2.3 support, cross-language interoperability, safety, packaging independence, and documentation readiness, then prepare the `0.3.0` release surface.
 
 **Architecture:** Machine-readable ABI metadata joins delegate and contract-test manifests. Shared scenarios run through public APIs across Rust/Rust and Rust/C++ pairings. CI layers fast contract tests before Miri, sanitizers, fuzzing, native companion tests, package smoke builds, and manual-source traceability.
 
@@ -418,8 +418,8 @@ git commit -m "docs: add executable ara manual sources"
 ### Task 8: Verify packages and define the manual release procedure
 
 **Files:**
-- Create: `docs/releases/0.2.0-alpha.1-conformance.md`
-- Create: `docs/releases/0.2.0-alpha.1-checklist.md`
+- Create: `docs/releases/0.3.0-conformance.md`
+- Create: `docs/releases/0.3.0-checklist.md`
 - Create: `docs/releases/source-bundle.toml`
 - Create: `CHANGELOG.md`
 - Create: `LICENSE-MIT`
@@ -451,9 +451,9 @@ Expected: FAIL on the deliberate unimplemented clean-room verifier, not on an un
 
 - [x] **Step 2: Implement release commands and clean-room smoke tests**
 
-Add workspace-pinned `tar = "0.4"` and `zstd = "0.13"`, opt `xtask` into them, and update `Cargo.lock`. Implement `audit-api`, `audit-unsafe`, `audit-licenses`, `verify-source-inputs`, `source-bundle`, and `verify-source-bundle` in `xtask/src/release.rs`; there is no CI-attestation import or workflow-authorized release command. Because sibling `0.2.0-alpha.1` crates are not yet in crates.io, the precommit input check vendors the locked registry graph, then packages and inserts each sibling into a Cargo directory source in dependency order before packaging its consumers with `cargo package --allow-dirty --no-verify --locked`. The clean post-commit manual source-bundle procedure repeats that staged-directory-source process with `cargo package --no-verify --locked` and rejects a dirty tree. The defined vendored clean-room workspace is the mandatory replacement for Cargo's skipped registry-based package verification. Unpack and build there with no `reference/`, clang, network, or undeclared SDK. Check Cargo metadata, README, licenses, dependency versions, and every generated Rust/C/C++/JSON/TOML/Markdown derivative for exact source repository/tag/commit, generator crate/version, SPDX license, and `DO NOT EDIT` metadata.
+Add workspace-pinned `tar = "0.4"` and `zstd = "0.13"`, opt `xtask` into them, and update `Cargo.lock`. Implement `audit-api`, `audit-unsafe`, `audit-licenses`, `verify-source-inputs`, `source-bundle`, and `verify-source-bundle` in `xtask/src/release.rs`; there is no CI-attestation import or workflow-authorized release command. Because sibling `0.3.0` crates are not yet in crates.io, the precommit input check vendors the locked registry graph, then packages and inserts each sibling into a Cargo directory source in dependency order before packaging its consumers with `cargo package --allow-dirty --no-verify --locked`. The clean post-commit manual source-bundle procedure repeats that staged-directory-source process with `cargo package --no-verify --locked` and rejects a dirty tree. The defined vendored clean-room workspace is the mandatory replacement for Cargo's skipped registry-based package verification. Unpack and build there with no `reference/`, clang, network, or undeclared SDK. Check Cargo metadata, README, licenses, dependency versions, and every generated Rust/C/C++/JSON/TOML/Markdown derivative for exact source repository/tag/commit, generator crate/version, SPDX license, and `DO NOT EDIT` metadata.
 
-`docs/releases/source-bundle.toml` is the exact, schema-versioned recipe. `cargo xtask release source-bundle --version 0.2.0-alpha.1 --output target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst` must produce a byte-deterministic archive containing: the seven publishable member `.crate` files under `packages/`; those archives unpacked under `clean-room/crates/<name>-<version>/`; `clean-room/Cargo.toml` listing those seven exact directories as workspace members; a generated `clean-room/Cargo.lock`; a versioned `vendor/` source directory containing the seven packaged crates for their normalized registry dependencies and every exact registry dependency from the release lock; a bundle-root `.cargo/config.toml` replacing `crates-io` with `vendor/`; root `Cargo.toml` and `Cargo.lock`; the existing Apache-2.0 project `LICENSE`, project `LICENSE-MIT`, and `LICENSES/**`; `sdk-provenance.toml`; `ara2-bridge-sys/generated/symbol-coverage.json`; every companion provenance and symbol/probe JSON; `docs/conformance/interface-coverage.{json,md}` and release conformance files; all normative specs; `docs/manual-source-map.md`, troubleshooting, migration, and changelog; plus generated `source-bundle.json` metadata and a sorted `MANIFEST.sha256` covering every other entry. Canonicalize each Cargo-produced `.crate` by sorted path, normalized metadata, and deterministic gzip before computing its package digest. Remove cache-specific vendored `.gitignore` files and regenerate directory checksums while retaining published package digests; retain every vendored license and source file. Reject any package not locked by name/version/source/checksum. Archive metadata fixes path order, uid/gid, modes, and timestamps to the candidate commit.
+`docs/releases/source-bundle.toml` is the exact, schema-versioned recipe. `cargo xtask release source-bundle --version 0.3.0 --output target/release-bundles/ara2-bridge-0.3.0-source.tar.zst` must produce a byte-deterministic archive containing: the seven publishable member `.crate` files under `packages/`; those archives unpacked under `clean-room/crates/<name>-<version>/`; `clean-room/Cargo.toml` listing those seven exact directories as workspace members; a generated `clean-room/Cargo.lock`; a versioned `vendor/` source directory containing the seven packaged crates for their normalized registry dependencies and every exact registry dependency from the release lock; a bundle-root `.cargo/config.toml` replacing `crates-io` with `vendor/`; root `Cargo.toml` and `Cargo.lock`; the existing Apache-2.0 project `LICENSE`, project `LICENSE-MIT`, and `LICENSES/**`; `sdk-provenance.toml`; `ara2-bridge-sys/generated/symbol-coverage.json`; every companion provenance and symbol/probe JSON; `docs/conformance/interface-coverage.{json,md}` and release conformance files; all normative specs; `docs/manual-source-map.md`, troubleshooting, migration, and changelog; plus generated `source-bundle.json` metadata and a sorted `MANIFEST.sha256` covering every other entry. Canonicalize each Cargo-produced `.crate` by sorted path, normalized metadata, and deterministic gzip before computing its package digest. Remove cache-specific vendored `.gitignore` files and regenerate directory checksums while retaining published package digests; retain every vendored license and source file. Reject any package not locked by name/version/source/checksum. Archive metadata fixes path order, uid/gid, modes, and timestamps to the candidate commit.
 
 `verify-source-bundle` extracts to a temporary root, sets its current directory to that root so `.cargo/config.toml` is discovered, sets `CARGO_HOME` to a new empty sibling directory, saves and removes `clean-room/Cargo.lock`, and runs `cargo generate-lockfile --manifest-path clean-room/Cargo.toml --offline`. It requires the regenerated lock to be byte-identical to the saved bundle lock and semantically consistent with the root release lock/source-bundle manifest, then runs `cargo build --manifest-path clean-room/Cargo.toml --workspace --offline --locked`. It rejects any missing, extra, duplicated, unhashed, stale, unresolved companion-deferred, unlicensed, ambient-cache-dependent, or non-reproducible entry. No package-local lockfile is assumed. The sys `.crate` itself must include `ara2-bridge-sys/generated/symbol-coverage.json`; workspace-level evidence and notices are carried by this defined source bundle rather than an undefined package set.
 
@@ -466,7 +466,7 @@ Expected: PASS for all synthetic candidate-identity, audit, package, clean-room 
 
 Generate the changelog, licenses, package metadata, release checklist, and a conformance document that names the immutable candidate inputs, exact manual commands, known AAX/AUv3 boundaries, and local artifact locations. Run-specific workflow/run/job IDs, sanitizer/fuzz durations, package hashes, checksums, and conclusions remain operator-reviewed candidate evidence under ignored `target/release-evidence/`; the tracked document must not claim a gate ran before the candidate commit exists.
 
-Run after all listed tracked candidate inputs have their final bytes: `cargo xtask release audit-api && cargo xtask release audit-unsafe && cargo xtask release audit-licenses && cargo xtask release verify-source-inputs --version 0.2.0-alpha.1`  
+Run after all listed tracked candidate inputs have their final bytes: `cargo xtask release audit-api && cargo xtask release audit-unsafe && cargo xtask release audit-licenses && cargo xtask release verify-source-inputs --version 0.3.0`
 `verify-source-inputs` deliberately invokes `cargo package --allow-dirty --no-verify --locked` for all seven crates into a temporary preflight directory, records that these are non-release test packages, validates the recipe's complete input set and vendorable lock graph, and runs the same custom vendored clean-room verification used after commit without emitting a release artifact or claiming a candidate commit. The post-commit manual procedure reruns `cargo package --no-verify --locked` from a clean tree and then performs that custom verification again. Expected: PASS with reviewed diffs, every unsafe block linked to a tested invariant, complete redistributable notices, and all final tracked inputs ready for manual release verification.
 
 - [x] **Step 4: Write the final compact handoff**
@@ -476,8 +476,8 @@ Record candidate crates/features, evidence requirements, known AAX/AUv3 boundari
 - [ ] **Step 5: Commit the complete release candidate before manual validation**
 
 ```bash
-git add -- Cargo.toml Cargo.lock CHANGELOG.md LICENSE-MIT LICENSES/ARA-SDK-Apache-2.0.txt LICENSES/third-party.md docs/releases/0.2.0-alpha.1-conformance.md docs/releases/0.2.0-alpha.1-checklist.md docs/releases/source-bundle.toml docs/superpowers/handoffs/phase-6-delivery.md ara2-bridge-sys/Cargo.toml ara2-bridge-core/Cargo.toml ara2-bridge-plugin/Cargo.toml ara2-bridge-host/Cargo.toml ara2-bridge-companion/Cargo.toml ara2-bridge-testkit/Cargo.toml ara2-bridge/Cargo.toml xtask/Cargo.toml xtask/src/release.rs xtask/tests/release.rs xtask/src/lib.rs xtask/src/main.rs .github/workflows
-git commit -m "chore(release): prepare 0.2.0-alpha.1 candidate"
+git add -- Cargo.toml Cargo.lock CHANGELOG.md LICENSE-MIT LICENSES/ARA-SDK-Apache-2.0.txt LICENSES/third-party.md docs/releases/0.3.0-conformance.md docs/releases/0.3.0-checklist.md docs/releases/source-bundle.toml docs/superpowers/handoffs/phase-6-delivery.md ara2-bridge-sys/Cargo.toml ara2-bridge-core/Cargo.toml ara2-bridge-plugin/Cargo.toml ara2-bridge-host/Cargo.toml ara2-bridge-companion/Cargo.toml ara2-bridge-testkit/Cargo.toml ara2-bridge/Cargo.toml xtask/Cargo.toml xtask/src/release.rs xtask/tests/release.rs xtask/src/lib.rs xtask/src/main.rs .github/workflows
+git commit -m "chore(release): prepare 0.3.0 candidate"
 ```
 
 - [ ] **Step 6: Run the complete matrix locally, verify that exact SHA, and tag without further tracked changes**
@@ -494,9 +494,9 @@ cargo xtask release audit-api
 cargo xtask release audit-unsafe
 cargo xtask release audit-licenses
 cargo xtask docs verify-manual-map
-cargo xtask release source-bundle --version 0.2.0-alpha.1 --output target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst
-cargo xtask release verify-source-bundle --bundle target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst
-sha256sum target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst > target/release-bundles/ara2-bridge-0.2.0-alpha.1-source.tar.zst.sha256
+cargo xtask release source-bundle --version 0.3.0 --output target/release-bundles/ara2-bridge-0.3.0-source.tar.zst
+cargo xtask release verify-source-bundle --bundle target/release-bundles/ara2-bridge-0.3.0-source.tar.zst
+sha256sum target/release-bundles/ara2-bridge-0.3.0-source.tar.zst > target/release-bundles/ara2-bridge-0.3.0-source.tar.zst.sha256
 cargo publish -p ara2-bridge-sys --dry-run --locked
 cargo publish -p ara2-bridge-core --dry-run --locked
 cargo publish -p ara2-bridge-plugin --dry-run --locked
@@ -505,7 +505,7 @@ cargo publish -p ara2-bridge-companion --dry-run --locked
 cargo publish -p ara2-bridge-testkit --dry-run --locked
 cargo publish -p ara2-bridge --dry-run --locked
 test -z "$(git status --porcelain --untracked-files=no)"
-git tag -s v0.2.0-alpha.1 "$COMMIT" -m "ara2-bridge 0.2.0-alpha.1"
+git tag -s v0.3.0 "$COMMIT" -m "ara2-bridge 0.3.0"
 ```
 
 Expected: PASS only after the operator has verified formatting, clippy, tests, rustdoc, manifests, scenarios, Miri/sanitizer/fuzz results, native companion jobs, cross-language pairings, dependency/license audit, MSRV, package dry-runs, and the deterministic source bundle against the committed candidate SHA. The tag points to that same SHA; any later tracked change creates a new candidate and requires the complete manual matrix and bundle verification again. Actual crate publication remains a separate explicit operator action and is never run by CI or this implementation plan.

@@ -1,6 +1,6 @@
 schema = 1
-version = "0.2.0-alpha.1"
+version = "0.3.0"
 repository = "entrepeneur4lyf/ara2-bridge"
 packages = ["ara2-bridge-sys", "ara2-bridge-core", "ara2-bridge-plugin", "ara2-bridge-host", "ara2-bridge-companion", "ara2-bridge-testkit", "ara2-bridge"]
-required_files = ["Cargo.toml", "Cargo.lock", "README.md", "LICENSE", "LICENSE-MIT", "LICENSES/ARA-SDK-Apache-2.0.txt", "LICENSES/third-party.md", "CHANGELOG.md", "sdk-provenance.toml", "ara2-bridge-sys/generated/symbol-coverage.json", "docs/manual-source-map.md", "docs/troubleshooting.md", "docs/migration-0.1-to-0.2.md", "docs/releases/source-bundle.toml", "docs/releases/0.2.0-alpha.1-conformance.md", "docs/releases/0.2.0-alpha.1-checklist.md"]
+required_files = ["Cargo.toml", "Cargo.lock", "README.md", "LICENSE", "LICENSE-MIT", "LICENSES/ARA-SDK-Apache-2.0.txt", "LICENSES/third-party.md", "CHANGELOG.md", "sdk-provenance.toml", "ara2-bridge-sys/generated/symbol-coverage.json", "docs/manual-source-map.md", "docs/troubleshooting.md", "docs/migration-0.1-to-0.2.md", "docs/releases/source-bundle.toml", "docs/releases/0.3.0-conformance.md", "docs/releases/0.3.0-checklist.md"]
 required_trees = ["ara2-bridge-companion/provenance", "ara2-bridge-companion/probes", "docs/conformance", "docs/specs/ara2-bridge"]

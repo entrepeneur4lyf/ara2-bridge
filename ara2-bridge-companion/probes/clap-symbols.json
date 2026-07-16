@@ -6,7 +6,7 @@
     "clap_repository": "https://github.com/free-audio/clap.git",
     "clap_tag": "1.1.9",
     "clap_commit": "094bb76c85366a13cc6c49292226d8608d6ae50c",
-    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "generator": "ara2-bridge xtask 0.3.0",
     "spdx_license": "Apache-2.0 AND MIT",
     "notice": "DO NOT EDIT"
   },

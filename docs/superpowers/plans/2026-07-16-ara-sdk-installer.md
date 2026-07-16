@@ -184,7 +184,7 @@ git commit -m "fix: resolve ARA SDK from consuming project"
 Add the downstream command:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.2.0-alpha.1/scripts/install-ara-sdk.sh
+curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.3.0/scripts/install-ara-sdk.sh
 bash install-ara-sdk.sh
 cargo build
 ```

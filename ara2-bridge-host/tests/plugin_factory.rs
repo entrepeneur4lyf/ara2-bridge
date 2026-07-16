@@ -24,7 +24,7 @@ fn factory_loading_copies_metadata_and_balances_initialization() {
         assert_eq!(loaded.metadata().factory_id(), "org.ara2-bridge.test");
         assert_eq!(loaded.metadata().plug_in_name(), "ARA2 Bridge Test Plug-In");
         assert_eq!(loaded.metadata().manufacturer_name(), "ara2-bridge");
-        assert_eq!(loaded.metadata().version(), "0.2.0-alpha.1");
+        assert_eq!(loaded.metadata().version(), "0.3.0");
         assert_eq!(
             loaded.metadata().document_archive_id(),
             "org.ara2-bridge.test.archive"

@@ -2459,7 +2459,7 @@
     ]
   },
   "metadata": {
-    "generator": "ara2-bridge xtask 0.2.0-alpha.1",
+    "generator": "ara2-bridge xtask 0.3.0",
     "normative_commit": "65ec5c43b943a48cb5446f448a0492db6af8534b",
     "notice": "DO NOT EDIT",
     "source_repository": "https://github.com/Celemony/ARA_API",

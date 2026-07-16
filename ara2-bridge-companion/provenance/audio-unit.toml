@@ -79,7 +79,7 @@ sha256 = "92da7d850c9c209dc25b9f681289d42cd03a83fdc87434413d4c73bc28d0f6ca"
 [[file]]
 path = "ara2-bridge-companion/probes/audio-unit-symbols.json"
 role = "generated-declaration"
-sha256 = "fee5c22ef67755bccbe668d6fb96eb2ef5f96243a710b33d37de379a0ad597d6"
+sha256 = "2450220d142b9b75789a6968d8ccfd4bd78e92a58c25408d026748a193b396e8"
 
 [[file]]
 path = "ara2-bridge-companion/src/audio_unit/ffi.rs"

@@ -7,7 +7,7 @@ use std::process::Command;
 
 pub(crate) mod bundle;
 
-pub(crate) const VERSION: &str = "0.2.0-alpha.1";
+pub(crate) const VERSION: &str = "0.3.0";
 pub(crate) const PACKAGES: &[&str] = &[
     "ara2-bridge-sys",
     "ara2-bridge-core",
@@ -199,7 +199,7 @@ pub fn validate_generated_derivative(source: &str) -> Result<(), String> {
         "Source repository: https://github.com/Celemony/ARA_API",
         "Source tag: releases/2.3.0",
         "Normative ARA API commit: 65ec5c43b943a48cb5446f448a0492db6af8534b",
-        "Generator: ara2-bridge xtask 0.2.0-alpha.1",
+        "Generator: ara2-bridge xtask 0.3.0",
         "SPDX-License-Identifier: Apache-2.0",
     ] {
         if !source.contains(required) {

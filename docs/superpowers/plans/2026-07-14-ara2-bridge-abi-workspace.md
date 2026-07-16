@@ -33,7 +33,7 @@ Expected: FAIL on the deliberately unimplemented checker, not a missing script o
 
 - ARA SDK: `https://github.com/Celemony/ARA_SDK.git` at `a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c`, tree `305a0dc9ba4759963c1e974353a999c3810b2319`; ARA API `65ec5c43b943a48cb5446f448a0492db6af8534b`, tree `2e3b0455f61314068d34501c5f71407d6ed0051b`; ARA Library `d18a6a5e489816316be84a9de0eaf7307bc1abe4`, tree `a53995463c520ba7aa1015a5cf8d7ae448007800`; ARA Examples `abd7c8aa5854591995e1fbf16f854c65b0998e8d`, tree `34919bd48ed748fc0889f1a0a8e532e37c8d4500`.
 - CLAP: `https://github.com/free-audio/clap.git`, tag `1.1.9`, commit `094bb76c85366a13cc6c49292226d8608d6ae50c`.
-- VST3: `https://github.com/steinbergmedia/vst3sdk.git`, tag/commit `v3.7.11_build_10` / `7d92338ae922db2d559ac458824a4df40f37e82e`.
+- VST3: `https://github.com/steinbergmedia/vst3sdk.git`, tag/commit `v3.8.0_build_66` / `9fad9770f2ae8542ab1a548a68c1ad1ac690abe0` under MIT.
 - Audio Unit SDK: `https://github.com/apple/AudioUnitSDK.git`, tag/commit `AudioUnitSDK-1.0.0` / `53ea94e5efebf864b70afb673bdd60c977818ec7`.
 
 The bootstrap command never infers license acceptance. It requires a component-specific `--accept-license <SPDX-or-commercial-policy-id>`, prints the locked license URL, refuses mismatches, clones into ignored `reference/` or `.third-party/`, initializes pinned recursive submodules, verifies commit/tree identity, and never updates an existing dirty checkout. Preserve existing ignore rules and add the exact anchored `.third-party/` rule beside the existing `reference/` rule; the shell test asserts both bootstrap roots are ignored and cannot enter a package or commit accidentally.

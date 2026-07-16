@@ -218,9 +218,9 @@ fn component_contract(root: &Path, component: &str) -> Result<ComponentContract,
         }),
         "vst3" => Ok(ComponentContract {
             repository: "https://github.com/steinbergmedia/vst3sdk.git",
-            tag: "v3.7.11_build_10",
-            commit: "7d92338ae922db2d559ac458824a4df40f37e82e",
-            accepted_licenses: &["GPL-3.0-only", "LicenseRef-Steinberg-VST3"],
+            tag: "v3.8.0_build_66",
+            commit: "9fad9770f2ae8542ab1a548a68c1ad1ac690abe0",
+            accepted_licenses: &["MIT"],
             checkout: root.join(".third-party/vst3sdk"),
         }),
         "audio-unit" | "audio-unit-v2" => Ok(ComponentContract {
@@ -447,19 +447,7 @@ pub fn refresh_component(root: &Path, component: &str) -> Result<(), DynError> {
         "audio-unit" | "audio-unit-v2" => audio_unit_dependencies(root)?,
         _ => return Err(message(format!("unknown companion component: {component}"))),
     };
-    let license = if component == "vst3" {
-        let selected = std::env::var("ARA_VST3_LICENSE_POLICY").map_err(|_| {
-            message(
-                "refreshing VST3 provenance requires ARA_VST3_LICENSE_POLICY=GPL-3.0-only or LicenseRef-Steinberg-VST3",
-            )
-        })?;
-        if !contract.accepted_licenses.contains(&selected.as_str()) {
-            return Err(message("invalid ARA_VST3_LICENSE_POLICY"));
-        }
-        selected
-    } else {
-        contract.accepted_licenses[0].to_owned()
-    };
+    let license = contract.accepted_licenses[0].to_owned();
     let manifest = ComponentManifest {
         schema: 1,
         component: component.to_owned(),

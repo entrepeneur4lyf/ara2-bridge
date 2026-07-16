@@ -45,11 +45,11 @@ EOF
 write_cargo_config "$consumer" Linux
 config="$consumer/.cargo/config.toml"
 grep -Fq 'target-dir = "target-custom"' "$config" || fail "existing Cargo config was lost"
-grep -Fq 'ARA_SDK_DIR = { value = "../.third-party/ARA_SDK", relative = true }' "$config" ||
+grep -Fq 'ARA_SDK_DIR = { value = ".third-party/ARA_SDK", relative = true }' "$config" ||
     fail "ARA SDK entry is missing"
-grep -Fq 'ARA_CLAP_DIR = { value = "../.third-party/clap", relative = true }' "$config" ||
+grep -Fq 'ARA_CLAP_DIR = { value = ".third-party/clap", relative = true }' "$config" ||
     fail "CLAP entry is missing"
-grep -Fq 'ARA_VST3_SDK_DIR = { value = "../.third-party/vst3sdk", relative = true }' "$config" ||
+grep -Fq 'ARA_VST3_SDK_DIR = { value = ".third-party/vst3sdk", relative = true }' "$config" ||
     fail "VST3 entry is missing"
 if grep -Fq 'ARA_AUDIO_UNIT_SDK_DIR' "$config"; then
     fail "AudioUnit entry must not be written on Linux"
@@ -60,10 +60,38 @@ write_cargo_config "$consumer" Linux
 after="$(sha256_file "$config")"
 [[ "$before" == "$after" ]] || fail "Cargo config update is not idempotent"
 
+mkdir -p "$consumer/src"
+cat > "$consumer/Cargo.toml" <<'EOF'
+[package]
+name = "installer-path-fixture"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[workspace]
+EOF
+cat > "$consumer/build.rs" <<'EOF'
+use std::path::PathBuf;
+
+fn main() {
+    let root = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap());
+    for (key, suffix) in [
+        ("ARA_SDK_DIR", ".third-party/ARA_SDK"),
+        ("ARA_CLAP_DIR", ".third-party/clap"),
+        ("ARA_VST3_SDK_DIR", ".third-party/vst3sdk"),
+    ] {
+        assert_eq!(PathBuf::from(std::env::var(key).unwrap()), root.join(suffix));
+    }
+}
+EOF
+: > "$consumer/src/lib.rs"
+(cd "$consumer" && cargo check --quiet) ||
+    fail "Cargo did not resolve generated SDK paths from the consuming project"
+
 mac_consumer="$temporary/mac-consumer"
 mkdir -p "$mac_consumer"
 write_cargo_config "$mac_consumer" Darwin
-grep -Fq 'ARA_AUDIO_UNIT_SDK_DIR = { value = "../.third-party/AudioUnitSDK", relative = true }' \
+grep -Fq 'ARA_AUDIO_UNIT_SDK_DIR = { value = ".third-party/AudioUnitSDK", relative = true }' \
     "$mac_consumer/.cargo/config.toml" || fail "AudioUnit entry is missing on macOS"
 
 conflict="$temporary/conflict"
@@ -82,6 +110,8 @@ rendered="$(render_cmake_command \
 [[ "$rendered" == *'.third-party/ARA_SDK/ARA_Examples'* ]] || fail "ARA source path is missing"
 [[ "$rendered" == *'.third-party/vst3sdk'* ]] || fail "VST3 path is missing"
 [[ "$rendered" == *'.third-party/clap'* ]] || fail "CLAP path is missing"
+[[ "$rendered" == *'CMAKE_CXX_FLAGS=-include'* ]] ||
+    fail "Linux command is missing the GCC 15 ARA header compatibility include"
 if [[ "$rendered" == *'AudioUnitSDK'* ]]; then
     fail "Linux CMake command contains AudioUnitSDK"
 fi

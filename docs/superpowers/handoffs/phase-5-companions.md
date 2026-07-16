@@ -18,8 +18,7 @@ uses an Apple-only Objective-C++ property shim backed by the pinned AudioUnitSDK
 ## Features and SDK routing
 
 - `clap` is portable and requires no SDK during consumer builds.
-- `vst3` requires `ARA_VST3_SDK_DIR` and an operator-selected
-  `ARA_VST3_LICENSE_POLICY` (`GPL-3.0-only` or `LicenseRef-Steinberg-VST3`).
+- `vst3` requires `ARA_VST3_SDK_DIR` pointing to the locked VST3 3.8.0 MIT checkout.
 - `audio-unit-v2` requires Apple targets and `ARA_AUDIO_UNIT_SDK_DIR`.
 - `full-portable` enables plug-in, host, CLAP, and VST3; `full-apple` adds Audio Unit v2.
 

@@ -62,7 +62,7 @@ required = ["--component clap --accept-license MIT", "clap_abi", "clap_interop",
 workflow = "native-conformance.yml"
 id = "vst3-conformance"
 evidence_count = 5
-required = ["ARA_VST3_LICENSE_POLICY", "--component vst3 --accept-license", "vst3_abi", "vst3_interop", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
+required = ["--component vst3 --accept-license MIT", "vst3_abi", "vst3_interop", "x86_64-unknown-linux-gnu", "aarch64-unknown-linux-gnu", "x86_64-pc-windows-msvc", "x86_64-apple-darwin", "aarch64-apple-darwin"]
 
 [[job]]
 workflow = "native-conformance.yml"

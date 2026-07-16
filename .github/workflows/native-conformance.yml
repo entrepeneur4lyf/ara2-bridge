@@ -125,7 +125,6 @@ jobs:
 
   vst3-conformance:
     name: VST3 ${{ matrix.target }}
-    if: ${{ vars.ARA_VST3_LICENSE_POLICY != '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -137,7 +136,6 @@ jobs:
           - { os: macos-15, target: aarch64-apple-darwin, cxx: clang++ }
     runs-on: ${{ matrix.os }}
     env:
-      ARA_VST3_LICENSE_POLICY: ${{ vars.ARA_VST3_LICENSE_POLICY }}
       ARA_VST3_SDK_DIR: ${{ github.workspace }}/.third-party/vst3sdk
       CXX: ${{ matrix.cxx }}
     steps:
@@ -150,8 +148,8 @@ jobs:
           key: vst3-${{ matrix.target }}
       - shell: bash
         run: |
-          ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
-          ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license "$ARA_VST3_LICENSE_POLICY"
+            ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+            ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license MIT
       - shell: bash
         run: |
           cargo xtask ara provenance --check --component vst3

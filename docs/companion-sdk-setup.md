@@ -9,6 +9,8 @@ bash install-ara-sdk.sh
 
 The default installation is `.third-party/` in the consuming project, with build output in `target/ara-sdk-build`. Existing SDK checkouts must be clean and match the locked origin and commit. The installer preserves unrelated Cargo configuration and rejects conflicting SDK entries.
 
+On Linux, the installer injects `<limits>` and `<cstdint>` through the C++ compiler command because released ARA 2.3 example headers rely on both being transitively included. This keeps the official checkout immutable while supporting GCC 15.
+
 ## CLAP 1.1.9
 
 The `clap` feature uses commit `094bb76c85366a13cc6c49292226d8608d6ae50c` under MIT. Maintainer verification:

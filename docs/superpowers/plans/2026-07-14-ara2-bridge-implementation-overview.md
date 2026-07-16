@@ -6,7 +6,7 @@
 
 **Architecture:** Build upward from pregenerated ABI artifacts into a shared safety core, semantic content/persistence layer, independent plug-in and host runtimes, companion adapters, then cross-language conformance and packaging. Each phase has a separate plan and release-quality exit gate so implementers load only this overview, the active plan, and its linked normative specs.
 
-**Tech Stack:** Rust 2021/MSRV 1.82, C11/C++17 ABI probes and shims, bindgen as a maintainer-only generator, cargo-nextest-compatible tests, trybuild, proptest, Miri, sanitizers, CLAP 1.1.9, VST3 v3.7.11_build_10, AudioUnitSDK 1.0.0.
+**Tech Stack:** Rust 2021/MSRV 1.82, C11/C++17 ABI probes and shims, bindgen as a maintainer-only generator, cargo-nextest-compatible tests, trybuild, proptest, Miri, sanitizers, CLAP 1.1.9, VST3 v3.8.0_build_66, AudioUnitSDK 1.0.0.
 
 **Audit status:** `CLEAR` — see [the final implementation-plan audit](../../reviews/2026-07-15-ara2-bridge-plan-audit.md).
 

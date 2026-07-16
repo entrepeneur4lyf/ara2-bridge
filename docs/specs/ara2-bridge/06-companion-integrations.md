@@ -81,6 +81,7 @@ For each enabled companion, a minimal external test processor using `CompanionPr
 - 2026-07-15: The neutral processor boundary permanently rejects binding after an observed state, activation, processing, or view boundary and retains tombstoned state through either controller/processor teardown order.
 - 2026-07-15: Native adapters expose `observe_controller_destruction`; hosts call it before controller-first teardown so later boundaries fail without dereferencing stale controller state.
 - 2026-07-15: VST3 COM objects and Audio Unit property handlers are opaque C ABI allocations; C++ exceptions and ownership never cross into Rust.
-- 2026-07-15: VST3 license policy remains an operator-selected locked input (`GPL-3.0-only` or `LicenseRef-Steinberg-VST3`) and is never inferred by Cargo or provenance tooling.
+- 2026-07-15: VST3 license policy was initially an operator-selected locked input and was never inferred by Cargo or provenance tooling.
 - 2026-07-15: Probe source identities use normalized repository-relative paths so independently located Linux and macOS checkouts produce the same canonical hash.
 - 2026-07-16: Add the project-local recursive SDK installer and pin VST3 `v3.8.0_build_66` under MIT.
+- 2026-07-16: Remove the obsolete VST3 GPL/proprietary policy selector; provenance and CI now record the pinned release's MIT license directly.

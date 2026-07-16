@@ -27,6 +27,8 @@ CLAP 1.1.9, VST3 `v3.8.0_build_66`, and AudioUnitSDK 1.0.0 are provisioned throu
 
 The script configures `ARA_Examples` with CMake and passes the installed companion paths explicitly. `ARA_SETUP_DEBUGGING=OFF` prevents the upstream project from copying plug-ins into user or system locations. It then builds the default upstream target set, which includes the ARA host and plug-in libraries, TestHost, TestPlugIn variants available on the current platform, MiniHost, and chunk writer.
 
+On Linux, configuration forces implicit `<limits>` and `<cstdint>` includes because immutable ARA 2.3 example headers rely on those declarations being provided transitively, which fails with GCC 15.
+
 The completed checkout plus companion SDKs constitute the SDK installation; no unsupported `cmake --install` or `/usr/local` copy is invented.
 
 ## Consumer Cargo Integration

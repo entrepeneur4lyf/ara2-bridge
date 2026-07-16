@@ -130,12 +130,12 @@ write_cargo_config() {
     local cargo_dir="$project/.cargo" config="$project/.cargo/config.toml"
     local key value expected missing="" temporary
     local -a entries=(
-        "ARA_SDK_DIR|../.third-party/ARA_SDK"
-        "ARA_CLAP_DIR|../.third-party/clap"
-        "ARA_VST3_SDK_DIR|../.third-party/vst3sdk"
+        "ARA_SDK_DIR|.third-party/ARA_SDK"
+        "ARA_CLAP_DIR|.third-party/clap"
+        "ARA_VST3_SDK_DIR|.third-party/vst3sdk"
     )
     if [[ "$platform" == "Darwin" ]]; then
-        entries+=("ARA_AUDIO_UNIT_SDK_DIR|../.third-party/AudioUnitSDK")
+        entries+=("ARA_AUDIO_UNIT_SDK_DIR|.third-party/AudioUnitSDK")
     fi
 
     mkdir -p "$cargo_dir"
@@ -194,6 +194,10 @@ cmake_configure_arguments() {
             -G Xcode
             -DARA_AUDIO_UNIT_SDK_DIR="$project/.third-party/AudioUnitSDK"
         )
+    elif [[ "$platform" == "Linux" ]]; then
+        # ARA SDK 2.3's examples use std::numeric_limits and fixed-width integers without
+        # including <limits> and <cstdint>. GCC 15 no longer exposes either transitively.
+        arguments+=("-DCMAKE_CXX_FLAGS=-include limits -include cstdint")
     fi
     printf '%s\0' "${arguments[@]}"
 }

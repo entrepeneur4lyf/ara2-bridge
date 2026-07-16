@@ -6,7 +6,7 @@
 
 **Architecture:** `CompanionProcessorBinding` connects an externally owned processor to shared plug-in/host runtime state. CLAP uses audited direct Rust declarations; VST3 and AUv2 use narrow C++/Objective-C++ shims around pinned SDKs. Every adapter shares factory pointers, enforces one-shot pre-activation binding, and preserves both teardown orders.
 
-**Tech Stack:** Rust, C11/C++17, CLAP 1.1.9 commit `094bb76c85366a13cc6c49292226d8608d6ae50c`, VST3 SDK `v3.7.11_build_10`, AudioUnitSDK `AudioUnitSDK-1.0.0`, platform Core Audio.
+**Tech Stack:** Rust, C11/C++17, CLAP 1.1.9 commit `094bb76c85366a13cc6c49292226d8608d6ae50c`, VST3 SDK `v3.8.0_build_66` under MIT, AudioUnitSDK `AudioUnitSDK-1.0.0`, platform Core Audio.
 
 ---
 
@@ -14,7 +14,7 @@ Read first: specs `01`, `02`, `03`, `04`, `06`, `07`, `08` and handoffs `phase-0
 
 ### Task 0: Provision and preflight companion SDK inputs
 
-Use the Phase 0 lock/bootstrap boundary before any feature-gated build. Run portably: `ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT && ci/bootstrap-reference-sdks.sh check --component clap`. Run on configured VST3 jobs with the operator-selected locked GPL/commercial policy ID: `ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license "$ARA_VST3_LICENSE_POLICY" && ci/bootstrap-reference-sdks.sh check --component vst3`. Run on macOS: `ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0 && ci/bootstrap-reference-sdks.sh check --component audio-unit`. This initial preflight verifies only the exact commits, recursive identities, license choices, and clean state recorded in `ci/reference-sdks.lock.toml`. Tasks 2, 4, and 6 create the component provenance manifests, hash every transitively consumed source, and require `cargo xtask ara provenance --check --component <name>` before accepting generated output. Missing flags, wrong identities, later hash drift, and dirty checkouts fail before compilation. The script sets or documents the canonical SDK paths under `.third-party/` and never downloads during a package build.
+Use the Phase 0 lock/bootstrap boundary before any feature-gated build. Run portably: `ci/bootstrap-reference-sdks.sh fetch --component clap --accept-license MIT && ci/bootstrap-reference-sdks.sh check --component clap`. Run on configured VST3 jobs with `ci/bootstrap-reference-sdks.sh fetch --component vst3 --accept-license MIT && ci/bootstrap-reference-sdks.sh check --component vst3`. Run on macOS: `ci/bootstrap-reference-sdks.sh fetch --component audio-unit --accept-license Apache-2.0 && ci/bootstrap-reference-sdks.sh check --component audio-unit`. This initial preflight verifies only the exact commits, recursive identities, license choices, and clean state recorded in `ci/reference-sdks.lock.toml`. Tasks 2, 4, and 6 create the component provenance manifests, hash every transitively consumed source, and require `cargo xtask ara provenance --check --component <name>` before accepting generated output. Missing flags, wrong identities, later hash drift, and dirty checkouts fail before compilation. The script sets or documents the canonical SDK paths under `.third-party/` and never downloads during a package build.
 
 ### Task 1: Define the companion-neutral processor boundary
 
@@ -176,7 +176,7 @@ Declare the feature-gated `vst3` module from `lib.rs`, create a minimal `vst3/mo
 - [x] **Step 2: Verify configured failure**
 
 Run: `ARA_VST3_SDK_DIR=$PWD/ara2-bridge-testkit/fixtures/empty-vst3-sdk cargo test -p ara2-bridge-testkit --test vst3_abi --features vst3`  
-Expected: FAIL after inspecting that exact empty fixture, naming missing version `v3.7.11_build_10` and `ARA_VST3_SDK_DIR`. A second run with the variable unset produces the same actionable configuration contract.
+Expected: FAIL after inspecting that exact empty fixture, naming missing version `v3.8.0_build_66` and `ARA_VST3_SDK_DIR`. A second run with the variable unset produces the same actionable configuration contract.
 
 - [ ] **Step 3: Implement a narrow `extern "C"` shim**
 
@@ -185,7 +185,7 @@ Build only when `vst3` is enabled. Validate the configured SDK provenance before
 - [ ] **Step 4: Run shim probes**
 
 Run these exact emit commands on matching native or system-emulated runners: `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-linux-x86_64.probe.tar.zst --target x86_64-unknown-linux-gnu`, `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-linux-aarch64.probe.tar.zst --target aarch64-unknown-linux-gnu`, `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-windows-x86_64.probe.tar.zst --target x86_64-pc-windows-msvc`, `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-macos-x86_64.probe.tar.zst --target x86_64-apple-darwin`, and `cargo xtask ara companion-probe vst3 --emit target/companion-probes/vst3-macos-aarch64.probe.tar.zst --target aarch64-apple-darwin`, each with `ARA_VST3_SDK_DIR` set to the locked checkout. Collect those five envelopes without renaming into `target/companion-probes/`, then run: `ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo xtask ara companion-probe vst3 --import-dir target/companion-probes && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo xtask ara companion-probe vst3 --check-all && cargo xtask ara provenance --check --component vst3 && ARA_VST3_SDK_DIR=$PWD/.third-party/vst3sdk cargo test -p ara2-bridge-testkit --test vst3_abi --features vst3`  
-Expected: PASS against exact `v3.7.11_build_10` inputs with complete symbol classification and five deterministic results.
+Expected: PASS against exact `v3.8.0_build_66` inputs with complete symbol classification and five deterministic results.
 
 - [ ] **Step 5: Commit**
 

@@ -1,8 +1,32 @@
-ara_api_commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
-ara_examples_commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
-ara_library_commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
 schema = 1
 sdk_commit = "a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c"
+ara_api_commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+ara_library_commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
+ara_examples_commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
+
+[[submodule]]
+path = "ARA_API"
+commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
+
+[[submodule]]
+path = "ARA_Library"
+commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
+
+[[submodule]]
+path = "ARA_Examples"
+commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
+
+[[submodule]]
+path = "ARA_Examples/3rdParty/ICST_AudioFile"
+commit = "148e3c7828ebbe0ddafd29d83e67f91b9458b1bd"
+
+[[submodule]]
+path = "ARA_Examples/3rdParty/cpp-base64"
+commit = "07ae5045d67b5bf6ffb46646b8ac2370eff1ae3e"
+
+[[submodule]]
+path = "ARA_Examples/3rdParty/pugixml"
+commit = "08b3433180727ea2f78fe02e860a08471db1e03c"
 
 [[file]]
 path = "ara2-bridge-testkit/fixtures/audio/aifc-unknown-odd.aifc"
@@ -148,27 +172,3 @@ sha256 = "93b92b8c3ec162d8177f041134d43232485d369e8b4bbc94dcac423c838cb343"
 path = ".third-party/ARA_SDK/NOTICE.txt"
 role = "upstream-notice"
 sha256 = "c2cb0f6d2e7142c4eaa437c658e2fef1aa6d304b9eb75e5de8a9be09f317cdd3"
-
-[[submodule]]
-commit = "65ec5c43b943a48cb5446f448a0492db6af8534b"
-path = "ARA_API"
-
-[[submodule]]
-commit = "d18a6a5e489816316be84a9de0eaf7307bc1abe4"
-path = "ARA_Library"
-
-[[submodule]]
-commit = "abd7c8aa5854591995e1fbf16f854c65b0998e8d"
-path = "ARA_Examples"
-
-[[submodule]]
-commit = "148e3c7828ebbe0ddafd29d83e67f91b9458b1bd"
-path = "ARA_Examples/3rdParty/ICST_AudioFile"
-
-[[submodule]]
-commit = "07ae5045d67b5bf6ffb46646b8ac2370eff1ae3e"
-path = "ARA_Examples/3rdParty/cpp-base64"
-
-[[submodule]]
-commit = "08b3433180727ea2f78fe02e860a08471db1e03c"
-path = "ARA_Examples/3rdParty/pugixml"

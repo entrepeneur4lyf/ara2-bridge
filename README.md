@@ -41,9 +41,10 @@ cargo run -p ara2-bridge --example minimal-host --no-default-features --features
 cargo run -p ara2-bridge --example archive-roundtrip
 ```
 
-See `docs/migration-0.1-to-0.2.md` for the intentional 0.1 API break,
-`docs/companion-sdk-setup.md` for locked SDK configuration, and
-`docs/manual-source-map.md` for the 12-chapter manual inventory.
+See [the build guide](docs/building.md) for the complete platform, feature, SDK, and maintainer
+build process; [companion SDK setup](docs/companion-sdk-setup.md) for locked native inputs;
+[the migration guide](docs/migration-0.1-to-0.2.md) for the intentional 0.1 API break; and
+[the manual source map](docs/manual-source-map.md) for the 12-chapter inventory.
 
 Projects using native companion features can install and build the complete locked SDK locally:
 
@@ -60,7 +61,9 @@ Celemony examples under `target/ara-sdk-build`, and records relocatable paths in
 ## Development
 
 Rust 1.82 or newer is required. Package builds without native companion features do not need Clang
-or an SDK checkout. Maintainer generation requires Clang and the project-local SDK installation:
+or an SDK checkout. Maintainer generation requires Clang and the project-local SDK installation.
+Follow the prerequisites and tiered workflow in [the build guide](docs/building.md); the short
+quality gate is:
 
 ```bash
 bash scripts/install-ara-sdk.sh

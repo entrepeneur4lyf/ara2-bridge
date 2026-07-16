@@ -2,34 +2,53 @@
 
 ## Project Structure & Module Organization
 
-This repository is a Rust 2021 workspace with two library crates:
+This Rust 2021 workspace contains eight members. `ara2-bridge-sys/` holds checked-in,
+target-selected raw bindings; ordinary builds do not run bindgen. `ara2-bridge-core/` owns shared
+safe types and dispatch. `ara2-bridge-plugin/` and `ara2-bridge-host/` provide the two runtimes.
+`ara2-bridge-companion/` contains CLAP, VST3, and Audio Unit v2 adapters.
+`ara2-bridge-testkit/` supplies fixtures and conformance peers, `ara2-bridge/` is the facade, and
+`xtask/` owns generation, provenance, documentation, CI, and release audits.
 
-- `ara2-bridge-sys/` contains the ARA2 C headers, the `bindgen` build script, and raw FFI exports. Generated bindings are written to Cargo's `OUT_DIR`; do not hand-edit generated code.
-- `ara2-bridge/` provides the safe-facing traits, callback shims, host vtable constructors, and controller state management.
-- `ara2-bridge/src/lib.rs` also contains the current unit tests under `#[cfg(test)]`.
-- `.github/workflows/ci.yml` is the authoritative CI checklist. `reference/ARA_API/` is an ignored local copy of the upstream SDK, not workspace source.
+Tests live beside each crate under `tests/` or `#[cfg(test)]`. Generated ABI files are under
+`ara2-bridge-sys/src/generated/`; do not edit them manually. `reference/` is ignored research
+material and is never a build input. See `docs/building.md` for the complete build process.
 
 ## Build, Test, and Development Commands
 
-Install `clang`/`libclang` before building because `ara2-bridge-sys` runs bindgen.
+Rust 1.82 is the minimum. Default workspace builds are SDK- and Clang-free:
 
-- `cargo check --workspace` — type-check both crates quickly.
-- `cargo build --workspace` — compile the complete workspace.
-- `cargo test --workspace` — run all unit and documentation tests.
-- `cargo fmt --all --check` — verify formatting; use `cargo fmt --all` to fix it.
-- `cargo clippy --workspace -- -D warnings` — run the CI lint policy.
-- `RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps` — validate public documentation.
+- `cargo check --workspace --all-targets` type-checks every default target.
+- `cargo build --workspace` builds all workspace members.
+- `cargo test --workspace` runs unit, integration, and documentation tests.
+- `cargo fmt --all --check` verifies formatting.
+- `cargo clippy --workspace --all-targets -- -D warnings` enforces the lint gate.
+- `RUSTDOCFLAGS="-D warnings" cargo doc --workspace --no-deps` validates public docs.
 
-There is no local application command; these crates are consumed by an ARA-capable audio plugin.
+VST3, Audio Unit, generation, and native-probe work requires the project-local SDK installation:
+
+```bash
+bash scripts/install-ara-sdk.sh
+cargo xtask ara provenance --check
+cargo xtask ara generate --check
+cargo xtask ara probe-core --check-all
+```
 
 ## Coding Style & Naming Conventions
 
-Use standard `rustfmt` output (four-space indentation). Follow Rust naming conventions: `snake_case` functions and modules, `CamelCase` types and traits, and `SCREAMING_SNAKE_CASE` constants. Preserve upstream C names only in raw FFI bindings. Keep safe abstractions in `ara2-bridge` and raw ABI details in `ara2-bridge-sys`. Document every `unsafe` block or callback with the pointer, lifetime, thread, and ownership invariant it relies on.
+Use standard `rustfmt` output. Follow Rust naming conventions: `snake_case` functions and modules,
+`CamelCase` types and traits, and `SCREAMING_SNAKE_CASE` constants. Preserve upstream names only
+in raw ABI declarations. Every unsafe block or callback must document its pointer, lifetime,
+thread, and ownership invariants.
 
 ## Testing Guidelines
 
-Add focused `#[test]` functions beside the code they exercise; use descriptive `snake_case` names such as `test_plugin_lifecycle`. Cover callback-to-trait dispatch, vtable construction, null handling, and ownership cleanup when changing ABI-facing code. No numeric coverage threshold is configured; CI requires the full workspace test suite to pass.
+Use descriptive `snake_case` test names. ABI changes must cover callback dispatch, layout,
+nullability, ownership cleanup, and generated drift. Companion changes need the matching native
+feature tests and probe checks. CI has no numeric coverage threshold; every configured gate must
+pass without skipped required capabilities.
 
 ## Commit & Pull Request Guidelines
 
-Recent history uses Conventional Commit prefixes such as `feat:`, `fix:`, `docs:`, and `chore:`. Keep commits scoped and imperative. Pull requests should explain the behavior and ABI impact, identify the ARA SDK/API generation involved, link relevant issues, and include the commands run. Screenshots are only useful for downstream plugin UI changes; for this library, prefer test output or integration notes.
+Use scoped Conventional Commit prefixes such as `feat:`, `fix:`, `docs:`, and `chore:`.
+Pull requests must describe behavior and ABI impact, identify affected SDK generations, link issues,
+and list commands run. Prefer test or conformance evidence over screenshots.

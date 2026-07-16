@@ -1,5 +1,9 @@
 # Companion SDK Setup
 
+For the complete Rust toolchain, operating-system prerequisites, feature matrix, ordinary build,
+and maintainer quality gate, start with [`building.md`](building.md). This page focuses on the
+locked native SDK inputs and their conformance commands.
+
 Cargo builds never download SDKs implicitly. Run the installer once from the consuming project; it clones the official repositories, initializes ARA recursively, builds Celemony's libraries and examples, and writes relocatable SDK paths to `.cargo/config.toml`:
 
 ```bash

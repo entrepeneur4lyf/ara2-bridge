@@ -26,7 +26,7 @@ troubleshooting = ["docs/troubleshooting.md#general-diagnostics", "docs/troubles
 [[chapter]]
 number = 2
 title = "Installation, features, targets, and SDK licensing"
-normative_specs = ["docs/specs/ara2-bridge/06-companion-integrations.md", "docs/specs/ara2-bridge/08-packaging-versioning-and-manual.md"]
+normative_specs = ["docs/building.md", "docs/specs/ara2-bridge/06-companion-integrations.md", "docs/specs/ara2-bridge/08-packaging-versioning-and-manual.md"]
 public_apis = ["ara2_bridge::core", "ara2_bridge::plugin", "ara2_bridge::host", "ara2_bridge::companion", "ara2_bridge::testkit"]
 examples = ["ara2-bridge/examples/minimal-plugin.rs"]
 conformance_commands = ["scripts/install-ara-sdk.sh", "cargo test -p ara2-bridge --test features", "cargo +1.82.0 check --workspace --all-targets --locked"]

@@ -159,6 +159,28 @@ fn native_build_scripts_resolve_ara_from_the_consuming_project() {
     }
 }
 
+#[test]
+fn vst3_fallback_requires_the_locked_header_layout() {
+    let root =
+        std::env::temp_dir().join(format!("ara2-bridge-vst3-fallback-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&root);
+    fs::create_dir_all(&root).unwrap();
+
+    assert!(!sdk_fallback_is_configured("ARA_VST3_SDK_DIR", &root));
+    for relative in [
+        "pluginterfaces/base/funknown.h",
+        "pluginterfaces/base/falignpush.h",
+        "pluginterfaces/base/falignpop.h",
+    ] {
+        let marker = root.join(relative);
+        fs::create_dir_all(marker.parent().unwrap()).unwrap();
+        fs::write(marker, []).unwrap();
+    }
+    assert!(sdk_fallback_is_configured("ARA_VST3_SDK_DIR", &root));
+
+    fs::remove_dir_all(root).unwrap();
+}
+
 fn assert_non_apple_audio_unit_error(root: &Path, name: &str, features: &[&str]) {
     let output = run_case(
         root,
@@ -233,13 +255,27 @@ fn run_case(root: &Path, case: Case<'_>) -> Output {
 fn configure_sdk(command: &mut Command, variable: &str, fallback: PathBuf) {
     if let Some(value) = std::env::var_os(variable) {
         command.env(variable, value);
-    } else if fallback.is_dir() {
+    } else if sdk_fallback_is_configured(variable, &fallback) {
         command.env(variable, fallback);
     }
 }
 
 fn sdk_is_configured(root: &Path, variable: &str, fallback: &str) -> bool {
-    std::env::var_os(variable).is_some() || root.join(fallback).is_dir()
+    std::env::var_os(variable).is_some()
+        || sdk_fallback_is_configured(variable, &root.join(fallback))
+}
+
+fn sdk_fallback_is_configured(variable: &str, fallback: &Path) -> bool {
+    if variable != "ARA_VST3_SDK_DIR" {
+        return fallback.is_dir();
+    }
+    [
+        "pluginterfaces/base/funknown.h",
+        "pluginterfaces/base/falignpush.h",
+        "pluginterfaces/base/falignpop.h",
+    ]
+    .iter()
+    .all(|relative| fallback.join(relative).is_file())
 }
 
 fn manifest(root: &Path, case: Case<'_>) -> String {

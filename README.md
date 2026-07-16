@@ -9,15 +9,15 @@ companions. DSP algorithms, AUv3, and the separately licensed AAX API are outsid
 
 ## Workspace
 
-| Crate | Responsibility |
-| --- | --- |
-| `ara2-bridge-sys` | Pregenerated, target-selected raw ABI and compatibility metadata |
-| `ara2-bridge-core` | Shared safe types, validation, registries, and dispatch |
-| `ara2-bridge-plugin` | Plug-in factory, document controller, and extension roles |
-| `ara2-bridge-host` | Host services, document graph, and plug-in dispatch |
-| `ara2-bridge-companion` | CLAP, VST3, and Audio Unit v2 adapters |
-| `ara2-bridge-testkit` | Mock peers, fixtures, and conformance scenarios |
-| `ara2-bridge` | Aggregating facade |
+| Crate | Version | Responsibility |
+| --- | --- | --- |
+| `ara2-bridge-sys` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge-sys.svg)](https://crates.io/crates/ara2-bridge-sys) | Pregenerated, target-selected raw ABI and compatibility metadata |
+| `ara2-bridge-core` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge-core.svg)](https://crates.io/crates/ara2-bridge-core) | Shared safe types, validation, registries, and dispatch |
+| `ara2-bridge-plugin` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge-plugin.svg)](https://crates.io/crates/ara2-bridge-plugin) | Plug-in factory, document controller, and extension roles |
+| `ara2-bridge-host` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge-host.svg)](https://crates.io/crates/ara2-bridge-host) | Host services, document graph, and plug-in dispatch |
+| `ara2-bridge-companion` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge-companion.svg)](https://crates.io/crates/ara2-bridge-companion) | CLAP, VST3, and Audio Unit v2 adapters |
+| `ara2-bridge-testkit` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge-testkit.svg)](https://crates.io/crates/ara2-bridge-testkit) | Mock peers, fixtures, and conformance scenarios |
+| `ara2-bridge` | [![crates.io](https://img.shields.io/crates/v/ara2-bridge.svg)](https://crates.io/crates/ara2-bridge) | Aggregating facade |
 
 The current `0.3.0` implementation includes the plug-in and host runtimes, core content and
 persistence utilities, CLAP/VST3/Audio Unit v2 adapters, deterministic conformance kit, native C++

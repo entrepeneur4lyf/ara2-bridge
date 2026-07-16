@@ -25,7 +25,7 @@ do
     fi
 done
 
-if output="$(PYTHONPATH="$repo_root/ci/tests/crlf-python" \
+if output="$(PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$repo_root/ci/tests/crlf-python" \
     "$bootstrap" check --root "$empty_root" --component ara 2>&1)"; then
     echo "expected the CRLF preflight to reject an absent SDK checkout" >&2
     exit 1

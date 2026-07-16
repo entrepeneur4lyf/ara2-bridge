@@ -45,11 +45,11 @@ EOF
 write_cargo_config "$consumer" Linux
 config="$consumer/.cargo/config.toml"
 grep -Fq 'target-dir = "target-custom"' "$config" || fail "existing Cargo config was lost"
-grep -Fq 'ARA_SDK_DIR = { value = ".third-party/ARA_SDK", relative = true }' "$config" ||
+grep -Fq 'ARA_SDK_DIR = { value = "../.third-party/ARA_SDK", relative = true }' "$config" ||
     fail "ARA SDK entry is missing"
-grep -Fq 'ARA_CLAP_DIR = { value = ".third-party/clap", relative = true }' "$config" ||
+grep -Fq 'ARA_CLAP_DIR = { value = "../.third-party/clap", relative = true }' "$config" ||
     fail "CLAP entry is missing"
-grep -Fq 'ARA_VST3_SDK_DIR = { value = ".third-party/vst3sdk", relative = true }' "$config" ||
+grep -Fq 'ARA_VST3_SDK_DIR = { value = "../.third-party/vst3sdk", relative = true }' "$config" ||
     fail "VST3 entry is missing"
 if grep -Fq 'ARA_AUDIO_UNIT_SDK_DIR' "$config"; then
     fail "AudioUnit entry must not be written on Linux"
@@ -63,7 +63,7 @@ after="$(sha256_file "$config")"
 mac_consumer="$temporary/mac-consumer"
 mkdir -p "$mac_consumer"
 write_cargo_config "$mac_consumer" Darwin
-grep -Fq 'ARA_AUDIO_UNIT_SDK_DIR = { value = ".third-party/AudioUnitSDK", relative = true }' \
+grep -Fq 'ARA_AUDIO_UNIT_SDK_DIR = { value = "../.third-party/AudioUnitSDK", relative = true }' \
     "$mac_consumer/.cargo/config.toml" || fail "AudioUnit entry is missing on macOS"
 
 conflict="$temporary/conflict"

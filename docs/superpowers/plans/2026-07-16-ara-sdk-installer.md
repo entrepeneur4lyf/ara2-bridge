@@ -85,9 +85,9 @@ Create or update `<project>/.cargo/config.toml` with relative entries:
 
 ```toml
 [env]
-ARA_SDK_DIR = { value = ".third-party/ARA_SDK", relative = true }
-ARA_CLAP_DIR = { value = ".third-party/clap", relative = true }
-ARA_VST3_SDK_DIR = { value = ".third-party/vst3sdk", relative = true }
+ARA_SDK_DIR = { value = "../.third-party/ARA_SDK", relative = true }
+ARA_CLAP_DIR = { value = "../.third-party/clap", relative = true }
+ARA_VST3_SDK_DIR = { value = "../.third-party/vst3sdk", relative = true }
 ```
 
 Add `ARA_AUDIO_UNIT_SDK_DIR` only on macOS. Preserve unrelated tables and fail when an existing SDK key has a different value.

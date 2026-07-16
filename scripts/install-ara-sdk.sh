@@ -130,12 +130,12 @@ write_cargo_config() {
     local cargo_dir="$project/.cargo" config="$project/.cargo/config.toml"
     local key value expected missing="" temporary
     local -a entries=(
-        "ARA_SDK_DIR|.third-party/ARA_SDK"
-        "ARA_CLAP_DIR|.third-party/clap"
-        "ARA_VST3_SDK_DIR|.third-party/vst3sdk"
+        "ARA_SDK_DIR|../.third-party/ARA_SDK"
+        "ARA_CLAP_DIR|../.third-party/clap"
+        "ARA_VST3_SDK_DIR|../.third-party/vst3sdk"
     )
     if [[ "$platform" == "Darwin" ]]; then
-        entries+=("ARA_AUDIO_UNIT_SDK_DIR|.third-party/AudioUnitSDK")
+        entries+=("ARA_AUDIO_UNIT_SDK_DIR|../.third-party/AudioUnitSDK")
     fi
 
     mkdir -p "$cargo_dir"

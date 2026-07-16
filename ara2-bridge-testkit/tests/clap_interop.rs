@@ -89,23 +89,24 @@ fn clap_plugin_extension_binds_once_before_lifecycle_boundaries() {
     }
     .unwrap();
     assert_eq!(adapter.factory(), factory.as_raw());
-    // SAFETY: plug-in and registered extension adapter remain live.
-    let host = unsafe { ClapAraHostPlugin::discover(plugin_pointer) }.unwrap();
-    assert_eq!(host.factory().unwrap(), factory.as_raw());
+    {
+        // SAFETY: plug-in and registered extension adapter remain live.
+        let host = unsafe { ClapAraHostPlugin::discover(plugin_pointer) }.unwrap();
+        assert_eq!(host.factory().unwrap(), factory.as_raw());
 
-    let mut controller_storage = Box::new(0_u8);
-    let controller = (&mut *controller_storage as *mut u8).cast();
-    let roles = CompanionRoles::all();
-    // SAFETY: controller storage remains live through adapter teardown.
-    let extension = unsafe { host.bind(controller, roles, roles) }.unwrap();
-    assert_eq!(extension, std::ptr::from_ref(&EXTENSION_INSTANCE).cast());
-    assert!(unsafe { host.bind(controller, roles, roles) }.is_err());
-    adapter.observe_activation().unwrap();
-    adapter.observe_processing().unwrap();
-    assert!(adapter.observe_state_load().is_err());
-    adapter.observe_deactivation().unwrap();
-    adapter.observe_controller_destruction().unwrap();
-    assert!(adapter.observe_state_load().is_err());
-    drop(host);
+        let mut controller_storage = Box::new(0_u8);
+        let controller = (&mut *controller_storage as *mut u8).cast();
+        let roles = CompanionRoles::all();
+        // SAFETY: controller storage remains live through adapter teardown.
+        let extension = unsafe { host.bind(controller, roles, roles) }.unwrap();
+        assert_eq!(extension, std::ptr::from_ref(&EXTENSION_INSTANCE).cast());
+        assert!(unsafe { host.bind(controller, roles, roles) }.is_err());
+        adapter.observe_activation().unwrap();
+        adapter.observe_processing().unwrap();
+        assert!(adapter.observe_state_load().is_err());
+        adapter.observe_deactivation().unwrap();
+        adapter.observe_controller_destruction().unwrap();
+        assert!(adapter.observe_state_load().is_err());
+    }
     drop(adapter);
 }

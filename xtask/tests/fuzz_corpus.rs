@@ -46,9 +46,24 @@ fn repository_corpus_is_fresh_complete_and_nonempty() {
     let manifest: toml::Value =
         toml::from_str(&fs::read_to_string(root.join("fuzz/corpus-manifest.toml")).unwrap())
             .unwrap();
-    let targets = manifest["seed"]
-        .as_array()
-        .unwrap()
+    let seeds = manifest["seed"].as_array().unwrap();
+    let paths = seeds
+        .iter()
+        .map(|seed| seed["path"].as_str().unwrap())
+        .collect::<Vec<_>>();
+    let tracked = std::process::Command::new("git")
+        .current_dir(root)
+        .args(["ls-files", "--error-unmatch", "--"])
+        .args(&paths)
+        .output()
+        .unwrap();
+    assert!(
+        tracked.status.success(),
+        "canonical fuzz seeds must be tracked:\n{}",
+        String::from_utf8_lossy(&tracked.stderr)
+    );
+
+    let targets = seeds
         .iter()
         .map(|seed| seed["target"].as_str().unwrap())
         .collect::<std::collections::BTreeSet<_>>();

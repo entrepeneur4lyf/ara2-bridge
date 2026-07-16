@@ -1,4 +1,6 @@
 /artifacts/
-/corpus/
+/corpus/*/*
+!/corpus/*/*.bin
+!/corpus/*/*.xml
 /coverage/
 /target/

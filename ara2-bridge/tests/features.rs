@@ -75,6 +75,8 @@ fn facade_feature_matrix_compiles_in_isolated_consumers() {
         }
     }
 
+    let ara_configured = sdk_is_configured(root, "ARA_SDK_DIR", ".third-party/ARA_SDK");
+    let vst3_configured = sdk_is_configured(root, "ARA_VST3_SDK_DIR", ".third-party/vst3sdk");
     let vst3_cases = [
         Case {
             name: "vst3-3-8",
@@ -89,7 +91,7 @@ fn facade_feature_matrix_compiles_in_isolated_consumers() {
             modules: &["plugin", "host", "companion"],
         },
     ];
-    if sdk_is_configured(root, "ARA_VST3_SDK_DIR", ".third-party/vst3sdk") {
+    if vst3_configured && ara_configured {
         for case in vst3_cases {
             let output = run_case(root, case);
             if !output.status.success() {
@@ -102,40 +104,61 @@ fn facade_feature_matrix_compiles_in_isolated_consumers() {
         }
     } else {
         for case in vst3_cases {
-            assert_missing_vst3_error(root, case);
+            if vst3_configured {
+                assert_missing_sdk_error(
+                    root,
+                    case,
+                    "ARA_SDK_DIR must point at the project-local SDK installed by scripts/install-ara-sdk.sh",
+                );
+            } else {
+                assert_missing_vst3_error(root, case);
+            }
         }
     }
 
     if cfg!(target_vendor = "apple") {
-        let output = run_case(
-            root,
-            Case {
-                name: "audio-unit-v2",
-                default_features: false,
-                features: &["audio-unit-v2"],
-                modules: &["companion"],
-            },
-        );
-        if !output.status.success() {
-            failures.push(format!(
-                "audio-unit-v2 failed:\n{}",
-                String::from_utf8_lossy(&output.stderr)
-            ));
+        let audio_unit_configured =
+            sdk_is_configured(root, "ARA_AUDIO_UNIT_SDK_DIR", ".third-party/AudioUnitSDK");
+        let audio_unit_case = Case {
+            name: "audio-unit-v2",
+            default_features: false,
+            features: &["audio-unit-v2"],
+            modules: &["companion"],
+        };
+        if audio_unit_configured && ara_configured {
+            let output = run_case(root, audio_unit_case);
+            if !output.status.success() {
+                failures.push(format!(
+                    "audio-unit-v2 failed:\n{}",
+                    String::from_utf8_lossy(&output.stderr)
+                ));
+            }
+        } else if audio_unit_configured {
+            assert_missing_ara_error(root, audio_unit_case);
+        } else {
+            assert_missing_audio_unit_error(root, audio_unit_case);
         }
-        let output = run_case(
-            root,
-            Case {
-                name: "full-apple",
-                default_features: false,
-                features: &["full-apple"],
-                modules: &["plugin", "host", "companion"],
-            },
-        );
-        if !output.status.success() {
-            failures.push(format!(
-                "full-apple failed:\n{}",
-                String::from_utf8_lossy(&output.stderr)
-            ));
+
+        let full_apple_case = Case {
+            name: "full-apple",
+            default_features: false,
+            features: &["full-apple"],
+            modules: &["plugin", "host", "companion"],
+        };
+        if vst3_configured && audio_unit_configured && ara_configured {
+            let output = run_case(root, full_apple_case);
+            if !output.status.success() {
+                failures.push(format!(
+                    "full-apple failed:\n{}",
+                    String::from_utf8_lossy(&output.stderr)
+                ));
+            }
+        } else if !vst3_configured {
+            assert_missing_vst3_error(root, full_apple_case);
+        } else if !ara_configured {
+            assert_missing_ara_error(root, full_apple_case);
+        } else {
+            assert_missing_audio_unit_error(root, full_apple_case);
         }
     } else {
         assert_non_apple_audio_unit_error(root, "audio-unit-v2", &["audio-unit-v2"]);
@@ -217,6 +240,24 @@ fn vst3_fallback_requires_the_locked_header_layout() {
     fs::remove_dir_all(root).unwrap();
 }
 
+#[test]
+fn audio_unit_fallback_requires_the_locked_header_layout() {
+    let root = std::env::temp_dir().join(format!(
+        "ara2-bridge-audio-unit-fallback-{}",
+        std::process::id()
+    ));
+    let _ = fs::remove_dir_all(&root);
+    fs::create_dir_all(&root).unwrap();
+
+    assert!(!sdk_fallback_is_configured("ARA_AUDIO_UNIT_SDK_DIR", &root));
+    let header = root.join("Source/AudioUnitSDK.h");
+    fs::create_dir_all(header.parent().unwrap()).unwrap();
+    fs::write(header, []).unwrap();
+    assert!(sdk_fallback_is_configured("ARA_AUDIO_UNIT_SDK_DIR", &root));
+
+    fs::remove_dir_all(root).unwrap();
+}
+
 fn assert_non_apple_audio_unit_error(root: &Path, name: &str, features: &[&str]) {
     let output = run_case(
         root,
@@ -236,6 +277,30 @@ fn assert_non_apple_audio_unit_error(root: &Path, name: &str, features: &[&str])
 }
 
 fn assert_missing_vst3_error(root: &Path, case: Case<'_>) {
+    assert_missing_sdk_error(
+        root,
+        case,
+        "VST3 SDK v3.8.0_build_66 is required when this companion feature is enabled",
+    );
+}
+
+fn assert_missing_audio_unit_error(root: &Path, case: Case<'_>) {
+    assert_missing_sdk_error(
+        root,
+        case,
+        "AudioUnitSDK-1.0.0 is required when this companion feature is enabled",
+    );
+}
+
+fn assert_missing_ara_error(root: &Path, case: Case<'_>) {
+    assert_missing_sdk_error(
+        root,
+        case,
+        "ARA_SDK_DIR must point at the project-local SDK installed by scripts/install-ara-sdk.sh",
+    );
+}
+
+fn assert_missing_sdk_error(root: &Path, case: Case<'_>, expected: &str) {
     let output = run_case(root, case);
     assert!(
         !output.status.success(),
@@ -244,9 +309,7 @@ fn assert_missing_vst3_error(root: &Path, case: Case<'_>) {
     );
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(
-        stderr.contains(
-            "VST3 SDK v3.8.0_build_66 is required when this companion feature is enabled"
-        ),
+        stderr.contains(expected),
         "{} produced the wrong diagnostic:\n{stderr}",
         case.name
     );
@@ -317,16 +380,20 @@ fn sdk_is_configured(root: &Path, variable: &str, fallback: &str) -> bool {
 }
 
 fn sdk_fallback_is_configured(variable: &str, fallback: &Path) -> bool {
-    if variable != "ARA_VST3_SDK_DIR" {
-        return fallback.is_dir();
-    }
-    [
-        "pluginterfaces/base/funknown.h",
-        "pluginterfaces/base/falignpush.h",
-        "pluginterfaces/base/falignpop.h",
-    ]
-    .iter()
-    .all(|relative| fallback.join(relative).is_file())
+    let required: &[&str] = match variable {
+        "ARA_SDK_DIR" => &["ARA_API/ARAInterface.h"],
+        "ARA_CLAP_DIR" => &["include/clap/clap.h"],
+        "ARA_VST3_SDK_DIR" => &[
+            "pluginterfaces/base/funknown.h",
+            "pluginterfaces/base/falignpush.h",
+            "pluginterfaces/base/falignpop.h",
+        ],
+        "ARA_AUDIO_UNIT_SDK_DIR" => &["Source/AudioUnitSDK.h"],
+        _ => return fallback.is_dir(),
+    };
+    required
+        .iter()
+        .all(|relative| fallback.join(relative).is_file())
 }
 
 fn manifest(root: &Path, case: Case<'_>) -> String {

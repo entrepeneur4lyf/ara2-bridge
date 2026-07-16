@@ -1039,6 +1039,7 @@ mod tests {
             assert!(status.success(), "git {arguments:?} failed");
         };
         git(&["init", "--quiet"]);
+        git(&["config", "core.autocrlf", "false"]);
         git(&["config", "user.name", "ARA2 Bridge Test"]);
         git(&["config", "user.email", "test@ara2-bridge.invalid"]);
         git(&["add", "sources"]);

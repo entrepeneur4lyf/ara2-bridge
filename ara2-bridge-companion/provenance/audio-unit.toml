@@ -7,6 +7,16 @@ tree = "bb8b75ec63fe7d9036073287c4f01bf96d8a49f5"
 license = "Apache-2.0"
 
 [[file]]
+path = ".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"
+role = "transitive-header"
+sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
+
+[[file]]
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
+role = "transitive-header"
+sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"
+
+[[file]]
 path = ".third-party/AudioUnitSDK/Source/AUBase.h"
 role = "transitive-header"
 sha256 = "ffe220c4766e331fd416b086efd03925eaba4971531133367b440d88a3e4607c"
@@ -54,7 +64,7 @@ sha256 = "482efd3c90a1740fa6f1314619353bbf8b2a56f952b7814813b30a1ef9fdad8d"
 [[file]]
 path = "ara2-bridge-companion/build.rs"
 role = "generated-declaration"
-sha256 = "b6b6a2da94d0edf1dd54100260b3fdbcdc8fed237e9d90a39abbab648a2f4977"
+sha256 = "522242c2e131793ebc0f9f5041e5bc810c6bd7c29f09bba239e0a52bade0463c"
 
 [[file]]
 path = "ara2-bridge-companion/native/audio_unit/ara_au_shim.h"
@@ -85,13 +95,3 @@ sha256 = "d14ecb1e3631818bcaa0b4f990f88a8b089bf57a5725969f3413ce9510b2b354"
 path = "ara2-bridge-testkit/tests/audio_unit_interop.rs"
 role = "generated-declaration"
 sha256 = "e2ba8b24478928a811d56670e1fea9302c3d47ecc5b9c5c829997f76074c8725"
-
-[[file]]
-path = ".third-party/ARA_SDK/ARA_API/ARAAudioUnit.h"
-role = "generated-declaration"
-sha256 = "90ab59063cf7cd80c941bd59244dea58beb2d4fdd056a5368c1b95f1e9a7c129"
-
-[[file]]
-path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
-role = "ara-header"
-sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

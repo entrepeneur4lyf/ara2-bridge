@@ -45,13 +45,25 @@ See `docs/migration-0.1-to-0.2.md` for the intentional 0.1 API break,
 `docs/companion-sdk-setup.md` for locked SDK configuration, and
 `docs/manual-source-map.md` for the 12-chapter manual inventory.
 
-## Development
-
-Rust 1.82 or newer is required. Package builds do not need Clang or an SDK checkout. Maintainer
-generation requires Clang and the exact ignored reference checkout:
+Projects using native companion features can install and build the complete locked SDK locally:
 
 ```bash
-ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/main/scripts/install-ara-sdk.sh
+bash install-ara-sdk.sh
+cargo build
+```
+
+The installer uses the invoking project's Git root, places sources under `.third-party/`, builds the
+Celemony examples under `target/ara-sdk-build`, and records relocatable paths in
+`.cargo/config.toml`. It never needs `sudo` or writes into a global SDK location.
+
+## Development
+
+Rust 1.82 or newer is required. Package builds without native companion features do not need Clang
+or an SDK checkout. Maintainer generation requires Clang and the project-local SDK installation:
+
+```bash
+bash scripts/install-ara-sdk.sh
 cargo xtask ara generate --check
 cargo xtask ara probe-core --check-all
 cargo test --workspace

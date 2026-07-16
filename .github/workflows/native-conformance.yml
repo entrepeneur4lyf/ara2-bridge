@@ -38,6 +38,8 @@ jobs:
             cxx: clang++
     runs-on: ${{ matrix.os }}
     env:
+      ARA_SDK_REPOSITORY: https://github.com/Celemony/ARA_SDK.git
+      ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       CXX: ${{ matrix.cxx }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -84,6 +86,7 @@ jobs:
           - { os: macos-15, target: aarch64-apple-darwin }
     runs-on: ${{ matrix.os }}
     env:
+      ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       ARA_CLAP_DIR: ${{ github.workspace }}/.third-party/clap
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -138,6 +141,7 @@ jobs:
           - { os: macos-15, target: aarch64-apple-darwin, cxx: clang++ }
     runs-on: ${{ matrix.os }}
     env:
+      ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       ARA_VST3_SDK_DIR: ${{ github.workspace }}/.third-party/vst3sdk
       CXX: ${{ matrix.cxx }}
     steps:
@@ -188,6 +192,7 @@ jobs:
           - { os: macos-15, target: aarch64-apple-darwin }
     runs-on: ${{ matrix.os }}
     env:
+      ARA_SDK_DIR: ${{ github.workspace }}/.third-party/ARA_SDK
       ARA_AUDIO_UNIT_SDK_DIR: ${{ github.workspace }}/.third-party/AudioUnitSDK
       CXX: clang++
     steps:

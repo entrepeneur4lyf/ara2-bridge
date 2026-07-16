@@ -1,16 +1,18 @@
 fn main() {
     if std::env::var_os("CARGO_FEATURE_CLAP").is_some() {
-        let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-            .parent()
-            .expect("testkit is a workspace child");
+        let sdk = ara_sdk();
+        let clap = sdk_directory("ARA_CLAP_DIR", "CLAP 1.1.9");
         cc::Build::new()
             .file("native/clap_probe.c")
-            .include(root.join(".third-party/clap/include"))
-            .include(root.join(".third-party/ARA_SDK/ARA_API"))
+            .include(clap.join("include"))
+            .include(sdk.join("ARA_API"))
             .warnings(true)
             .compile("ara2_clap_probe");
         println!("cargo:rerun-if-changed=native/clap_probe.c");
-        println!("cargo:rerun-if-changed=../.third-party/ARA_SDK/ARA_API/ARACLAP.h");
+        println!(
+            "cargo:rerun-if-changed={}",
+            sdk.join("ARA_API/ARACLAP.h").display()
+        );
     }
 
     if std::env::var_os("CARGO_FEATURE_CPP_INTEROP").is_some() {
@@ -18,15 +20,38 @@ fn main() {
     }
 }
 
+fn sdk_directory(variable: &str, label: &str) -> std::path::PathBuf {
+    println!("cargo:rerun-if-env-changed={variable}");
+    let path = std::env::var_os(variable)
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(|| {
+            panic!("{variable} must point at the project-local {label} installation")
+        });
+    assert!(
+        path.is_dir(),
+        "{variable} does not name a readable {label} directory: {}",
+        path.display()
+    );
+    path
+}
+
+fn ara_sdk() -> std::path::PathBuf {
+    println!("cargo:rerun-if-env-changed=ARA_SDK_DIR");
+    let sdk = sdk_directory("ARA_SDK_DIR", "ARA SDK");
+    assert!(
+        sdk.join("ARA_API/ARAInterface.h").is_file(),
+        "ARA_SDK_DIR does not contain ARA_API/ARAInterface.h: {}",
+        sdk.display()
+    );
+    sdk
+}
+
 fn build_cpp_interop() {
-    let sdk = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .expect("testkit is a workspace child")
-        .join(".third-party/ARA_SDK");
+    let sdk = ara_sdk();
     for required in ["ARA_API", "ARA_Library", "ARA_Examples"] {
         assert!(
             sdk.join(required).is_dir(),
-            "the GitHub-provisioned ARA SDK is missing {required}; run ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0 (expected {})",
+            "ARA_SDK_DIR is missing {required}: {}",
             sdk.display()
         );
     }

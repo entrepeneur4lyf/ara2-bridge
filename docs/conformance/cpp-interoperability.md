@@ -7,7 +7,7 @@ The `cpp-interop` testkit feature builds directly against the pinned Celemony AR
 Run the gate with:
 
 ```bash
-ci/bootstrap-reference-sdks.sh fetch --component ara --accept-license Apache-2.0
+bash scripts/install-ara-sdk.sh
 cargo test -p ara2-bridge-testkit --features cpp-interop --test cpp_interop -- --nocapture
 ```
 

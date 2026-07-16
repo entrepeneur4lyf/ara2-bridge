@@ -1,6 +1,15 @@
 # Companion SDK Setup
 
-Companion features never download SDKs during Cargo builds. Maintainers provision exact ignored checkouts from the repositories recorded in `ci/reference-sdks.lock.toml` through `ci/bootstrap-reference-sdks.sh`. The ARA source is always `https://github.com/Celemony/ARA_SDK.git`, cached at `.third-party/ARA_SDK`; `reference/` and `ARA_SDK_DIR` are not used.
+Cargo builds never download SDKs implicitly. Run the installer once from the consuming project; it clones the official repositories, initializes ARA recursively, builds Celemony's libraries and examples, and writes relocatable SDK paths to `.cargo/config.toml`:
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/main/scripts/install-ara-sdk.sh
+bash install-ara-sdk.sh
+```
+
+The default installation is `.third-party/` in the consuming project, with build output in `target/ara-sdk-build`. Existing checkouts must be clean and match the locked origins and commits. The installer preserves unrelated Cargo configuration and rejects conflicting SDK entries. On Linux it supplies implicit `<limits>` and `<cstdint>` includes required by the immutable ARA 2.3 examples under GCC 15.
+
+Maintainers may also provision individual ignored checkouts from `ci/reference-sdks.lock.toml` through `ci/bootstrap-reference-sdks.sh`. The ARA source is always `https://github.com/Celemony/ARA_SDK.git`, cached at `.third-party/ARA_SDK`; `reference/` is never a build input. When using the lower-level bootstrap directly, set `ARA_SDK_DIR` and the applicable companion variable to those project-local paths.
 
 The bootstrap command configures every checkout and submodule with `core.autocrlf=false` and
 `core.filemode=false` before materializing files. This is required on Windows: converted CRLF files

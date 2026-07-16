@@ -7,6 +7,16 @@ tree = "4b56d7267e846fbe2a420370ea4f88f3ca7869b3"
 license = "MIT"
 
 [[file]]
+path = ".third-party/ARA_SDK/ARA_API/ARACLAP.h"
+role = "transitive-header"
+sha256 = "40cf55e206034087e47be32ed243b33d6748348cecce3eac063e662ae4cf2217"
+
+[[file]]
+path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
+role = "transitive-header"
+sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"
+
+[[file]]
 path = ".third-party/clap/include/clap/audio-buffer.h"
 role = "transitive-header"
 sha256 = "efe1d90ba87499fc8f930d9c9c86157e023bede2c6ade01a20de6d2dfef3828e"
@@ -269,7 +279,7 @@ sha256 = "6fafd49734f37e4d8b7975dddd7cc89867135bee2d423d635e0074d6e0650010"
 [[file]]
 path = "ara2-bridge-companion/build.rs"
 role = "generated-declaration"
-sha256 = "b6b6a2da94d0edf1dd54100260b3fdbcdc8fed237e9d90a39abbab648a2f4977"
+sha256 = "522242c2e131793ebc0f9f5041e5bc810c6bd7c29f09bba239e0a52bade0463c"
 
 [[file]]
 path = "ara2-bridge-companion/src/clap/sys.rs"
@@ -285,13 +295,3 @@ sha256 = "91853de34e11f4937d94db9a15ba236f18dc43c2283d42588976db5690dc5101"
 path = "ara2-bridge-testkit/native/clap_probe.c"
 role = "abi-probe"
 sha256 = "52909a3117f294dee0788c59a1ef22a7fb175534f8d2235685a0493e93a53feb"
-
-[[file]]
-path = ".third-party/ARA_SDK/ARA_API/ARACLAP.h"
-role = "ara-header"
-sha256 = "40cf55e206034087e47be32ed243b33d6748348cecce3eac063e662ae4cf2217"
-
-[[file]]
-path = ".third-party/ARA_SDK/ARA_API/ARAInterface.h"
-role = "ara-header"
-sha256 = "d6b92a31aca0e3e6974fd73e291e021de05b190f782646bf283139a0adccce48"

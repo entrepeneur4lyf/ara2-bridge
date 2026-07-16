@@ -124,8 +124,21 @@ fn checked_in_source_recipe_is_complete() {
 
 #[cfg(not(windows))]
 #[test]
-fn release_audits_pass_on_candidate_inputs() {
-    xtask::release::audit_api(root()).unwrap();
+fn release_api_audit_passes_on_candidate_inputs() {
+    let root = root();
+    if !root
+        .join(".third-party/ARA_SDK/ARA_API/ARAInterface.h")
+        .is_file()
+        || !root.join(".third-party/ARA_SDK/.git").exists()
+    {
+        eprintln!("skipping release API audit without the maintainer ARA SDK checkout");
+        return;
+    }
+    xtask::release::audit_api(root).unwrap();
+}
+
+#[test]
+fn release_license_audit_passes_on_candidate_inputs() {
     xtask::release::audit_licenses(root()).unwrap();
 }
 
@@ -137,7 +150,6 @@ fn release_api_audit_requires_a_canonical_generation_host() {
         error.contains("binding generation is not supported on Windows"),
         "{error}"
     );
-    xtask::release::audit_licenses(root()).unwrap();
 }
 
 #[test]

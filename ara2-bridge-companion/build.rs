@@ -61,11 +61,45 @@ fn require_sdk(feature: &str, variable: &str, version: &str) -> Option<PathBuf> 
     Some(PathBuf::from(path))
 }
 
+fn require_ara_sdk(feature: &str) -> Option<PathBuf> {
+    env::var_os(feature)?;
+    println!("cargo:rerun-if-env-changed=ARA_SDK_DIR");
+    let path = env::var_os("ARA_SDK_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| {
+            panic!(
+                "ARA_SDK_DIR must point at the project-local SDK installed by scripts/install-ara-sdk.sh"
+            )
+        });
+    let interface = path.join("ARA_API/ARAInterface.h");
+    if !interface.is_file() {
+        panic!(
+            "ARA_SDK_DIR does not contain ARA_API/ARAInterface.h: {}",
+            path.display()
+        );
+    }
+    verify_git_identity(
+        &path,
+        "ARA_SDK_DIR",
+        "https://github.com/Celemony/ARA_SDK.git",
+        "a2b1aac1d1d5c4eed387db85a9c0cdb7d460254c",
+        "305a0dc9ba4759963c1e974353a999c3810b2319",
+    );
+    verify_git_identity(
+        &path.join("ARA_API"),
+        "ARA_SDK_DIR/ARA_API",
+        "https://github.com/Celemony/ARA_API.git",
+        "65ec5c43b943a48cb5446f448a0492db6af8534b",
+        "2e3b0455f61314068d34501c5f71407d6ed0051b",
+    );
+    Some(path)
+}
+
 fn require_vst3() {
     let Some(path) = require_sdk(
         "CARGO_FEATURE_VST3",
         "ARA_VST3_SDK_DIR",
-        "VST3 SDK v3.7.11_build_10",
+        "VST3 SDK v3.8.0_build_66",
     ) else {
         return;
     };
@@ -79,7 +113,7 @@ fn require_vst3() {
         .find(|relative| !path.join(relative).is_file())
     {
         panic!(
-            "ARA_VST3_SDK_DIR must name the locked VST3 SDK v3.7.11_build_10 checkout; missing {missing} under {}",
+            "ARA_VST3_SDK_DIR must name the locked VST3 SDK v3.8.0_build_66 checkout; missing {missing} under {}",
             path.display()
         );
     }
@@ -87,32 +121,37 @@ fn require_vst3() {
         &path,
         "ARA_VST3_SDK_DIR",
         "https://github.com/steinbergmedia/vst3sdk.git",
-        "7d92338ae922db2d559ac458824a4df40f37e82e",
-        "1509aeb4426b5e51ff7586b8096f2ab8ccbbd2a4",
+        "9fad9770f2ae8542ab1a548a68c1ad1ac690abe0",
+        "2b7fc6abf314f6a16e57cc8ef71529d74a4ecce9",
     );
     verify_git_identity(
         &path.join("pluginterfaces"),
         "ARA_VST3_SDK_DIR/pluginterfaces",
         "https://github.com/steinbergmedia/vst3_pluginterfaces.git",
-        "cf187058ae79fe557fd854f2cc66a2b587d8cbe9",
-        "f4aebd86e7bff7b0d6d653715ddc1cce202adbf4",
+        "31d6eeba6daaa3e2a8bfbe3e7a90ca0b7fbfbc1c",
+        "ebffbe4eb40bbf1f6fec030feeed30da47e6c719",
     );
-    let root = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .expect("companion crate is a workspace child");
-    cc::Build::new()
+    let ara = require_ara_sdk("CARGO_FEATURE_VST3").expect("feature was checked above");
+    let mut build = cc::Build::new();
+    build
         .cpp(true)
         .std("c++17")
         .file("native/vst3/ara_vst3_shim.cpp")
         .include("native/vst3")
         .include(&path)
-        .include(root.join("reference/ARA_SDK/ARA_API"))
+        .include(ara.join("ARA_API"))
         .warnings(true)
-        .flag_if_supported("-fvisibility=hidden")
-        .compile("ara2_vst3_shim");
+        .flag_if_supported("-fvisibility=hidden");
+    if env::var("CARGO_CFG_TARGET_ENV").as_deref() == Ok("msvc") {
+        build.flag_if_supported("/EHsc");
+    }
+    build.compile("ara2_vst3_shim");
     println!("cargo:rerun-if-changed=native/vst3/ara_vst3_shim.hpp");
     println!("cargo:rerun-if-changed=native/vst3/ara_vst3_shim.cpp");
-    println!("cargo:rerun-if-changed=../reference/ARA_SDK/ARA_API/ARAVST3.h");
+    println!(
+        "cargo:rerun-if-changed={}",
+        ara.join("ARA_API/ARAVST3.h").display()
+    );
 }
 
 fn require_audio_unit() {
@@ -141,22 +180,23 @@ fn require_audio_unit() {
         "53ea94e5efebf864b70afb673bdd60c977818ec7",
         "bb8b75ec63fe7d9036073287c4f01bf96d8a49f5",
     );
-    let root = Path::new(env!("CARGO_MANIFEST_DIR"))
-        .parent()
-        .expect("companion crate is a workspace child");
+    let ara = require_ara_sdk("CARGO_FEATURE_AUDIO_UNIT_V2").expect("feature was checked above");
     cc::Build::new()
         .cpp(true)
         .std("c++17")
         .file("native/audio_unit/ara_au_shim.mm")
         .include("native/audio_unit")
         .include(path.join("Source"))
-        .include(root.join("reference/ARA_SDK/ARA_API"))
+        .include(ara.join("ARA_API"))
         .warnings(true)
         .compile("ara2_audio_unit_shim");
     println!("cargo:rustc-link-lib=framework=AudioToolbox");
     println!("cargo:rerun-if-changed=native/audio_unit/ara_au_shim.h");
     println!("cargo:rerun-if-changed=native/audio_unit/ara_au_shim.mm");
-    println!("cargo:rerun-if-changed=../reference/ARA_SDK/ARA_API/ARAAudioUnit.h");
+    println!(
+        "cargo:rerun-if-changed={}",
+        ara.join("ARA_API/ARAAudioUnit.h").display()
+    );
 }
 
 fn main() {

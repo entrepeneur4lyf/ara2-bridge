@@ -139,6 +139,26 @@ fn facade_feature_matrix_compiles_in_isolated_consumers() {
     assert!(failures.is_empty(), "{}", failures.join("\n\n"));
 }
 
+#[test]
+fn native_build_scripts_resolve_ara_from_the_consuming_project() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap();
+    for relative in [
+        "ara2-bridge-companion/build.rs",
+        "ara2-bridge-testkit/build.rs",
+    ] {
+        let source = fs::read_to_string(root.join(relative)).unwrap();
+        assert!(
+            source.contains("cargo:rerun-if-env-changed=ARA_SDK_DIR"),
+            "{relative} does not track the consuming project's ARA SDK configuration"
+        );
+        assert!(
+            !source.contains("reference/ARA_SDK")
+                && !source.contains("root.join(\".third-party/ARA_SDK"),
+            "{relative} assumes an SDK inside the ara2-bridge source tree"
+        );
+    }
+}
+
 fn assert_non_apple_audio_unit_error(root: &Path, name: &str, features: &[&str]) {
     let output = run_case(
         root,
@@ -167,7 +187,7 @@ fn assert_missing_vst3_error(root: &Path, case: Case<'_>) {
     let stderr = String::from_utf8_lossy(&output.stderr);
     assert!(
         stderr.contains(
-            "VST3 SDK v3.7.11_build_10 is required when this companion feature is enabled"
+            "VST3 SDK v3.8.0_build_66 is required when this companion feature is enabled"
         ),
         "{} produced the wrong diagnostic:\n{stderr}",
         case.name
@@ -190,8 +210,13 @@ fn run_case(root: &Path, case: Case<'_>) -> Output {
         .env(
             "CARGO_TARGET_DIR",
             root.join("target/feature-matrix-target"),
-        )
-        .env("ARA_CLAP_DIR", root.join(".third-party/clap"));
+        );
+    configure_sdk(
+        &mut command,
+        "ARA_SDK_DIR",
+        root.join(".third-party/ARA_SDK"),
+    );
+    configure_sdk(&mut command, "ARA_CLAP_DIR", root.join(".third-party/clap"));
     configure_sdk(
         &mut command,
         "ARA_VST3_SDK_DIR",

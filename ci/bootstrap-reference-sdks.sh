@@ -5,10 +5,6 @@ set -euo pipefail
 readonly script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly repository_root="$(cd "$script_dir/.." && pwd)"
 readonly lock_file="$script_dir/reference-sdks.lock.toml"
-python_command="python3"
-if ! command -v "$python_command" >/dev/null 2>&1; then
-    python_command="python"
-fi
 
 usage() {
     cat >&2 <<'EOF'
@@ -24,6 +20,19 @@ EOF
 fail() {
     echo "bootstrap-reference-sdks: $*" >&2
     exit 1
+}
+
+select_python() {
+    local candidate
+    for candidate in python3 python /opt/homebrew/bin/python3 /usr/local/bin/python3; do
+        if command -v "$candidate" >/dev/null 2>&1 &&
+            "$candidate" -c 'import tomllib' >/dev/null 2>&1
+        then
+            printf '%s\n' "$candidate"
+            return
+        fi
+    done
+    fail "Python with tomllib support is required (Python 3.11 or newer)"
 }
 
 normalize_url() {
@@ -62,8 +71,9 @@ done
 [[ -n "$component" ]] || usage
 [[ -d "$root" ]] || fail "repository root does not exist: $root"
 root="$(cd "$root" && pwd)"
+python_command="$(select_python)"
 
-mapfile -t fields < <("$python_command" - "$lock_file" "$component" <<'PY'
+fields_output="$("$python_command" - "$lock_file" "$component" <<'PY'
 import sys
 import tomllib
 
@@ -82,7 +92,13 @@ for item in data.get("component", []):
 else:
     raise SystemExit(f"unknown component: {sys.argv[2]}")
 PY
-) || fail "could not read $lock_file"
+)" || fail "could not read $lock_file"
+fields=()
+while IFS= read -r field; do
+    fields[${#fields[@]}]="$field"
+done <<EOF
+$fields_output
+EOF
 
 ((${#fields[@]} == 7)) || fail "unknown component '$component' in $lock_file"
 relative_path="${fields[0]}"
@@ -120,6 +136,18 @@ verify_checkout() {
     [[ "$(normalize_url "$actual")" == "$(normalize_url "$repository")" ]] ||
         fail "$relative_path origin is $actual; expected $repository"
 
+    local submodules_output
+    submodules_output="$("$python_command" - "$lock_file" "$component" <<'PY'
+import sys
+import tomllib
+
+with open(sys.argv[1], "rb") as stream:
+    data = tomllib.load(stream)
+item = next(entry for entry in data["component"] if entry["name"] == sys.argv[2])
+for submodule in item.get("submodule", []):
+    print("\t".join((submodule["path"], submodule["repository"], submodule["commit"], submodule["tree"])))
+PY
+)" || fail "could not read submodules for '$component' from $lock_file"
     while IFS=$'\t' read -r path sub_repository sub_commit sub_tree; do
         [[ -n "$path" ]] || continue
         local sub_checkout="$checkout/$path"
@@ -133,17 +161,9 @@ verify_checkout() {
         actual="$(git -C "$sub_checkout" remote get-url origin)"
         [[ "$(normalize_url "$actual")" == "$(normalize_url "$sub_repository")" ]] ||
             fail "$relative_path/$path origin is $actual; expected $sub_repository"
-    done < <("$python_command" - "$lock_file" "$component" <<'PY'
-import sys
-import tomllib
-
-with open(sys.argv[1], "rb") as stream:
-    data = tomllib.load(stream)
-item = next(entry for entry in data["component"] if entry["name"] == sys.argv[2])
-for submodule in item.get("submodule", []):
-    print("\t".join((submodule["path"], submodule["repository"], submodule["commit"], submodule["tree"])))
-PY
-)
+    done <<EOF
+$submodules_output
+EOF
 
     printf '%s\n' "$component SDK verified at $relative_path ($commit)"
 }

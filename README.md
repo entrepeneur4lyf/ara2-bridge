@@ -48,7 +48,7 @@ See `docs/migration-0.1-to-0.2.md` for the intentional 0.1 API break,
 Projects using native companion features can install and build the complete locked SDK locally:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/main/scripts/install-ara-sdk.sh
+curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.2.0-alpha.1/scripts/install-ara-sdk.sh
 bash install-ara-sdk.sh
 cargo build
 ```

@@ -36,14 +36,12 @@ struct PackageRecord {
 }
 
 pub(super) fn create(root: &Path, output: &Path, allow_dirty: bool) -> Result<(), String> {
-    let recipe = read_recipe(root)?;
-    verify_recipe(root, &root.join(RECIPE_PATH))?;
     if !allow_dirty {
         require_clean_tree(root)?;
     }
     let commit = git(root, &["rev-parse", "HEAD"])?;
     validate_commit(&commit)?;
-    let timestamp = git(root, &["show", "-s", "--format=%ct", "HEAD"])?
+    let timestamp = git(root, &["show", "-s", "--format=%ct", &commit])?
         .parse::<u64>()
         .map_err(|error| format!("invalid candidate commit timestamp: {error}"))?;
 
@@ -55,18 +53,29 @@ pub(super) fn create(root: &Path, output: &Path, allow_dirty: bool) -> Result<()
         .map_err(|error| format!("cannot create source-bundle staging directory: {error}"))?;
     let staging = temp.path().join("bundle");
     let vendor = staging.join("vendor");
+    let committed_source = temp.path().join("committed-source");
+    if !allow_dirty {
+        materialize_commit(root, &committed_source, &commit)?;
+    }
+    let source_root = if allow_dirty {
+        root
+    } else {
+        committed_source.as_path()
+    };
+    let recipe = read_recipe(source_root)?;
+    verify_recipe(source_root, &source_root.join(RECIPE_PATH))?;
     fs::create_dir_all(&staging)
         .map_err(|error| format!("cannot create {}: {error}", staging.display()))?;
 
-    vendor_locked_graph(root, &vendor)?;
+    vendor_locked_graph(source_root, &vendor)?;
     write_source_config(
         &staging.join(".cargo/config.toml"),
         Path::new("vendor"),
         true,
     )?;
-    copy_recipe_inputs(root, &staging, &recipe)?;
+    copy_recipe_inputs(root, &commit, source_root, &staging, &recipe)?;
 
-    let records = package_members(root, &staging, &vendor, allow_dirty)?;
+    let records = package_members(source_root, &staging, &vendor, allow_dirty)?;
     write_clean_room_manifest(&staging)?;
     generate_clean_room_lock(&staging)?;
 
@@ -83,6 +92,24 @@ pub(super) fn create(root: &Path, output: &Path, allow_dirty: bool) -> Result<()
     write_inventory(&staging)?;
     write_archive(&staging, output, timestamp)?;
     Ok(())
+}
+
+fn materialize_commit(root: &Path, destination: &Path, commit: &str) -> Result<(), String> {
+    fs::create_dir_all(destination)
+        .map_err(|error| format!("cannot create {}: {error}", destination.display()))?;
+    let output = command_output(
+        {
+            let mut command = Command::new("git");
+            command
+                .current_dir(root)
+                .args(["archive", "--format=tar", commit]);
+            command
+        },
+        "materialize committed source snapshot",
+    )?;
+    tar::Archive::new(output.stdout.as_slice())
+        .unpack(destination)
+        .map_err(|error| format!("cannot unpack committed source snapshot: {error}"))
 }
 
 pub(super) fn verify(bundle: &Path) -> Result<(), String> {
@@ -654,26 +681,32 @@ fn clean_cargo(staging: &Path, cargo_home: &Path) -> Command {
     command
 }
 
-fn copy_recipe_inputs(root: &Path, staging: &Path, recipe: &Recipe) -> Result<(), String> {
+fn copy_recipe_inputs(
+    git_root: &Path,
+    commit: &str,
+    source_root: &Path,
+    staging: &Path,
+    recipe: &Recipe,
+) -> Result<(), String> {
     for relative in &recipe.required_files {
-        let object = format!("HEAD:{relative}");
-        if git(root, &["cat-file", "-t", &object]).as_deref() != Ok("blob") {
+        let object = format!("{commit}:{relative}");
+        if git(git_root, &["cat-file", "-t", &object]).as_deref() != Ok("blob") {
             return Err(format!(
                 "required source file {relative} is not committed at HEAD"
             ));
         }
-        copy_file(root, staging, Path::new(relative))?;
+        copy_file(source_root, staging, Path::new(relative))?;
     }
     for tree in &recipe.required_trees {
         let output = command_output(
             {
                 let mut command = Command::new("git");
-                command.current_dir(root).args([
+                command.current_dir(git_root).args([
                     "ls-tree",
                     "-r",
                     "--name-only",
                     "-z",
-                    "HEAD",
+                    commit,
                     "--",
                     tree,
                 ]);
@@ -688,7 +721,7 @@ fn copy_recipe_inputs(root: &Path, staging: &Path, recipe: &Recipe) -> Result<()
         {
             let relative = std::str::from_utf8(bytes)
                 .map_err(|_| format!("committed source tree {tree} contains a non-UTF-8 path"))?;
-            copy_file(root, staging, Path::new(relative))?;
+            copy_file(source_root, staging, Path::new(relative))?;
         }
     }
     Ok(())
@@ -982,8 +1015,8 @@ fn command_output(mut command: Command, action: &str) -> Result<Output, String> 
 #[cfg(test)]
 mod tests {
     use super::{
-        canonicalize_crate_archive, clean_cargo, copy_recipe_inputs, normalize_vendored_sources,
-        read_json, unpack_crate, verify_crate_matches_clean_tree,
+        canonicalize_crate_archive, clean_cargo, copy_recipe_inputs, materialize_commit,
+        normalize_vendored_sources, read_json, unpack_crate, verify_crate_matches_clean_tree,
     };
     use crate::release::Recipe;
     use flate2::{Compression, GzBuilder};
@@ -1033,7 +1066,14 @@ mod tests {
         .unwrap();
         let staging = tempfile::tempdir().unwrap();
 
-        copy_recipe_inputs(repository.path(), staging.path(), &recipe).unwrap();
+        copy_recipe_inputs(
+            repository.path(),
+            "HEAD",
+            repository.path(),
+            staging.path(),
+            &recipe,
+        )
+        .unwrap();
 
         assert!(!staging.path().join("sources/untracked.rs").exists());
     }
@@ -1048,7 +1088,14 @@ mod tests {
         .unwrap();
         let staging = tempfile::tempdir().unwrap();
 
-        copy_recipe_inputs(repository.path(), staging.path(), &recipe).unwrap();
+        copy_recipe_inputs(
+            repository.path(),
+            "HEAD",
+            repository.path(),
+            staging.path(),
+            &recipe,
+        )
+        .unwrap();
 
         assert!(!staging.path().join("sources/generated.obj").exists());
     }
@@ -1060,9 +1107,34 @@ mod tests {
         recipe.required_files = vec!["required.txt".to_owned()];
         let staging = tempfile::tempdir().unwrap();
 
-        let error = copy_recipe_inputs(repository.path(), staging.path(), &recipe).unwrap_err();
+        let error = copy_recipe_inputs(
+            repository.path(),
+            "HEAD",
+            repository.path(),
+            staging.path(),
+            &recipe,
+        )
+        .unwrap_err();
 
         assert!(error.contains("not committed at HEAD"), "{error}");
+    }
+
+    #[test]
+    fn committed_source_snapshot_ignores_later_worktree_edits() {
+        let (repository, _) = recipe_copy_fixture();
+        fs::write(
+            repository.path().join("sources/tracked.rs"),
+            b"worktree edit\n",
+        )
+        .unwrap();
+        let snapshot = tempfile::tempdir().unwrap();
+
+        materialize_commit(repository.path(), snapshot.path(), "HEAD").unwrap();
+
+        assert_eq!(
+            fs::read(snapshot.path().join("sources/tracked.rs")).unwrap(),
+            b"tracked\n"
+        );
     }
 
     fn write_crate(path: &Path, entries: &[(&str, &[u8])], mtime: u64) {

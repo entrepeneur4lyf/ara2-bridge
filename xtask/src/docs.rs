@@ -69,6 +69,7 @@ pub fn run(mut args: impl Iterator<Item = String>) -> Result<(), String> {
 
 /// Validates all publishable crate-root documentation contracts.
 pub fn verify_public_docs_path(root: &Path) -> Result<(), String> {
+    verify_installer_download_refs(root)?;
     let generated = root.join("ara2-bridge-sys/src/generated");
     let mut generated_sources = Vec::new();
     collect_rust_sources(&generated, &mut generated_sources)?;
@@ -105,6 +106,35 @@ pub fn verify_public_docs_path(root: &Path) -> Result<(), String> {
         }
         if !source.contains("#![deny(clippy::missing_safety_doc)]") {
             return Err(format!("{crate_name} must deny missing # Safety contracts"));
+        }
+    }
+    Ok(())
+}
+
+/// Ensures release-facing installer commands are pinned to the workspace version tag.
+pub fn verify_installer_download_refs(root: &Path) -> Result<(), String> {
+    let manifest_path = root.join("Cargo.toml");
+    let manifest_source = fs::read_to_string(&manifest_path)
+        .map_err(|error| format!("cannot read {}: {error}", manifest_path.display()))?;
+    let manifest: toml::Value = toml::from_str(&manifest_source)
+        .map_err(|error| format!("cannot parse {}: {error}", manifest_path.display()))?;
+    let version = manifest
+        .get("workspace")
+        .and_then(|workspace| workspace.get("package"))
+        .and_then(|package| package.get("version"))
+        .and_then(toml::Value::as_str)
+        .ok_or_else(|| "workspace.package.version is missing from Cargo.toml".to_owned())?;
+    let expected = format!(
+        "https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v{version}/scripts/install-ara-sdk.sh"
+    );
+    for relative in ["README.md", "docs/companion-sdk-setup.md"] {
+        let path = root.join(relative);
+        let source = fs::read_to_string(&path)
+            .map_err(|error| format!("cannot read {}: {error}", path.display()))?;
+        if !source.contains(&expected) {
+            return Err(format!(
+                "{relative} must download the installer from immutable release tag v{version}"
+            ));
         }
     }
     Ok(())

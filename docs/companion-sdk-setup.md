@@ -3,7 +3,7 @@
 Cargo builds never download SDKs implicitly. Run the installer once from the consuming project; it clones the official repositories, initializes ARA recursively, builds Celemony's libraries and examples, and writes relocatable SDK paths to `.cargo/config.toml`:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/main/scripts/install-ara-sdk.sh
+curl -fsSLO https://raw.githubusercontent.com/entrepeneur4lyf/ara2-bridge/v0.2.0-alpha.1/scripts/install-ara-sdk.sh
 bash install-ara-sdk.sh
 ```
 

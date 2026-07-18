@@ -6,8 +6,9 @@ use super::ffi::{
     ARA2_VST3_OK,
 };
 use crate::{
+    record_controller_destroy_snapshot, register_controller_destroy_handler,
     CompanionControllerBinding, CompanionFactory, CompanionProcessorBinding, CompanionRoles,
-    LifecycleEvent,
+    ControllerDestroyRegistration, ControllerDestroySnapshot, LifecycleEvent,
 };
 use ara2_bridge_core::AraError;
 use ara2_bridge_sys::ARAPlugInExtensionInstance;
@@ -143,6 +144,7 @@ struct EntryState {
     processor: CompanionProcessorBinding<'static>,
     factory_id: String,
     controller: Mutex<Option<CompanionControllerBinding<'static>>>,
+    controller_destroy_registration: Mutex<Option<ControllerDestroyRegistration>>,
     extension_builder: Box<ExtensionBuilder>,
 }
 
@@ -191,7 +193,29 @@ unsafe extern "C" fn entry_bind(
         }) else {
             return std::ptr::null();
         };
+        let state_weak = Arc::downgrade(state);
+        let controller_ref = controller.cast();
+        let controller_key = controller_ref as usize;
+        let registration = register_controller_destroy_handler(controller_ref, move || {
+            if let Some(state) = state_weak.upgrade() {
+                let probe = state.processor.lifetime_probe();
+                let processor_alive_before_controller_drop = probe.processor_alive();
+                let controller_alive_before_controller_drop = probe.controller_alive();
+                lock(&state.controller).take();
+                lock(&state.controller_destroy_registration).take();
+                record_controller_destroy_snapshot(
+                    controller_key as ara2_bridge_sys::ARADocumentControllerRef,
+                    ControllerDestroySnapshot {
+                        processor_alive_before_controller_drop,
+                        controller_alive_before_controller_drop,
+                        processor_alive_after_controller_drop: probe.processor_alive(),
+                        controller_alive_after_controller_drop: probe.controller_alive(),
+                    },
+                );
+            }
+        });
         *current = Some(binding);
+        *lock(&state.controller_destroy_registration) = Some(registration);
         extension.cast()
     }))
     .unwrap_or(std::ptr::null())
@@ -233,6 +257,7 @@ impl Vst3PluginEntryAdapter {
             processor,
             factory_id: class_name,
             controller: Mutex::new(None),
+            controller_destroy_registration: Mutex::new(None),
             extension_builder: Box::new(extension_builder),
         });
         let context = Box::into_raw(Box::new(Arc::clone(&state))).cast();
@@ -281,20 +306,12 @@ impl Vst3PluginEntryAdapter {
     pub fn observe(&self, event: LifecycleEvent) -> Result<(), AraError> {
         self.state.processor.observe(event)
     }
-
-    /// Tombstones the controller side before an external host destroys it first.
-    pub fn observe_controller_destruction(&self) -> Result<(), AraError> {
-        lock(&self.state.controller)
-            .take()
-            .map(drop)
-            .ok_or(AraError::InvalidState(
-                "VST3 processor has no live ARA controller binding",
-            ))
-    }
 }
 
 impl Drop for Vst3PluginEntryAdapter {
     fn drop(&mut self) {
+        lock(&self.state.controller_destroy_registration).take();
+        let _ = lock(&self.state.controller).take();
         let mut remaining = 0;
         // SAFETY: this consumes the adapter's unique original owning COM reference.
         let _ = unsafe { ara2_vst3_release(self.as_raw(), &mut remaining) };

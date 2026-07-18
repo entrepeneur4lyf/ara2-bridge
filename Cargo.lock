@@ -72,6 +72,7 @@ dependencies = [
 name = "ara2-bridge-plugin"
 version = "0.3.0"
 dependencies = [
+ "ara2-bridge-companion",
  "ara2-bridge-core",
  "ara2-bridge-sys",
  "bitflags",

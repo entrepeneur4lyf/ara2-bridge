@@ -6,9 +6,10 @@ use ara2_bridge_sys::{
     kARAEditorRendererRole, kARAEditorViewRole, kARAPlaybackRendererRole, ARADocumentControllerRef,
     ARAFactory,
 };
+use std::collections::HashMap;
 use std::marker::PhantomData;
 use std::ptr::NonNull;
-use std::sync::{Arc, Mutex, MutexGuard, Weak};
+use std::sync::{Arc, Mutex, MutexGuard, OnceLock, Weak};
 use std::thread::ThreadId;
 
 const MAXIMUM_FACTORY_ID_BYTES: usize = 16 * 1024;
@@ -30,6 +31,132 @@ fn lock<T>(mutex: &Mutex<T>) -> MutexGuard<'_, T> {
     mutex
         .lock()
         .unwrap_or_else(|poisoned| poisoned.into_inner())
+}
+
+type ControllerDestroyHandler = dyn Fn() + Send + Sync + 'static;
+
+/// Diagnostic snapshot captured by a format adapter at exact document-controller destruction.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct ControllerDestroySnapshot {
+    /// Whether the processor-side binding owner was alive before dropping the controller owner.
+    pub processor_alive_before_controller_drop: bool,
+    /// Whether the controller-side binding owner was alive before dropping it.
+    pub controller_alive_before_controller_drop: bool,
+    /// Whether the processor-side binding owner remained alive after dropping the controller owner.
+    pub processor_alive_after_controller_drop: bool,
+    /// Whether the controller-side binding owner remained alive after dropping it.
+    pub controller_alive_after_controller_drop: bool,
+}
+
+fn controller_destroy_registry(
+) -> &'static Mutex<HashMap<usize, Vec<Weak<ControllerDestroyHandler>>>> {
+    static REGISTRY: OnceLock<Mutex<HashMap<usize, Vec<Weak<ControllerDestroyHandler>>>>> =
+        OnceLock::new();
+    REGISTRY.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+fn controller_destroy_observation_registry(
+) -> &'static Mutex<HashMap<usize, Vec<ControllerDestroySnapshot>>> {
+    static REGISTRY: OnceLock<Mutex<HashMap<usize, Vec<ControllerDestroySnapshot>>>> =
+        OnceLock::new();
+    REGISTRY.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+/// RAII registration for one exact document-controller destroy notification.
+#[must_use]
+pub struct ControllerDestroyRegistration {
+    controller: usize,
+    handler: Arc<ControllerDestroyHandler>,
+}
+
+impl Drop for ControllerDestroyRegistration {
+    fn drop(&mut self) {
+        let mut registry = lock(controller_destroy_registry());
+        if let Some(handlers) = registry.get_mut(&self.controller) {
+            handlers.retain(|handler| {
+                handler
+                    .upgrade()
+                    .is_some_and(|current| !Arc::ptr_eq(&current, &self.handler))
+            });
+            if handlers.is_empty() {
+                registry.remove(&self.controller);
+            }
+        }
+    }
+}
+
+/// Registers a companion-owned action for the exact factory-side document controller reference.
+pub fn register_controller_destroy_handler(
+    controller: ARADocumentControllerRef,
+    handler: impl Fn() + Send + Sync + 'static,
+) -> ControllerDestroyRegistration {
+    let controller = controller as usize;
+    let handler: Arc<ControllerDestroyHandler> = Arc::new(handler);
+    lock(controller_destroy_registry())
+        .entry(controller)
+        .or_default()
+        .push(Arc::downgrade(&handler));
+    ControllerDestroyRegistration {
+        controller,
+        handler,
+    }
+}
+
+/// Notifies all live handlers registered for one exact factory-side document controller reference.
+pub fn notify_document_controller_destroyed(controller: ARADocumentControllerRef) {
+    let controller = controller as usize;
+    let handlers = {
+        let mut registry = lock(controller_destroy_registry());
+        let Some(handlers) = registry.get_mut(&controller) else {
+            return;
+        };
+        let live = handlers
+            .iter()
+            .filter_map(Weak::upgrade)
+            .collect::<Vec<_>>();
+        handlers.retain(|handler| Weak::strong_count(handler) > 0);
+        if handlers.is_empty() {
+            registry.remove(&controller);
+        }
+        live
+    };
+    for handler in handlers {
+        handler();
+    }
+}
+
+pub(crate) fn record_controller_destroy_snapshot(
+    controller: ARADocumentControllerRef,
+    snapshot: ControllerDestroySnapshot,
+) {
+    lock(controller_destroy_observation_registry())
+        .entry(controller as usize)
+        .or_default()
+        .push(snapshot);
+}
+
+/// Returns and clears controller-destroy snapshots captured for one exact controller reference.
+pub fn take_controller_destroy_snapshots(
+    controller: ARADocumentControllerRef,
+) -> Vec<ControllerDestroySnapshot> {
+    lock(controller_destroy_observation_registry())
+        .remove(&(controller as usize))
+        .unwrap_or_default()
+}
+
+/// Counts live destroy handlers for one exact controller reference, pruning stale registrations.
+pub fn controller_destroy_handler_count(controller: ARADocumentControllerRef) -> usize {
+    let controller = controller as usize;
+    let mut registry = lock(controller_destroy_registry());
+    let Some(handlers) = registry.get_mut(&controller) else {
+        return 0;
+    };
+    handlers.retain(|handler| Weak::strong_count(handler) > 0);
+    let count = handlers.len();
+    if count == 0 {
+        registry.remove(&controller);
+    }
+    count
 }
 
 /// Stable companion-visible association between an ID and one ARA factory.

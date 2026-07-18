@@ -45,9 +45,13 @@
 mod binding;
 mod lifecycle;
 
+pub(crate) use binding::record_controller_destroy_snapshot;
 pub use binding::{
+    controller_destroy_handler_count, notify_document_controller_destroyed,
+    register_controller_destroy_handler, take_controller_destroy_snapshots,
     CompanionControllerBinding, CompanionFactory, CompanionLifetimeProbe,
-    CompanionProcessorBinding, CompanionRoles,
+    CompanionProcessorBinding, CompanionRoles, ControllerDestroyRegistration,
+    ControllerDestroySnapshot,
 };
 pub use lifecycle::LifecycleEvent;
 

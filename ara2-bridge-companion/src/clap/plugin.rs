@@ -6,8 +6,9 @@ use super::sys::{
     CLAP_EXT_ARA_PLUGIN_EXTENSION_COMPAT,
 };
 use crate::{
+    record_controller_destroy_snapshot, register_controller_destroy_handler,
     CompanionControllerBinding, CompanionFactory, CompanionProcessorBinding, CompanionRoles,
-    LifecycleEvent,
+    ControllerDestroyRegistration, ControllerDestroySnapshot, LifecycleEvent,
 };
 use ara2_bridge_core::AraError;
 use ara2_bridge_sys::{ARADocumentControllerRef, ARAFactory, ARAPlugInExtensionInstance};
@@ -161,6 +162,7 @@ struct PluginState {
     processor: CompanionProcessorBinding<'static>,
     factory_id: String,
     controller: Mutex<Option<CompanionControllerBinding<'static>>>,
+    controller_destroy_registration: Mutex<Option<ControllerDestroyRegistration>>,
     extension_builder: Box<ExtensionBuilder>,
 }
 
@@ -222,7 +224,28 @@ unsafe extern "C" fn plugin_bind(
         }) else {
             return std::ptr::null();
         };
+        let state_weak = Arc::downgrade(&state);
+        let controller_key = controller as usize;
+        let registration = register_controller_destroy_handler(controller, move || {
+            if let Some(state) = state_weak.upgrade() {
+                let probe = state.processor.lifetime_probe();
+                let processor_alive_before_controller_drop = probe.processor_alive();
+                let controller_alive_before_controller_drop = probe.controller_alive();
+                lock(&state.controller).take();
+                lock(&state.controller_destroy_registration).take();
+                record_controller_destroy_snapshot(
+                    controller_key as ARADocumentControllerRef,
+                    ControllerDestroySnapshot {
+                        processor_alive_before_controller_drop,
+                        controller_alive_before_controller_drop,
+                        processor_alive_after_controller_drop: probe.processor_alive(),
+                        controller_alive_after_controller_drop: probe.controller_alive(),
+                    },
+                );
+            }
+        });
         *current = Some(binding);
+        *lock(&state.controller_destroy_registration) = Some(registration);
         extension
     }))
     .unwrap_or(std::ptr::null())
@@ -302,6 +325,7 @@ impl ClapAraPluginAdapter {
             processor,
             factory_id: factory_id.to_owned(),
             controller: Mutex::new(None),
+            controller_destroy_registration: Mutex::new(None),
             extension_builder: Box::new(extension_builder),
         });
         let mut registry = lock(registry());
@@ -350,21 +374,12 @@ impl ClapAraPluginAdapter {
     pub fn observe_view_creation(&self) -> Result<(), AraError> {
         self.state.processor.observe(LifecycleEvent::CreateView)
     }
-
-    /// Tombstones the controller side before an external host destroys it first.
-    pub fn observe_controller_destruction(&self) -> Result<(), AraError> {
-        lock(&self.state.controller)
-            .take()
-            .map(drop)
-            .ok_or(AraError::InvalidState(
-                "CLAP plug-in has no live ARA controller binding",
-            ))
-    }
 }
 
 impl Drop for ClapAraPluginAdapter {
     fn drop(&mut self) {
         lock(registry()).remove(&(self.plugin.as_ptr() as usize));
+        lock(&self.state.controller_destroy_registration).take();
         let _ = lock(&self.state.controller).take();
     }
 }

@@ -7,7 +7,7 @@ use super::ControllerInterface;
 use ara2_bridge_sys::{ARADocumentControllerInstance, ARADocumentControllerRef};
 use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::atomic::{AtomicPtr, Ordering};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex, OnceLock};
 
 /// Coverage entry joining one C callback name to its generated delegate index.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -36,6 +36,61 @@ pub struct CallbackContract {
 impl CallbackContract {
     pub(crate) const fn new(c_name: &'static str, slot: usize) -> Self {
         Self { c_name, slot }
+    }
+}
+
+/// Observer invoked from the plug-in-side `destroyDocumentController` callback before the
+/// controller delegate and raw controller allocation are invalidated.
+pub type DocumentControllerDestroyObserver =
+    dyn Fn(ARADocumentControllerRef) + Send + Sync + 'static;
+
+/// RAII registration for a document-controller destroy observer.
+#[must_use]
+pub struct DocumentControllerDestroyObserverRegistration {
+    observer: Arc<DocumentControllerDestroyObserver>,
+}
+
+impl Drop for DocumentControllerDestroyObserverRegistration {
+    fn drop(&mut self) {
+        let mut observers = document_controller_destroy_observers()
+            .lock()
+            .unwrap_or_else(|poisoned| poisoned.into_inner());
+        observers.retain(|observer| !Arc::ptr_eq(observer, &self.observer));
+    }
+}
+
+static DOCUMENT_CONTROLLER_DESTROY_OBSERVERS: OnceLock<
+    Mutex<Vec<Arc<DocumentControllerDestroyObserver>>>,
+> = OnceLock::new();
+
+fn document_controller_destroy_observers(
+) -> &'static Mutex<Vec<Arc<DocumentControllerDestroyObserver>>> {
+    DOCUMENT_CONTROLLER_DESTROY_OBSERVERS.get_or_init(|| Mutex::new(Vec::new()))
+}
+
+/// Registers a process-local observer for factory-side document-controller destruction.
+///
+/// The observer runs before the ARA plug-in runtime calls the controller delegate's terminal
+/// teardown hook and before the raw controller reference is freed. It must not panic and must not
+/// retain the controller pointer beyond the callback.
+pub fn register_document_controller_destroy_observer(
+    observer: impl Fn(ARADocumentControllerRef) + Send + Sync + 'static,
+) -> DocumentControllerDestroyObserverRegistration {
+    let observer = Arc::new(observer);
+    document_controller_destroy_observers()
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .push(observer.clone());
+    DocumentControllerDestroyObserverRegistration { observer }
+}
+
+pub(crate) fn notify_document_controller_destroy_observers(controller: ARADocumentControllerRef) {
+    let observers = document_controller_destroy_observers()
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner())
+        .clone();
+    for observer in observers {
+        observer(controller);
     }
 }
 
@@ -126,8 +181,11 @@ pub(crate) fn dispatch<R: Copy>(
 mod tests {
     use super::*;
     use crate::ffi::generated_callbacks;
+    use ara2_bridge_companion::{CompanionFactory, CompanionProcessorBinding, CompanionRoles};
+    use ara2_bridge_sys::ARAFactory;
+    use std::mem::{size_of, zeroed};
     use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
-    use std::sync::Arc;
+    use std::sync::{Arc, Mutex};
 
     struct Fixture {
         calls: Arc<AtomicUsize>,
@@ -140,6 +198,10 @@ mod tests {
             if self.panic_once.swap(false, Ordering::SeqCst) {
                 panic!("fixture panic");
             }
+        }
+
+        fn destroy_document_controller(&mut self) {
+            self.calls.fetch_add(1, Ordering::SeqCst);
         }
 
         fn get_processing_algorithms_count(&mut self) -> i32 {
@@ -164,5 +226,67 @@ mod tests {
         assert_eq!(algorithm_count, 7);
         // SAFETY: this is the unique terminal callback and consumes the controller allocation.
         unsafe { generated_callbacks::destroy_document_controller(controller) };
+    }
+
+    fn factory_fixture() -> &'static ARAFactory {
+        Box::leak(Box::new(ARAFactory {
+            structSize: size_of::<ARAFactory>(),
+            // SAFETY: the companion binding treats the factory as an opaque stable address.
+            ..unsafe { zeroed() }
+        }))
+    }
+
+    fn companion_fixture() -> CompanionProcessorBinding<'static> {
+        let factory = factory_fixture();
+        // SAFETY: the leaked factory remains at a stable address for the process lifetime.
+        let factory = unsafe { CompanionFactory::from_raw("test.factory", factory) }.unwrap();
+        CompanionProcessorBinding::new([factory], CompanionRoles::all()).unwrap()
+    }
+
+    #[test]
+    fn destroy_document_controller_observer_drops_controller_binding_before_processor() {
+        let processor = companion_fixture();
+        let probe = processor.lifetime_probe();
+        let controller = controller_ref(Box::new(Fixture {
+            calls: Arc::new(AtomicUsize::new(0)),
+            panic_once: Arc::new(AtomicBool::new(false)),
+        }));
+        let controller_id = controller as usize;
+        // SAFETY: the generated controller reference remains live until destroy callback below.
+        let binding = unsafe {
+            processor
+                .bind(controller, CompanionRoles::all(), CompanionRoles::all())
+                .unwrap()
+        };
+        let binding_slot = Arc::new(Mutex::new(Some(binding)));
+        let observed = Arc::new(AtomicUsize::new(0));
+        let registration = register_document_controller_destroy_observer({
+            let binding_slot = Arc::clone(&binding_slot);
+            let observed = Arc::clone(&observed);
+            move |destroyed| {
+                if destroyed as usize == controller_id {
+                    observed.fetch_add(1, Ordering::SeqCst);
+                    binding_slot
+                        .lock()
+                        .unwrap_or_else(|poisoned| poisoned.into_inner())
+                        .take();
+                }
+            }
+        });
+
+        assert!(probe.storage_is_alive());
+        assert!(probe.processor_alive());
+        assert!(probe.controller_alive());
+        // SAFETY: this is the unique terminal controller callback and consumes the controller.
+        unsafe { generated_callbacks::destroy_document_controller(controller) };
+
+        assert_eq!(observed.load(Ordering::SeqCst), 1);
+        assert!(probe.storage_is_alive());
+        assert!(probe.processor_alive());
+        assert!(!probe.controller_alive());
+
+        drop(registration);
+        drop(processor);
+        assert!(!probe.storage_is_alive());
     }
 }

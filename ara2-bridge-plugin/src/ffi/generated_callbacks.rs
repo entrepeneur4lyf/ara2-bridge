@@ -320,6 +320,7 @@ pub(crate) trait ControllerDelegate {
 pub(crate) unsafe extern "C" fn destroy_document_controller(
     controllerRef: ARADocumentControllerRef,
 ) {
+    super::callbacks::notify_document_controller_destroy_observers(controllerRef);
     super::callbacks::dispatch(controllerRef, (), |delegate| {
         delegate.destroy_document_controller()
     });

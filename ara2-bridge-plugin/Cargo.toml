@@ -11,3 +11,6 @@ repository.workspace = true
 ara2-bridge-core = { path = "../ara2-bridge-core", version = "=0.3.0" }
 ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.3.0" }
 bitflags.workspace = true
+
+[dev-dependencies]
+ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.3.0" }

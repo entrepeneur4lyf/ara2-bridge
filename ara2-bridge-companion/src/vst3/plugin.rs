@@ -17,7 +17,11 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::ptr::NonNull;
 use std::sync::{Arc, Mutex, MutexGuard};
 
-type ExtensionBuilder = dyn Fn(CompanionRoles, CompanionRoles) -> Result<*const ARAPlugInExtensionInstance, AraError>
+type ExtensionBuilder = dyn Fn(
+        ara2_bridge_sys::ARADocumentControllerRef,
+        CompanionRoles,
+        CompanionRoles,
+    ) -> Result<*const ARAPlugInExtensionInstance, AraError>
     + Send
     + Sync;
 
@@ -179,7 +183,9 @@ unsafe extern "C" fn entry_bind(
         if current.is_some() {
             return std::ptr::null();
         }
-        let Ok(extension) = (state.extension_builder)(known_roles, assigned_roles) else {
+        let Ok(extension) =
+            (state.extension_builder)(controller.cast(), known_roles, assigned_roles)
+        else {
             return std::ptr::null();
         };
         if extension.is_null() {
@@ -240,6 +246,7 @@ impl Vst3PluginEntryAdapter {
         processor: CompanionProcessorBinding<'static>,
         class_name: impl Into<String>,
         extension_builder: impl Fn(
+                ara2_bridge_sys::ARADocumentControllerRef,
                 CompanionRoles,
                 CompanionRoles,
             ) -> Result<*const ARAPlugInExtensionInstance, AraError>

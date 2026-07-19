@@ -153,7 +153,11 @@ impl<'factory> ClapAraEntry<'factory> {
     }
 }
 
-type ExtensionBuilder = dyn Fn(CompanionRoles, CompanionRoles) -> Result<*const ARAPlugInExtensionInstance, AraError>
+type ExtensionBuilder = dyn Fn(
+        ARADocumentControllerRef,
+        CompanionRoles,
+        CompanionRoles,
+    ) -> Result<*const ARAPlugInExtensionInstance, AraError>
     + Send
     + Sync;
 
@@ -210,7 +214,8 @@ unsafe extern "C" fn plugin_bind(
         if current.is_some() {
             return std::ptr::null();
         }
-        let Ok(extension) = (state.extension_builder)(known_roles, assigned_roles) else {
+        let Ok(extension) = (state.extension_builder)(controller, known_roles, assigned_roles)
+        else {
             return std::ptr::null();
         };
         if extension.is_null() {
@@ -303,6 +308,7 @@ impl ClapAraPluginAdapter {
         processor: CompanionProcessorBinding<'static>,
         factory_id: &str,
         extension_builder: impl Fn(
+                ARADocumentControllerRef,
                 CompanionRoles,
                 CompanionRoles,
             ) -> Result<*const ARAPlugInExtensionInstance, AraError>

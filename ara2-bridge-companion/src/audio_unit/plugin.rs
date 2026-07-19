@@ -11,13 +11,17 @@ use crate::{
     ControllerDestroyRegistration, ControllerDestroySnapshot, LifecycleEvent,
 };
 use ara2_bridge_core::AraError;
-use ara2_bridge_sys::{ARAFactory, ARAPlugInExtensionInstance};
+use ara2_bridge_sys::{ARADocumentControllerRef, ARAFactory, ARAPlugInExtensionInstance};
 use std::ffi::c_void;
 use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::ptr::NonNull;
 use std::sync::{Arc, Mutex, MutexGuard};
 
-type ExtensionBuilder = dyn Fn(CompanionRoles, CompanionRoles) -> Result<*const ARAPlugInExtensionInstance, AraError>
+type ExtensionBuilder = dyn Fn(
+        ARADocumentControllerRef,
+        CompanionRoles,
+        CompanionRoles,
+    ) -> Result<*const ARAPlugInExtensionInstance, AraError>
     + Send
     + Sync;
 
@@ -66,7 +70,8 @@ unsafe extern "C" fn bind(
         if current.is_some() {
             return std::ptr::null();
         }
-        let Ok(extension) = (state.extension_builder)(known_roles, assigned_roles) else {
+        let Ok(extension) = (state.extension_builder)(controller, known_roles, assigned_roles)
+        else {
             return std::ptr::null();
         };
         if extension.is_null() {
@@ -126,6 +131,7 @@ impl AudioUnitPluginAdapter {
         processor: CompanionProcessorBinding<'static>,
         factory_id: impl Into<String>,
         extension_builder: impl Fn(
+                ARADocumentControllerRef,
                 CompanionRoles,
                 CompanionRoles,
             ) -> Result<*const ARAPlugInExtensionInstance, AraError>

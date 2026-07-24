@@ -6,7 +6,7 @@ use ara2_bridge_companion::{
     CompanionFactory, CompanionProcessorBinding, CompanionRoles, LifecycleEvent,
 };
 use ara2_bridge_core::AraError;
-use ara2_bridge_sys::{ARAFactory, ARAPlugInExtensionInstance};
+use ara2_bridge_sys::{ARADocumentControllerRef, ARAFactory, ARAPlugInExtensionInstance};
 use ara2_bridge_testkit::{build_test_factory, TestPluginTrace};
 use std::ffi::c_void;
 use std::sync::atomic::{AtomicI32, Ordering};
@@ -158,6 +158,7 @@ fn plugin_properties_validate_scope_size_magic_and_preserve_failures() {
 }
 
 fn extension_instance(
+    _: ARADocumentControllerRef,
     _: CompanionRoles,
     _: CompanionRoles,
 ) -> Result<*const ARAPlugInExtensionInstance, AraError> {

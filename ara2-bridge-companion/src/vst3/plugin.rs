@@ -6,9 +6,10 @@ use super::ffi::{
     ARA2_VST3_OK,
 };
 use crate::{
-    record_controller_destroy_snapshot, register_controller_destroy_handler,
-    CompanionControllerBinding, CompanionFactory, CompanionProcessorBinding, CompanionRoles,
-    ControllerDestroyRegistration, ControllerDestroySnapshot, LifecycleEvent,
+    notify_document_controller_destroyed, record_controller_destroy_snapshot,
+    register_controller_destroy_handler, CompanionControllerBinding, CompanionFactory,
+    CompanionProcessorBinding, CompanionRoles, ControllerDestroyRegistration,
+    ControllerDestroySnapshot, LifecycleEvent,
 };
 use ara2_bridge_core::AraError;
 use ara2_bridge_sys::ARAPlugInExtensionInstance;
@@ -312,6 +313,26 @@ impl Vst3PluginEntryAdapter {
     /// Records one external VST3 processor lifecycle boundary.
     pub fn observe(&self, event: LifecycleEvent) -> Result<(), AraError> {
         self.state.processor.observe(event)
+    }
+
+    /// Records host-driven document-controller destruction before the host releases it.
+    ///
+    /// Fires the destroy handler registered at binding, which drops the controller binding,
+    /// releases its registration, and captures a [`ControllerDestroySnapshot`]. Later processor
+    /// boundaries then fail without dereferencing the stale controller reference.
+    ///
+    /// Returns [`AraError::InvalidState`] when no controller binding is live.
+    pub fn observe_controller_destruction(&self) -> Result<(), AraError> {
+        // The handler locks the same controller slot, so release the guard before notifying.
+        let controller = {
+            let binding = lock(&self.state.controller);
+            binding.as_ref().map(CompanionControllerBinding::controller)
+        };
+        let Some(controller) = controller else {
+            return Err(AraError::InvalidState("no ARA controller binding is live"));
+        };
+        notify_document_controller_destroyed(controller);
+        Ok(())
     }
 }
 

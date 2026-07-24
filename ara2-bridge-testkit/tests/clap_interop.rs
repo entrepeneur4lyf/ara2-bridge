@@ -7,13 +7,14 @@ use ara2_bridge_companion::clap::{
 };
 use ara2_bridge_companion::{CompanionFactory, CompanionProcessorBinding, CompanionRoles};
 use ara2_bridge_core::AraError;
-use ara2_bridge_sys::ARAPlugInExtensionInstance;
+use ara2_bridge_sys::{ARADocumentControllerRef, ARAPlugInExtensionInstance};
 use ara2_bridge_testkit::{build_test_factory, TestPluginTrace};
 use std::sync::atomic::AtomicU8;
 
 static EXTENSION_INSTANCE: AtomicU8 = AtomicU8::new(0);
 
 fn extension_instance(
+    _: ARADocumentControllerRef,
     _: CompanionRoles,
     _: CompanionRoles,
 ) -> Result<*const ARAPlugInExtensionInstance, AraError> {

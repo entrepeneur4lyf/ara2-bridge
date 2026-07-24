@@ -125,6 +125,7 @@ pub fn notify_document_controller_destroyed(controller: ARADocumentControllerRef
     }
 }
 
+#[cfg(any(feature = "clap", feature = "vst3", feature = "audio-unit-v2"))]
 pub(crate) fn record_controller_destroy_snapshot(
     controller: ARADocumentControllerRef,
     snapshot: ControllerDestroySnapshot,

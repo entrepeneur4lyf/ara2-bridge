@@ -45,6 +45,7 @@
 mod binding;
 mod lifecycle;
 
+#[cfg(any(feature = "clap", feature = "vst3", feature = "audio-unit-v2"))]
 pub(crate) use binding::record_controller_destroy_snapshot;
 pub use binding::{
     controller_destroy_handler_count, notify_document_controller_destroyed,

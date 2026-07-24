@@ -5,3 +5,4 @@ xtask = "run --package xtask --"
 ARA_SDK_DIR = { value = ".third-party/ARA_SDK", relative = true }
 ARA_CLAP_DIR = { value = ".third-party/clap", relative = true }
 ARA_VST3_SDK_DIR = { value = ".third-party/vst3sdk", relative = true }
+ARA_AUDIO_UNIT_SDK_DIR = { value = ".third-party/AudioUnitSDK", relative = true } # macOS

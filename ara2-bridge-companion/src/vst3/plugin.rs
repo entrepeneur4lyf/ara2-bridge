@@ -329,7 +329,9 @@ impl Vst3PluginEntryAdapter {
             binding.as_ref().map(CompanionControllerBinding::controller)
         };
         let Some(controller) = controller else {
-            return Err(AraError::InvalidState("no ARA controller binding is live"));
+            return Err(AraError::InvalidState(
+                "VST3 processor has no live ARA controller binding",
+            ));
         };
         notify_document_controller_destroyed(controller);
         Ok(())

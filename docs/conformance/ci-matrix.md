@@ -89,7 +89,7 @@ required = ["cargo-fuzz --version 0.13.2", "versioned_structs", "references", "c
 [[job]]
 workflow = "safety.yml"
 id = "supply-chain-and-features"
-required = ["cargo-audit --version 0.22.1", "cargo-deny --version 0.20.2", "cargo audit", "cargo deny check licenses sources", "-Z minimal-versions", "cargo check -p ara2-bridge --no-default-features", "--features clap,testkit"]
+required = ["cargo-audit --version 0.22.1", "cargo-deny --version 0.20.2", "cargo audit", "cargo deny check licenses sources", "-Z direct-minimal-versions", "cargo check -p ara2-bridge --no-default-features", "--features clap,testkit"]
 
 -->
 

@@ -166,14 +166,20 @@ jobs:
       - run: cargo +stable install cargo-deny --version 0.20.2 --locked
       - run: cargo audit
       - run: cargo deny check licenses sources
+      # -Z direct-minimal-versions floors only our own declared requirements. Full
+      # -Z minimal-versions also floors third-party transitives we do not control,
+      # where zstd-sys drags in pkg-config 0.3.0 that no longer compiles at all.
+      # Transitives therefore resolve to latest, which outruns the MSRV, so this
+      # runs on stable; the ci.yml msrv job covers 1.82.0 against the committed
+      # lock. xtask is excluded because it is dev-only tooling and is never published.
       - name: Resolve and check minimum dependency versions
         run: |
           mkdir -p target/minimal-versions
           cp Cargo.lock target/minimal-versions/Cargo.lock.original
           restore_lock() { cp target/minimal-versions/Cargo.lock.original Cargo.lock; }
           trap restore_lock EXIT
-          cargo +nightly update -Z minimal-versions
-          cargo +1.82.0 check --workspace --all-targets
+          cargo +nightly update -Z direct-minimal-versions
+          cargo +stable check --workspace --exclude xtask --all-targets
           restore_lock
           trap - EXIT
       - name: Check zero, one, and selected pairwise facade features
@@ -187,7 +193,7 @@ jobs:
         env:
           EVIDENCE_TARGET: x86_64-unknown-linux-gnu
           EVIDENCE_TOOLCHAIN: stable-nightly-1.82.0
-          EVIDENCE_COMMAND: cargo-audit --version 0.22.1; cargo-deny --version 0.20.2; cargo audit; license/source audit; -Z minimal-versions; facade feature pairs
+          EVIDENCE_COMMAND: cargo-audit --version 0.22.1; cargo-deny --version 0.20.2; cargo audit; license/source audit; -Z direct-minimal-versions; facade feature pairs
           EVIDENCE_CONCLUSION: ${{ job.status }}
           EVIDENCE_INPUTS: |
             Cargo.lock

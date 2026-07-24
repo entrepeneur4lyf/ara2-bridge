@@ -94,4 +94,4 @@ sha256 = "d14ecb1e3631818bcaa0b4f990f88a8b089bf57a5725969f3413ce9510b2b354"
 [[file]]
 path = "ara2-bridge-testkit/tests/audio_unit_interop.rs"
 role = "generated-declaration"
-sha256 = "e2ba8b24478928a811d56670e1fea9302c3d47ecc5b9c5c829997f76074c8725"
+sha256 = "634d44f98b1f2cf4bb083b83e355162a587243487fbad55d227d9c70ee909658"

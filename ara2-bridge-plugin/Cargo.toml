@@ -13,4 +13,7 @@ ara2-bridge-sys = { path = "../ara2-bridge-sys", version = "=0.3.0" }
 bitflags.workspace = true
 
 [dev-dependencies]
-ara2-bridge-companion = { path = "../ara2-bridge-companion", version = "=0.3.0" }
+# Path-only by design: publishing this dev-only fixture would create a package cycle because the
+# companion adapters depend on the plug-in runtime. Cargo omits path-only dev-dependencies from
+# the crate.
+ara2-bridge-companion = { path = "../ara2-bridge-companion" }

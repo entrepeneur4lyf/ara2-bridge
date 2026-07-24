@@ -68,7 +68,11 @@ fn workspace_dependency_edges_match_the_runtime_and_test_architecture() {
         ("ara2-bridge-core", &["ara2-bridge-sys"][..]),
         (
             "ara2-bridge-plugin",
-            &["ara2-bridge-core", "ara2-bridge-sys"][..],
+            &[
+                "ara2-bridge-companion",
+                "ara2-bridge-core",
+                "ara2-bridge-sys",
+            ][..],
         ),
         (
             "ara2-bridge-host",

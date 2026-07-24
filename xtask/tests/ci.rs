@@ -163,6 +163,47 @@ fn validator_rejects_cargo_publish_in_validation_workflows() {
 }
 
 #[test]
+fn validator_rejects_an_implicit_toolchain_install_in_a_multi_toolchain_job() {
+    let temp = tempfile::tempdir().unwrap();
+    let workflows = temp.path().join("workflows");
+    fs::create_dir(&workflows).unwrap();
+    fs::write(
+        workflows.join("safety.yml"),
+        concat!(
+            "jobs:\n",
+            "  supply-chain-and-features:\n",
+            "    runs-on: ubuntu-24.04\n",
+            "    steps:\n",
+            "      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88\n",
+            "        with:\n",
+            "          toolchain: stable\n",
+            "      - uses: dtolnay/rust-toolchain@fa04a1451ff1842e2626ccb99004d0195b455a88\n",
+            "        with:\n",
+            "          toolchain: 1.82.0\n",
+            "      - run: cargo install cargo-audit --version 0.22.1 --locked\n",
+            "      - run: ci/write-evidence.sh target/evidence/supply.json\n",
+            "      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f\n",
+        ),
+    )
+    .unwrap();
+    let matrix = temp.path().join("matrix.md");
+    fs::write(
+        &matrix,
+        concat!(
+            "# Matrix\n\n<!-- ci-matrix\nenforce_policy = true\n\n",
+            "[[job]]\nworkflow = \"safety.yml\"\nid = \"supply-chain-and-features\"\n-->\n",
+        ),
+    )
+    .unwrap();
+
+    let error = xtask::ci::validate_paths(&workflows, &matrix).unwrap_err();
+    assert!(
+        error.contains("cargo install must name one explicitly"),
+        "{error}"
+    );
+}
+
+#[test]
 fn evidence_bundle_is_deterministic_and_rejects_mixed_commits() {
     let temp = tempfile::tempdir().unwrap();
     let input = temp.path().join("input");

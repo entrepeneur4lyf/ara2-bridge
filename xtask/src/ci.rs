@@ -401,6 +401,7 @@ fn validate_job_policy(path: &Path, job_id: &str, job: &YamlValue) -> Result<(),
             path.display()
         ));
     }
+    let multi_toolchain = rendered.matches("dtolnay/rust-toolchain@").count() > 1;
     for line in rendered.lines() {
         if line.contains("bootstrap-reference-sdks.sh fetch") && !line.contains("--accept-license")
         {
@@ -412,6 +413,12 @@ fn validate_job_policy(path: &Path, job_id: &str, job: &YamlValue) -> Result<(),
         if line.contains("curl ") || line.contains("wget ") {
             return Err(format!(
                 "{}:{job_id}: direct unpinned download is forbidden: {line}",
+                path.display()
+            ));
+        }
+        if multi_toolchain && line.contains("cargo install") && !line.contains("cargo +") {
+            return Err(format!(
+                "{}:{job_id}: job installs several toolchains, so cargo install must name one explicitly: {line}",
                 path.display()
             ));
         }

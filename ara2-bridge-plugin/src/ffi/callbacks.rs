@@ -90,7 +90,10 @@ pub(crate) fn notify_document_controller_destroy_observers(controller: ARADocume
         .unwrap_or_else(|poisoned| poisoned.into_inner())
         .clone();
     for observer in observers {
-        observer(controller);
+        // These run inside `destroy_document_controller`, an `extern "C"` callback, so an
+        // escaping panic aborts the host process. Contain each observer separately, matching
+        // `dispatch`, so one faulty observer neither kills the host nor skips the others.
+        let _ = catch_unwind(AssertUnwindSafe(|| observer(controller)));
     }
 }
 
@@ -288,5 +291,33 @@ mod tests {
         drop(registration);
         drop(processor);
         assert!(!probe.storage_is_alive());
+    }
+
+    #[test]
+    fn destroy_observer_panic_is_contained_and_later_observers_still_run() {
+        const PROBE: usize = 0xA2A2_0001;
+        let reached = Arc::new(AtomicBool::new(false));
+        // Both observers are keyed to one synthetic reference, so the process-global observer
+        // list stays inert for every other test sharing this binary.
+        let _panicking = register_document_controller_destroy_observer(|destroyed| {
+            if destroyed as usize == PROBE {
+                panic!("destroy observer failure");
+            }
+        });
+        let _recording = register_document_controller_destroy_observer({
+            let reached = Arc::clone(&reached);
+            move |destroyed| {
+                if destroyed as usize == PROBE {
+                    reached.store(true, Ordering::SeqCst);
+                }
+            }
+        });
+
+        notify_document_controller_destroy_observers(PROBE as ARADocumentControllerRef);
+
+        assert!(
+            reached.load(Ordering::SeqCst),
+            "a panicking observer must neither abort the host nor skip later observers"
+        );
     }
 }
